@@ -12,10 +12,10 @@
     <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0 mb-4">Category tables</h3>
           <div class="d-flex justify-content-between">
-            <div class="text-left">
-              <input type="text" placeholder="Tìm kiếm..." class="form-control" [style]="'with 30%'">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <input type="text" placeholder="Search..." class="form-control" style="flex: 1;">
+              <a href="#!" class="btn btn-info">Search</a>
             </div>
             <div class="text-right">
               <a [routerLink]="'/system-admin/category/new'" class="btn btn-sm btn-primary">Thêm mới</a>
