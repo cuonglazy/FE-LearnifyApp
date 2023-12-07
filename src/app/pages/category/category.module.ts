@@ -8,6 +8,7 @@ import { CategoriesComponent } from "./list/categories.component";
 import { CategoryDetailComponent } from "./detail/category.detail.component";
 import { UpdateCategoryComponent } from "./update/update.category.component";
 
+
 @NgModule({
   imports: [
     CategoryRoutingRoutingModule,
