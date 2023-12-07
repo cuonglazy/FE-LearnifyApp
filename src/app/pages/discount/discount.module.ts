@@ -6,6 +6,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { DiscountComponent } from "./list/discount.component";
 import { UpdateDiscountComponent } from "./update/update.discount.component";
 import { DiscountRoutingModule } from "./route/discount-routing.module";
+import { DiscountDetailComponent } from './detail/discount-detail.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { DiscountRoutingModule } from "./route/discount-routing.module";
   ],
   declarations: [
     DiscountComponent, 
-    UpdateDiscountComponent
+    UpdateDiscountComponent, DiscountDetailComponent
   ],
 })
 export class DiscountModule {}

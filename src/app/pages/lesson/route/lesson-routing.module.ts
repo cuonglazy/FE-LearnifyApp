@@ -2,6 +2,7 @@ import { LessonComponent } from './../list/lesson.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UpdateLessonComponent } from '../update/update.lesson.component';
+import { LessonDetailComponent } from '../detail/lesson-detail.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: ":id/edit",
     component: UpdateLessonComponent,
+  },
+  {
+    path: ":id/view",
+    component: LessonDetailComponent,
   },
 ];
 

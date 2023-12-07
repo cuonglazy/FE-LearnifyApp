@@ -5,11 +5,12 @@ import { ClipboardModule } from "ngx-clipboard";
 import { LessonComponent } from "./list/lesson.component";
 import { UpdateLessonComponent } from "./update/update.lesson.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { LessonDetailComponent } from './detail/lesson-detail.component';
 
 @NgModule({
   declarations: [
     LessonComponent, 
-    UpdateLessonComponent
+    UpdateLessonComponent, LessonDetailComponent
   ],
   imports: [
     LessonRoutingModule,
