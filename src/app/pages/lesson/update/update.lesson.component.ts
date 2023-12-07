@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update.lesson.component.scss']
 })
 export class UpdateLessonComponent implements OnInit {
+selectedStatus: any;
+selectedSection: any;
 
   constructor() { }
 

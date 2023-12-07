@@ -1,1 +1,105 @@
-<p>update.lesson works!</p>
+<div
+  class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="
+    min-height: 200px;
+    background-size: cover;
+    background-position: center top;
+  "
+>
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+  <div class="col-xl- order-xl-1">
+    <div class="card bg-secondary shadow">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h3 class="mb-0">Create/Update Lesson</h3>
+          </div>
+          <div class="col-4 text-right">
+            <a href="/#/system-admin/lesson" class="btn btn-sm btn-info mr-4"
+              >Back</a
+            >
+            <a
+              href="javascript:void(0)"
+              class="btn btn-sm btn-default float-right"
+              >Save</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <form>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-md-12"></div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-section"
+                    >Section</label
+                  >
+                  <select
+                    id="section"
+                    class="form-control"
+                    [(ngModel)]="selectedSection"
+                  >
+                    <option value="">Select Section</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-id">ID :</label>
+                  <input type="text" id="input-id" class="form-control form-control-alternative" placeholder="ID Lesson">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-title">Title :</label>
+                    <input type="text" id="input-title" class="form-control form-control-alternative" placeholder="Title">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-time">Time :</label>
+                    <input type="text" id="input-time" class="form-control form-control-alternative" placeholder="Time Lesson">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-url">URL :</label>
+                    <input type="text" id="input-url" class="form-control form-control-alternative" placeholder="URL Lesson">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-questionAndAnswer">Question And Answer :</label>
+                    <input type="text" id="input-questionAndAnswer" class="form-control form-control-alternative" placeholder="Question And Answer">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-overView">Over View :</label>
+                    <input type="text" id="input-overView" class="form-control form-control-alternative" placeholder="OverView">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-note">Note :</label>
+                    <input type="text" id="input-note" class="form-control form-control-alternative" placeholder="Note">
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="form-control-label" for="input-comment">Comment :</label>
+                    <input type="text" id="input-comment" class="form-control form-control-alternative" placeholder="Comment">
+                  </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

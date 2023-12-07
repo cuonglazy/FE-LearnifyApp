@@ -8,7 +8,15 @@ import { UpdateDiscountComponent } from "./update/update.discount.component";
 import { DiscountRoutingModule } from "./route/discount-routing.module";
 
 @NgModule({
-  imports: [DiscountRoutingModule, ClipboardModule, FormsModule, NgbModule],
-  declarations: [DiscountComponent, UpdateDiscountComponent],
+  imports: [
+    DiscountRoutingModule, 
+    ClipboardModule, 
+    FormsModule, 
+    NgbModule
+  ],
+  declarations: [
+    DiscountComponent, 
+    UpdateDiscountComponent
+  ],
 })
 export class DiscountModule {}
