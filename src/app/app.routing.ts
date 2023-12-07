@@ -6,6 +6,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { CategoryModule } from "./pages/category/category.module";
+import { ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -13,7 +14,6 @@ const routes: Routes = [
     redirectTo: "/system-admin/dashboard",
     pathMatch: "full",
   },
-
   {
     path: "",
     component: AdminLayoutComponent,
@@ -46,9 +46,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes, {
-      useHash: true,
-    }),
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes),
   ],
   exports: [],
 })
