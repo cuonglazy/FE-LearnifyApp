@@ -13,6 +13,7 @@ const routes: Routes = [
     redirectTo: "/system-admin/dashboard",
     pathMatch: "full",
   },
+
   {
     path: "",
     component: AdminLayoutComponent,
@@ -38,10 +39,6 @@ const routes: Routes = [
           ),
       },
     ],
-  },
-  {
-    path: "**",
-    redirectTo: "dashboard",
   },
 ];
 
