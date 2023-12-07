@@ -17,4 +17,8 @@ export class UpdateCategoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  previousState(): void {
+    window.history.back();
+}
+
 }
