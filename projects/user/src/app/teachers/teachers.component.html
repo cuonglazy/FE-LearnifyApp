@@ -1,0 +1,35 @@
+<section class="teachers">
+ 
+    <h1 class="heading">Giáo Viên Chuyên Môn</h1>
+ 
+    <form action="" method="post" class="search-tutor">
+       <input type="text" name="search_box" placeholder="search tutors..." required maxlength="100">
+       <button type="submit" class="fas fa-search" name="search_tutor"></button>
+    </form>
+ 
+    <div class="box-container">
+ 
+<!--       <div class="box offer">-->
+<!--          <h3>become a tutor</h3>-->
+<!--          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet, itaque ipsam fuga ex et aliquam.</p>-->
+<!--          <a href="register" class="inline-btn">get started</a>-->
+<!--       </div>-->
+ 
+       <div class="box" *ngFor="let item of teachers">
+          <div class="tutor">
+             <img src="{{item.img}}" alt="">
+             <div>
+                <h3>{{item.name}}</h3>
+                <span>{{item.specialization}}</span>
+             </div>
+          </div>
+          <p>tổng số danh sách phát : <span>{{item.total_playlists}}</span></p>
+          <p>tổng số video : <span>{{item.total_videos}}</span></p>
+          <p>tổng số lượt thích : <span>{{item.total_likes}}</span></p>
+          <a href="teacher-profile" class="inline-btn">Xem hồ sơ</a>
+       </div>
+
+    </div>
+ 
+ </section>
+ 
