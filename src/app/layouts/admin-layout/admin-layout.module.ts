@@ -9,7 +9,6 @@ import { ClipboardModule } from "ngx-clipboard";
 import { AdminLayoutRoutes } from "./admin-layout.routing";
 import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 import { IconsComponent } from "../../pages/icons/icons.component";
-import { UserProfileComponent } from "../../pages/user-profile/user-profile.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CategoryModule } from "src/app/pages/category/category.module";
 // import { ToastrModule } from 'ngx-toastr';
@@ -23,10 +22,6 @@ import { CategoryModule } from "src/app/pages/category/category.module";
     NgbModule,
     ClipboardModule,
   ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    IconsComponent,
-  ],
+  declarations: [DashboardComponent, IconsComponent],
 })
 export class AdminLayoutModule {}
