@@ -1,0 +1,122 @@
+<section class="home-grid">
+
+   <h1 class="heading">Thể Loại</h1>
+
+   <div class="box-container">
+
+      <!-- <div class="box">
+         <h3 class="title">Lượt thích và bình luận</h3>
+         <p class="likes">Tổng số lượt tích : <span>25</span></p>
+         <a href="#" class="inline-btn">Xem lượt thích</a>
+         <p class="likes">Tổng số bình luận : <span>12</span></p>
+         <a href="#" class="inline-btn">Xem bình luận</a>
+         <p class="likes">Tổng số lượt mua : <span>4</span></p>
+         <a href="#" class="inline-btn">Xem lượt mua</a>
+      </div> -->
+      
+      <!-- <div class="box">
+         <h3 class="title">top categories</h3>
+         <div class="flex">
+            <a href="#"><i class="fas fa-code"></i><span>Phát triển</span></a>
+            <a href="#"><i class="fas fa-chart-simple"></i><span>Kinh doanh</span></a>
+            <a href="#"><i class="fas fa-pen"></i><span>Thiết kế</span></a>
+            <a href="#"><i class="fas fa-chart-line"></i><span>Tiếp thị</span></a>
+            <a href="#"><i class="fas fa-music"></i><span>Âm nhạc</span></a>
+            <a href="#"><i class="fas fa-camera"></i><span>nhiếp ảnh</span></a>
+            <a href="#"><i class="fas fa-cog"></i><span>Phần mềm</span></a>
+            <a href="#"><i class="fas fa-vial"></i><span>Khoa học</span></a>
+         </div>
+      </div>
+
+      <div class="box">
+         <h3 class="title">popular topics</h3>
+         <div class="flex">
+            <a href="#"><i class="fab fa-html5"></i><span>HTML</span></a>
+            <a href="#"><i class="fab fa-css3"></i><span>CSS</span></a>
+            <a href="#"><i class="fab fa-js"></i><span>javascript</span></a>
+            <a href="#"><i class="fab fa-react"></i><span>react</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-bootstrap"></i><span>bootstrap</span></a>
+         </div>
+      </div> -->
+
+      <div class="box">
+         <ul class="nav">
+            <li><i class="fas fa-code"></i><span>Phát triển</span>
+               <ul>
+                  <li>Frontend
+                    <ul>
+                      <li>Frontend 1</li>
+                      <li>Frontend 2</li>
+                    </ul>
+                  </li>
+                  <li>BackEnd
+                     <ul>
+                        <li>Backend 1</li>
+                        <li>Backend 2</li>
+                      </ul>
+                  </li>
+                  <li>FullStack</li>
+                </ul>
+            </li>
+            <li><i class="fas fa-chart-simple"></i><span>Kinh doanh</span>
+              <ul>
+                <li>Web Design
+                  <ul>
+                    <li>Sub Service 1</li>
+                    <li>Sub Service 2</li>
+                  </ul>
+                </li>
+                <li>Graphic Design</li>
+                <li>SEO</li>
+              </ul>
+            </li>
+            <li><i class="fas fa-pen"></i><span>Thiết kế</span></li>
+            <li><i class="fas fa-chart-line"></i><span>Tiếp thị</span></li>
+            <li><i class="fas fa-music"></i><span>Âm nhạc</span></li>
+            <li><i class="fas fa-camera"></i><span>Nhiếp Ảnh</span></li>
+            <li><i class="fas fa-cog"></i><span>Phần mềm</span></li>
+            <li><i class="fas fa-vial"></i><span>Khoa Học</span></li>
+          </ul>
+      </div>
+
+   </div>
+
+</section>
+
+<section class="courses">
+
+   <h1 class="heading">Khóa Học Của Chúng Tôi</h1>
+
+   <div class="box-container">
+
+      <div class="box" *ngFor="let course of courses">
+         <div class="tutor">
+            <img src="{{course.img_teacher}}" alt="">
+            <div class="info">
+               <h3>{{course.name_teacher}}</h3>
+               <span>{{course.date_upload}}</span>
+            </div>
+         </div>
+         <div class="thumb">
+            <img src="{{course.img_course}}" alt="">
+            <span>{{course.total_videos}}</span>
+         </div>
+         <h3 class="title">{{course.title}}</h3>
+         <a href="playlist" class="inline-btn">Xem Khóa Học</a>
+      </div>
+   </div>
+
+   <div class="pagination-container">
+      <ul class="pagination">
+         <li><a href="#" class="disabled">&lt;=</a></li>
+         <li><a href="#" class="disabled">&lt;</a></li>
+         <li><a href="#" class="active">1</a></li>
+         <li><a href="#">2</a></li>
+         <li><a href="#">3</a></li>
+         <li><a href="#">&gt;</a></li>
+         <li><a href="#"> =&gt;</a></li>
+      </ul>
+   </div>
+
+</section>

@@ -1,0 +1,49 @@
+<section class="teacher-profile">
+ 
+    <h1 class="heading">Chi Tiết Hồ Sơ</h1>
+ 
+    <div class="details">
+       <div class="tutor">
+          <img src="{{teacher.img}}" alt="">
+          <h3>{{teacher.name}}</h3>
+          <span>{{teacher.specialization}}</span>
+       </div>
+       <div class="flex">
+          <p>tổng số danh sách phát : <span>{{teacher.total_playlists}}</span></p>
+          <p>tổng số video : <span>{{teacher.total_videos}}</span></p>
+          <p>tổng số lượt thích : <span>{{teacher.total_likes}}</span></p>
+          <p>tổng số ý kiến : <span>{{teacher.total_cmt}}</span></p>
+       </div>
+    </div>
+ 
+ </section>
+ 
+ <section class="courses">
+ 
+    <h1 class="heading">Khóa Học Của Chúng Tôi</h1>
+ 
+    <div class="box-container">
+
+       <div class="box" *ngFor="let item of courses">
+          <div class="thumb">
+             <img src="{{item.img_course}}" alt="">
+             <span>{{item.total_videos}}</span>
+          </div>
+          <h3 class="title">{{item.title}}</h3>
+          <a href="playlist" class="inline-btn">Xem Danh Sách phát</a>
+       </div>
+ 
+    </div>
+    <div class="pagination-container">
+       <ul class="pagination">
+          <li><a href="#" class="disabled">&lt;=</a></li>
+          <li><a href="#" class="disabled">&lt;</a></li>
+          <li><a href="#" class="active">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">&gt;</a></li>
+          <li><a href="#">&gt;=</a></li>
+       </ul>
+    </div>
+ </section>
+ 

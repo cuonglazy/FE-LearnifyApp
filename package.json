@@ -3,7 +3,7 @@
   "version": "1.5.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve\" \"ng serve user\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
