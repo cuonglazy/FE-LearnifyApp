@@ -10,6 +10,12 @@ import { CategoryModule } from "./pages/category/category.module";
 const routes: Routes = [
   {
     path: "",
+    redirectTo: "/system-admin/dashboard",
+    pathMatch: "full",
+  },
+
+  {
+    path: "",
     component: AdminLayoutComponent,
     children: [
       {
