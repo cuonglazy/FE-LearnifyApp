@@ -1,0 +1,41 @@
+ <section class="courses">
+ 
+   <h1 class="heading">Khóa Học Của Chúng Tôi</h1>
+
+   <div class="box-container">
+
+      <div class="box-container">
+
+         <div class="box" *ngFor="let course of courses">
+            <div class="tutor">
+               <img src="{{course.img_teacher}}" alt="">
+               <div class="info">
+                  <h3>{{course.name_teacher}}</h3>
+                  <span>{{course.date_upload}}</span>
+               </div>
+            </div>
+            <div class="thumb">
+               <img src="{{course.img_course}}" alt="">
+               <span>{{course.total_videos}}</span>
+            </div>
+            <h3 class="title">{{course.title}}</h3>
+            <a href="playlist" class="inline-btn">Xem Khóa Học</a>
+         </div>
+      </div>
+
+   </div>
+
+    <div class="pagination-container">
+       <ul class="pagination">
+          <li><a href="#" class="disabled">&lt;=</a></li>
+          <li><a href="#" class="disabled">&lt;</a></li>
+          <li><a href="#" class="active">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">&gt;</a></li>
+          <li><a href="#"> =&gt;</a></li>
+       </ul>
+    </div>
+
+ </section>
+ 
