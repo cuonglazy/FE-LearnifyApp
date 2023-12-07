@@ -33,8 +33,8 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/system-admin/tables",
-    title: "Tables",
+    path: "/system-admin/discount",
+    title: "Discount",
     icon: "ni-bullet-list-67 text-red",
     class: "",
   },
