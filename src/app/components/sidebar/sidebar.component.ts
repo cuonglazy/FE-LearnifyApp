@@ -15,18 +15,6 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/system-admin/icons",
-    title: "Icon",
-    icon: "ni-planet text-blue",
-    class: "",
-  },
-  {
-    path: "/system-admin/maps",
-    title: "Maps",
-    icon: "ni-pin-3 text-orange",
-    class: "",
-  },
-  {
     path: "/system-admin/user-profile",
     title: "User profile",
     icon: "ni-single-02 text-yellow",
@@ -35,12 +23,42 @@ export const ROUTES: RouteInfo[] = [
   {
     path: "/system-admin/discount",
     title: "Discount",
-    icon: "ni-bullet-list-67 text-red",
+    icon: "ni-air-baloon text-red",
     class: "",
   },
   {
     path: "/system-admin/category",
     title: "Category",
+    icon: "ni-bullet-list-67 text-red",
+    class: "",
+  },
+  {
+    path: "/system-admin/lesson",
+    title: "Lesson",
+    icon: "ni-book-bookmark text-red",
+    class: "",
+  },
+  {
+    path: "/system-admin/section",
+    title: "Section",
+    icon: "ni-book-bookmark text-red",
+    class: "",
+  },
+  {
+    path: "/system-admin/course",
+    title: "Course",
+    icon: "ni-books text-red",
+    class: "",
+  },
+  {
+    path: "/system-admin/payment",
+    title: "Payment",
+    icon: "ni-credit-card text-red",
+    class: "",
+  },
+  {
+    path: "/system-admin/icons",
+    title: "Icons",
     icon: "ni-bullet-list-67 text-red",
     class: "",
   },
