@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./update.category.component.scss']
 })
 export class UpdateCategoryComponent implements OnInit {
+[x: string]: any;
+
+  selectedCategory: number;
+  selectedCourse: number;
+  selectedStatus: any;
 
   constructor() { }
 

@@ -23,6 +23,7 @@ import { CategoryModule } from "./pages/category/category.module";
     NgbModule,
     RouterModule,
     AppRoutingModule,
+    // NgSelectModule
   ],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [],
