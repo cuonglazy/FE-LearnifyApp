@@ -24,13 +24,6 @@ const routes: Routes = [
             (m) => m.AdminLayoutModule
           ),
       },
-      {
-        path: "category",
-        loadChildren: () =>
-          import("src/app/pages/category/category.module").then(
-            (m) => m.CategoryModule
-          ),
-      },
     ],
   },
   {

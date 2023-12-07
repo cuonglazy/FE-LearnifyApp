@@ -165,18 +165,14 @@
                     </div>
                   </div>
                 </td>
-                <td class="text-right">
-                  <div ngbDropdown placement="bottom-right">
-                    <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="'/system-admin/category/new'"
-                        href="javascript:void(0)">Action</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Another action</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
-                    </div>
+                <td>
+                  <div class="col-4 text-right">
+                    <a [routerLink]="'/system-admin/category/new'" class="btn btn-sm btn-primary">Settings</a>
                   </div>
+                  <div class="col-4 text-right">
+                    <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                  </div>
+
                 </td>
               </tr>
             </tbody>

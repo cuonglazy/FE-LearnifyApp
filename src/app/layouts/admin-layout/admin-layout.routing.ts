@@ -12,7 +12,13 @@ export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: DashboardComponent },
   { path: "user-profile", component: UserProfileComponent },
   { path: "tables", component: TablesComponent },
-  { path: "category", component: CategoriesComponent },
+  {
+    path: "category",
+    loadChildren: () =>
+      import("./../../pages/category/category.module").then(
+        (m) => m.CategoryModule
+      ),
+  },
   { path: "icons", component: IconsComponent },
   { path: "maps", component: MapsComponent },
 ];
