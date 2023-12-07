@@ -45,13 +45,13 @@ export const ROUTES: RouteInfo[] = [
     class: "",
   },
   {
-    path: "/system-admin/login",
+    path: "/login",
     title: "Login",
     icon: "ni-key-25 text-info",
     class: "",
   },
   {
-    path: "/system-admin/register",
+    path: "/register",
     title: "Register",
     icon: "ni-circle-08 text-pink",
     class: "",
