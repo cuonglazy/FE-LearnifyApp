@@ -59,10 +59,8 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-categories">Percentage</label>
-                    <input type="text" id="input-percentage" formControlName="percentage"
-                      class="form-control form-control-alternative" placeholder="Percentage">
-                    <div
-                      *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
+                    <input type="text" id="input-percentage" formControlName="percentage" class="form-control form-control-alternative" placeholder="Percentage">
+                    <div *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
                       <div>
                         <div *ngIf="dataForm.get('percentage').errors.required" class="text-danger">
                           Percentage không được để trống!
@@ -71,52 +69,49 @@
                           Percentage có giá trị >= 1!
                         </div>
                         <div *ngIf="dataForm.get('percentage').errors.max" class="text-danger">
-                          Percentage có giá trị <= 100! </div>
+                          Percentage có giá trị <= 100!
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-course">startDate</label>
-                      <input type="datetime-local" id="input-startDate" formControlName="startDate"
-                        class="form-control form-control-alternative" placeholder="Start Date">
-                      <div
-                        *ngIf="dataForm.get('startDate').invalid && (dataForm.get('startDate').dirty || dataForm.get('startDate').touched)">
-                        <div *ngIf="dataForm.get('startDate').errors.required" class="text-danger">
-                          Start Date không được để trống!
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-course">startEnd</label>
-                      <input type="datetime-local" id="input-startEnd" formControlName="startEnd"
-                        class="form-control form-control-alternative" placeholder="Start End">
-                      <div
-                        *ngIf="dataForm.get('startEnd').invalid && (dataForm.get('startEnd').dirty || dataForm.get('startEnd').touched)">
-                        <div *ngIf="dataForm.get('startEnd').errors.required" class="text-danger">
-                          Start End không được để trống!
-                        </div>
-                        <div *ngIf="dataForm.get('startEnd').hasError('dateRange')" class="text-danger">
-                          Start End phải luôn lớn hơn Start Date!
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="form-control-label" for="input-status">Status</label>
-                      <div class="control">
-                        <label class="form-check-label mb-5">
-                          <input type="checkbox" formControlName="isActive" name="answer" [checked]="selectedStatus">
-                        </label>
                       </div>
                     </div>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-course">startDate</label>
+                    <input type="datetime-local" id="input-startDate" formControlName="startDate" class="form-control form-control-alternative" placeholder="Start Date">
+                    <div *ngIf="dataForm.get('startDate').invalid && (dataForm.get('startDate').dirty || dataForm.get('startDate').touched)">
+                      <div *ngIf="dataForm.get('startDate').errors.required" class="text-danger">
+                        Start Date không được để trống!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-course">startEnd</label>
+                    <input type="datetime-local" id="input-startEnd" formControlName="startEnd" class="form-control form-control-alternative" placeholder="Start End">
+                    <div *ngIf="dataForm.get('startEnd').invalid && (dataForm.get('startEnd').dirty || dataForm.get('startEnd').touched)">
+                      <div *ngIf="dataForm.get('startEnd').errors.required" class="text-danger">
+                        Start End không được để trống!
+                      </div>
+                      <div *ngIf="dataForm.get('startEnd').hasError('dateRange')" class="text-danger">
+                        Start End phải luôn lớn hơn Start Date!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-status">Status</label>
+                    <div class="control">
+                      <label class="form-check-label mb-5">
+                        <input type="checkbox" formControlName="isActive" name="answer" [checked]="selectedStatus"> 
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
         </form>
       </div>
     </div>

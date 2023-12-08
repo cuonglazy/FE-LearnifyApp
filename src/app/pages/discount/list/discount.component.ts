@@ -9,7 +9,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class DiscountComponent implements OnInit {
   page = 0;
-  size = 5;
+  size = 3;
+  currentPage = this.page + 1;
   dataDiscounts: IDiscount[] = [];
   dataOrigin: IDiscount[] = [];
   dataForm: FormGroup;
@@ -48,13 +49,21 @@ export class DiscountComponent implements OnInit {
   }
 
   previousPage() {
-    this.page--;
-    this.getPages(this.page,this.size);
+    if(this.page > 0){
+      this.page--;
+      this.currentPage = this.page + 1;
+      this.getPages(this.page,this.size);
+    }
   }
 
   nextPage() {
-    this.page++;
-    this.getPages(this.page,this.size);
-  }
+    const totalPages = Math.ceil(this.dataOrigin.length / this.size);
 
+    if (this.page < totalPages) {
+      this.page++;
+      this.currentPage = this.page + 1;
+      this.getPages(this.page,this.size);
+    }
+  }
+  
 }
