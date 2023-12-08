@@ -1,4 +1,4 @@
-import { TokenInterceptors } from './interceptors/token.interceptors';
+import { TokenInterceptors } from "./interceptors/token.interceptors";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -10,9 +10,9 @@ import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
-import { NgSelectModule } from "@ng-select/ng-select";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   imports: [
@@ -27,15 +27,15 @@ import { BrowserModule } from "@angular/platform-browser";
     ReactiveFormsModule,
     CommonModule,
     AppRoutingModule,
-    NgSelectModule
+    NgSelectModule,
   ],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptors,
-    multi: true,
-    }
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptors,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
