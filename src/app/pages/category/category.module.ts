@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { AdminLayoutModule } from "./../../layouts/admin-layout/admin-layout.module";
 import { NgModule } from "@angular/core";
-import { CategoryRoutingRoutingModule } from "./route/category-routing-routing.module";
+import { CategoryRoutingModule } from "./route/category-routing.module";
 import { ClipboardModule } from "ngx-clipboard";
 import { FormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -11,8 +11,7 @@ import { UpdateCategoryComponent } from "./update/update.category.component";
 
 @NgModule({
   imports: [
-    CommonModule,
-    CategoryRoutingRoutingModule,
+    CategoryRoutingModule,
     ClipboardModule,
     FormsModule,
     NgbModule,

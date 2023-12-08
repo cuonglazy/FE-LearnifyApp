@@ -1,6 +1,8 @@
+import { LessonComponent } from './../list/lesson.component';
+import { UpdateLessonComponent } from '../update/update.lesson.component';
+import { LessonDetailComponent } from '../detail/lesson-detail.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { LessonComponent } from "../list/lesson.component";
 
 const lessonRoutes: Routes = [
   {
@@ -13,7 +15,11 @@ const lessonRoutes: Routes = [
   },
   {
     path: ":id/edit",
-    component: LessonComponent,
+    component: UpdateLessonComponent,
+  },
+  {
+    path: ":id/view",
+    component: LessonDetailComponent,
   },
 ];
 
