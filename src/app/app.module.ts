@@ -12,6 +12,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
+import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { ComponentsModule } from "./components/components.module";
     NgbModule,
     RouterModule,
     AppRoutingModule,
-    // NgSelectModule
+    NgSelectModule
   ],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [],

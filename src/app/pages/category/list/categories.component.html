@@ -45,11 +45,11 @@
                 </th>
                 <td>{{ item.name }}</td>
                 <td>
-                  <span class="badge badge-dot mr-4">
-                    <i class="bg-success"></i> {{ item.isDelete ? 'Đã Xóa' : 'Hoạt động'}}
+                  <span class="badge badge-dot mr-4 align-items-center">
+                    <i [ngClass]="{'bg-warning': item.is_delete, 'bg-success': !item.is_delete}"></i> {{ item.is_delete ? 'Không hoạt động' : 'Hoạt động'}}
                   </span>
                 </td>
-                <td>{{ item.parentId }}</td>
+                <td>{{ item.parentName }}</td>
                 <td>
                 </td>
                 <td class="text-right">
@@ -58,10 +58,10 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="'/system-admin/category/{item.id}/edit'"
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']"
                         href="javascript:void(0)">Xem</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']" href="javascript:void(0)">Cập nhật</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']" href="javascript:void(0)">Xóa</a>
                     </div>
                   </div>
                 </td>
