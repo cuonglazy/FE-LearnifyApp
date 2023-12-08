@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Discount, IDiscount } from '../discount.model';
-import { DiscountService } from '../../service/discount.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { Observable, finalize } from 'rxjs';
+import { DiscountService } from 'src/app/service/discount.service';
 
 @Component({
   selector: 'app-update.discount',

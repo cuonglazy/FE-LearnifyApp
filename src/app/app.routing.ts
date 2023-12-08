@@ -42,15 +42,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    BrowserModule,
-<<<<<<< HEAD
-=======
-    ReactiveFormsModule,
->>>>>>> 7d4e65fc3449d0d7e1aba8eec99d80d9509696ad
-    RouterModule.forRoot(routes),
-  ],
+  imports: [CommonModule, BrowserModule, RouterModule.forRoot(routes)],
   exports: [],
 })
 export class AppRoutingModule {}
