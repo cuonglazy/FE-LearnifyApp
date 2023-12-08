@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { DiscountComponent } from "../list/discount.component";
 import { UpdateDiscountComponent } from "../update/update.discount.component";
-import { DiscountDetailComponent } from "../detail/discount-detail.component";
+import { DiscountRoutingResolveService } from "./discount-routing-resolve.service";
 
 const routes: Routes = [
   {
@@ -14,12 +14,11 @@ const routes: Routes = [
     component: UpdateDiscountComponent,
   },
   {
-    path: "id/view",
-    component: DiscountDetailComponent,
-  },
-  {
-    path: "id/update",
+    path: ":id/edit",
     component: UpdateDiscountComponent,
+    resolve: {
+      discount: DiscountRoutingResolveService,
+    }
   },
 ];
 

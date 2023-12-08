@@ -1,60 +1,109 @@
 <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-size: cover; background-position: center top;">
-  <!-- Mask -->
-  <span class="mask bg-gradient-danger opacity-8"></span>
- 
-</div>
-<div class="container-fluid mt--7">
-  
-    <div class="col-xl- order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Create/Update Discount</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a href="/#/system-admin/discount" class="btn btn-sm btn-info mr-4">Back</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Save</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          <form>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-discountCourse">Discount Course</label>
-                    <select id="discountCourse" class="form-control" [(ngModel)]="selectedDiscountCourse">
-                      <option value="">Select Discount Course</option>
-                    </select>
-                  </div>                
-                </div>
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+   
+  </div>
+  <div class="container-fluid mt--7">
+    
+      <div class="col-xl- order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">  
+              <div class="col-8">
+                <h3 class="mb-0">Create/Update Category</h3>
+              </div>
+              <div class="col-4 text-right">
+                <form [formGroup]="dataForm" (ngSubmit)="save()">
+                  <a routerLink="/system-admin/discount" class="btn btn-sm btn-info mr-4">Back</a>
+                  <button type="submit" [disabled]="dataForm.invalid" class="btn btn-sm btn-default float-right">Save</button>
+                </form>
               </div>
             </div>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-id">ID</label>
-                    <input type="text" id="input-id" class="form-control form-control-alternative" placeholder="ID Code">
+          </div>
+          <div class="card-body">
+            <form [formGroup]="dataForm" (ngSubmit)="save()">
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-6" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-control-label" for="id">Id</label>
+                        <input type="text" id="input-code" formControlName="id" class="form-control form-control-alternative" placeholder="Id">
+                    </div>
                   </div>
-                </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-code">Code</label>
-                    <input type="text" id="input-code" class="form-control form-control-alternative" placeholder="Code">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="code">Code</label>
+                      <input type="text" id="input-code" formControlName="code" class="form-control form-control-alternative" placeholder="Code">
+                      <div *ngIf="dataForm.get('code').invalid && (dataForm.get('code').dirty || dataForm.get('code').touched)">
+                        <div>
+                          <div *ngIf="dataForm.get('code').errors.required" class="text-danger">
+                            Code không được bỏ trống!
+                          </div>
+                          <div *ngIf="dataForm.get('code').errors.minlength" class="text-danger">
+                            Code không thể < 3 kí tự.
+                          </div>
+                          <div *ngIf="dataForm.get('code').errors.maxlength" class="text-danger">
+                            Code không thể > 10 kí tự!
+                          </div>
+                          <div *ngIf="dataForm.get('code')?.hasError('whitespace')" class="text-danger">
+                            Name không thể chỉ chứa khoảng trống.
+                          </div>
+                        </div>
+                      </div>
+                    </div>                
                   </div>
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-percentage">Percentage (%)</label>
-                    <input type="text" id="input-percentage" class="form-control form-control-alternative" placeholder="Percentage">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-categories">Percentage</label>
+                      <input type="text" id="input-percentage" formControlName="percentage" class="form-control form-control-alternative" placeholder="Percentage">
+                      <div *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
+                        <div>
+                          <div *ngIf="dataForm.get('percentage').errors.required" class="text-danger">
+                            Percentage không được để trống!
+                          </div>
+                          <div *ngIf="dataForm.get('percentage').errors.min" class="text-danger">
+                            Percentage có giá trị >= 1!
+                          </div>
+                          <div *ngIf="dataForm.get('percentage').errors.max" class="text-danger">
+                            Percentage có giá trị <= 100!
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-status">Status</label>
-                    <div class="control">
-                      <label class="form-check-label mb-5">
-                        <input type="checkbox" name="answer" [checked]="selectedStatus"> 
-                      </label>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-course">startDate</label>
+                      <input type="datetime-local" id="input-startDate" formControlName="startDate" class="form-control form-control-alternative" placeholder="Start Date">
+                      <div *ngIf="dataForm.get('startDate').invalid && (dataForm.get('startDate').dirty || dataForm.get('startDate').touched)">
+                        <div *ngIf="dataForm.get('startDate').errors.required" class="text-danger">
+                          Start Date không được để trống!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-course">startEnd</label>
+                      <input type="datetime-local" id="input-startEnd" formControlName="startEnd" class="form-control form-control-alternative" placeholder="Start End">
+                      <div *ngIf="dataForm.get('startEnd').invalid && (dataForm.get('startEnd').dirty || dataForm.get('startEnd').touched)">
+                        <div *ngIf="dataForm.get('startEnd').errors.required" class="text-danger">
+                          Start End không được để trống!
+                        </div>
+                        <div *ngIf="dataForm.get('startEnd').hasError('dateRange')" class="text-danger">
+                          Start End phải luôn lớn hơn Start Date!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-status">Status</label>
+                      <div class="control">
+                        <label class="form-check-label mb-5">
+                          <input type="checkbox" formControlName="isActive" name="answer" [checked]="selectedStatus"> 
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
