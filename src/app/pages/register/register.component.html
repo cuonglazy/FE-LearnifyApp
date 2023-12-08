@@ -39,38 +39,43 @@
           <div class="text-center text-muted mb-4">
             <small>Or sign up with credentials</small>
           </div>
-          <form role="form">
+          <form role="form" #registerForm="ngForm">
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                 </div>
-                <input class="form-control" placeholder="Name Address" type="text">
+                <input class="form-control" placeholder="Name Address" type="text" [(ngModel)]="fullName" name="fullName">
               </div>
+              <p class="text-danger" *ngIf="fullName.length < 2 && registerForm.form.touched">Tên phải có ít nhất 2 ký tự</p>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Date Of Birth" type="date">
+                <input class="form-control" placeholder="Date Of Birth" type="date" [(ngModel)]="dob" name="dob" (input)="registerForm.form.markAsTouched(); checkAge()">
               </div>
+              <p class="text-danger" *ngIf="registerForm.controls['dob'].hasError('invalidAge') 
+               && registerForm.form.touched">Bạn chưa đủ 18 tuổi!</p>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email">
+                <input class="form-control" placeholder="Email" type="email" [(ngModel)]="email" (input)="onEmailChange()" (focus)="registerForm.form.markAsTouched()" name="email" required>
               </div>
+              <p class="text-danger" *ngIf="email.length < 2 && registerForm.form.touched">Email phải có ít nhất 2 ký tự</p>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Password" type="password">
+                <input class="form-control" placeholder="Password" [(ngModel)]="password" name="password" type="password" required>
               </div>
+              <p class="text-danger" *ngIf="password.length < 6 && registerForm.form.touched">Password phải có ít nhất 6 ký tự</p>
               <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
             </div>
@@ -79,23 +84,28 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Confirm Password" type="password">
+                <input class="form-control" placeholder="Confirm Password" [(ngModel)]="retypePassword" name="retypePassword" 
+                (input)="registerForm.form.markAllAsTouched(); checkPasswordMatch()" type="password" required>
               </div>
+              <p class="text-danger" *ngIf="retypePassword.length < 6 
+                                    && registerForm.form.touched">Password phải có ít nhất 6 ký tự</p>               
+              <p class="text-danger" *ngIf="registerForm.controls['retypePassword'].hasError('passwordMismatch') 
+                                    && registerForm.form.touched">Mật khẩu không khớp!</p>
               <div class="text-muted font-italic"><small>password strength: <span
                     class="text-success font-weight-700">strong</span></small></div>
             </div>
             <div class="row my-4">
               <div class="col-12">
                 <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id="customCheckRegister" type="checkbox">
+                  <input class="custom-control-input" id="customCheckRegister" type="checkbox" [(ngModel)]="isAccepted">
                   <label class="custom-control-label" for="customCheckRegister">
-                    <span class="text-muted">I agree with the <a href="">Privacy Policy</a></span>
+                    <span class="text-muted">Tôi đồng ý với các <a href="">Điều Khoản và Điều Kiện</a></span>
                   </label>
                 </div>
               </div>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary mt-4">Create account</button>
+              <button type="button" class="btn btn-primary mt-4" (click)="register()">Đăng Ký</button>
             </div>
           </form>
         </div>
