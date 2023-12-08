@@ -1,17 +1,17 @@
 import { LessonComponent } from './../list/lesson.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { UpdateLessonComponent } from '../update/update.lesson.component';
 import { LessonDetailComponent } from '../detail/lesson-detail.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-const routes: Routes = [
+const lessonRoutes: Routes = [
   {
     path: "",
     component: LessonComponent,
   },
   {
     path: "new",
-    component: UpdateLessonComponent,
+    component: LessonComponent,
   },
   {
     path: ":id/edit",
@@ -24,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(lessonRoutes)],
+  exports: [RouterModule],
 })
-export class LessonRoutingModule { }
+export class LessonRoutingModule {}

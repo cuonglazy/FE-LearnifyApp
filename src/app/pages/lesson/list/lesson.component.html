@@ -18,7 +18,7 @@
                 <a href="#!" class="btn btn-info">Search</a>
               </div>
               <div class="text-right">
-                <a [routerLink]="'/system-admin/lesson/new'" class="btn btn-sm btn-primary">Thêm mới</a>
+                <a [routerLink]="'/system-admin/category/new'" class="btn btn-sm btn-primary">Thêm mới</a>
               </div>
             </div>
           </div>
@@ -27,15 +27,10 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col"><Title></Title></th>
-                  <th scope="col">Time</th>
-                  <th scope="col">URL</th>
-                  <th scope="col">Question And Answer</th>
-                  <th scope="col">Over View</th>
-                  <th scope="col">Note</th>
-                  <th scope="col">Comment</th>
-                  <th scope="col">Section</th>
+                  <th scope="col">STT</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Parent Id</th>
                   <th scope="col"></th>
                 </tr>
               </thead>
@@ -64,9 +59,15 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+<<<<<<< HEAD
                         <a class="dropdown-item" [routerLink]="'/system-admin/lesson/{id}/edit'"
                           href="javascript:void(0)">Xem</a>
                         <a class="dropdown-item" routerLink="/system-admin/lesson/new">Cập nhật</a>
+=======
+                        <a class="dropdown-item" [routerLink]="'/system-admin/category/{id}/edit'"
+                          href="javascript:void(0)">Xem</a>
+                        <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
+>>>>>>> b9c3133b02afe90fbb4b10f36ef61b822357fba3
                         <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
                       </div>
                     </div>
