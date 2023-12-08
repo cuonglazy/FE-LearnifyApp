@@ -10,7 +10,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/system-admin",
+    redirectTo: "/system-admin/dashboard",
     pathMatch: "full",
   },
   {

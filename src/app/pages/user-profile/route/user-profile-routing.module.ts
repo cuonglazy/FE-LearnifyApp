@@ -12,6 +12,14 @@ const routes: Routes = [
     path: "new",
     component: UpdateUserProfileComponent,
   },
+  {
+    path: "id/view",
+    component: UpdateUserProfileComponent,
+  },
+  {
+    path: "update",
+    component: UpdateUserProfileComponent,
+  },
 ];
 
 @NgModule({
