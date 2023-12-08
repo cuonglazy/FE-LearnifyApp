@@ -17,8 +17,8 @@
                   <a routerLink="/system-admin/discount" class="btn btn-sm btn-info mr-4">Back</a>
                   <button type="submit" [disabled]="dataForm.invalid" class="btn btn-sm btn-default float-right">Save</button>
                 </form>
-              </div>
-            </div>
+              </div>        
+            </div> 
           </div>
           <div class="card-body">
             <form [formGroup]="dataForm" (ngSubmit)="save()">
@@ -43,7 +43,7 @@
                             Code không thể < 3 kí tự.
                           </div>
                           <div *ngIf="dataForm.get('code').errors.maxlength" class="text-danger">
-                            Code không thể > 10 kí tự!
+                            Code không thể > 20 kí tự!
                           </div>
                           <div *ngIf="dataForm.get('code')?.hasError('whitespace')" class="text-danger">
                             Name không thể chỉ chứa khoảng trống.
@@ -108,7 +108,6 @@
                   </div>
                 </div>
               </div>
-            </div>
           </form>
         </div>
       </div>

@@ -17,7 +17,7 @@ export class UpdateDiscountComponent implements OnInit {
   constructor(private dataService: DiscountService, protected formBuilder: FormBuilder, protected activatedRoute: ActivatedRoute) {
     this.dataForm = this.formBuilder.group({
     id: [''],
-    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(10)]],
+    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(20)]],
     percentage: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
     startDate: [null, [Validators.required]],
     startEnd: [null, [Validators.required]],
