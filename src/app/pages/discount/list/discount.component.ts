@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-discount',
   templateUrl: './discount.component.html',
-  styleUrls: ['./discount.component.scss'],
 })
 export class DiscountComponent implements OnInit {
   page = 0;

@@ -9,7 +9,6 @@ import { Observable, finalize } from 'rxjs';
 @Component({
   selector: 'app-update.discount',
   templateUrl: './update.discount.component.html',
-  styleUrls: ['./update.discount.component.scss']
 })
 export class UpdateDiscountComponent implements OnInit {
   selectedStatus: any;

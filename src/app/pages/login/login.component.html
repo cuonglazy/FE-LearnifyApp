@@ -43,7 +43,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Email" type="email">
+                <input class="form-control" placeholder="Email" [(ngModel)]="email" (input)="onEmailChange()" (focus)="loginForm.form.markAsTouched()" name="email" type="email" required>
               </div>
             </div>
             <div class="form-group">
@@ -51,8 +51,17 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Password" type="password">
+                <input class="form-control" placeholder="Password" type="password" [(ngModel)]="password" name="password">
               </div>
+            </div>
+            <div class="form-group">
+              <select class="d-flex align-items-center m-b-12"
+                  [(ngModel)]="selectedRole" (change)="onRoleChange($event)" style="width: 100%; color: #333; background-color: #fff;">
+                  <label class="d-flex align-items-center m-b-12"> Quyền đăng nhập </label>
+                  <option *ngFor="let role of roles" [ngValue]="role">
+                      {{ role.name }}
+                  </option>
+              </select>
             </div>
             <div class="custom-control custom-control-alternative custom-checkbox">
               <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
@@ -61,7 +70,7 @@
               </label>
             </div>
             <div class="text-center">
-              <button type="button" class="btn btn-primary my-4">Sign in</button>
+              <button type="button" class="btn btn-primary my-4" (click)="login()">Sign in</button>
             </div>
           </form>
         </div>
