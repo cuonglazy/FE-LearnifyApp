@@ -93,12 +93,13 @@ export class UpdateCategoryComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const category = this.createFromForm();
+    category.parent_id = this.editForm.get('parent_id').value;
     if (category.id !== undefined) {
       this.subscribeToSaveResponse(this.categoryService.create(category));
     } else {
       this.subscribeToSaveResponse(this.categoryService.update(category));
     }
-  }
+}
 
   changToEditMode(): void {
     this.view = false;

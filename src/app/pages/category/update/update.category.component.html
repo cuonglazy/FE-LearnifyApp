@@ -19,8 +19,8 @@
                 <!-- <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
                 <button type="submit" [disabled]="editForm.invalid" href="javascript:void(0)"
                   class="btn btn-sm btn-default float-right">Save</button> -->
-                <button *ngIf="!view" type="submit" id="cancel-save"
-                class="btn btn-sm btn-info mr-4" (click)="previousState()"><span>cancel</span></button>
+                <button *ngIf="!view" type="submit" id="cancel-save" class="btn btn-sm btn-info mr-4"
+                  (click)="previousState()"><span>cancel</span></button>
 
                 <button *ngIf="!view" type="submit" id="save-entity" class="btn btn-sm btn-default float-right"
                   [disabled]="editForm.invalid || isSaving"><span>save</span></button>
@@ -58,10 +58,24 @@
                   </select> 
                 </div> -->
                 <!-- không cháu -->
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label class="form-control-label" for="input-parentId">Parent ID</label>
                   <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
                     (change)="updateSelectedCategory($event.target.value)" formControlName="parent_id">
+                    <ng-container *ngFor="let item of category">
+                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
+                      <ng-container *ngIf="item.children">
+                        <option *ngFor="let child of item.children" [value]="child.id">
+                          {{getIndentation(child.level)}} {{child.name}}
+                        </option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
+                </div> -->
+                <div class="form-group">
+                  <label class="form-control-label" for="input-parentId">Parent ID</label>
+                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
+                    (change)="selectedCategory.parent_id">
                     <ng-container *ngFor="let item of category">
                       <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
                       <ng-container *ngIf="item.children">
@@ -92,7 +106,8 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-status">Status</label>
                   <div class="control" class="form-check form-switch form-switch-md mb-2">
-                    <input type="checkbox" id="is_delete" class="form-check-input" formControlName="is_delete">
+                    <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input"
+                      formControlName="is_delete">
                   </div>
                   <div
                     *ngIf="editForm.get('is_delete')!.invalid && (editForm.get('is_delete')!.dirty || editForm.get('is_delete')!.touched)">
