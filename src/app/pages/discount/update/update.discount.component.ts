@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Discount, IDiscount } from '../discount.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
@@ -18,11 +18,11 @@ export class UpdateDiscountComponent implements OnInit {
   constructor(private dataService: DiscountService, protected formBuilder: FormBuilder, protected activatedRoute: ActivatedRoute) {
     this.dataForm = this.formBuilder.group({
     id: [''],
-    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(20)]],
-    percentage: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.min(1), Validators.max(100)]],
+    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(10)]],
+    percentage: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
     startDate: [null, [Validators.required]],
     startEnd: [null, [Validators.required]],
-    isActive: [''],
+    isActive: [true],
     },{
       validator: this.dateRangeValidator('startDate', 'startEnd')
     })
@@ -35,11 +35,6 @@ export class UpdateDiscountComponent implements OnInit {
       }
       this.updateForm(discount);
       this.discount = discount;
-    })
-  }
-
-  getAll():void {
-    this.dataService.findAll().subscribe(res => {
     })
   }
 
@@ -77,13 +72,11 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   save(): void {
-    const discount = this.createFromForm();
+    const discount = this.createFromform();
     if (!discount.id) {
       this.subscribeToSaveResponse(this.dataService.create(discount));
-      console.warn(discount);
     } else {
       this.subscribeToSaveResponse(this.dataService.update(discount));
-      console.warn(discount);
     }
   }
 
@@ -123,11 +116,11 @@ export class UpdateDiscountComponent implements OnInit {
       percentage: discount.percentage,
       startDate: discount.startDate,
       startEnd: discount.startEnd,
-      isActive: discount.isActive,
+      isActive: discount.isActive
     })
   }
 
-  protected createFromForm(): IDiscount {
+  protected createFromform(): IDiscount {
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,
