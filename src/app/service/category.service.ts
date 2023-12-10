@@ -15,9 +15,8 @@ export type EntityArrayResponseType = HttpResponse<ICategory[]>;
 })
 export class CategoryService {
   protected resourceUrl = `${environment.apiBaseUrl}/categories`;
-  protected token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImN1b25nMDM3MDhAZ21haWwuY29tIiwic3ViIjoiY3VvbmcwMzcwOEBnbWFpbC5jb20iLCJleHAiOjE3MDQ0MjQ2NjV9.GPUXo_VHXDvJOUXVSoA2zTbSdcWx08U1u9FcbbYaGPQ";
-  constructor(protected http: HttpClient) {}
+  protected token ='eyJlbWFpbCI6Im5nb25zb250cnVvbmc3NUBnbWFpbC5jb20iLCJzdWIiOiJuZ29uc29udHJ1b25nNzVAZ21haWwuY29tIiwiZXhwIjoxNzA0NTk1MDc0fQ';
+     constructor(protected http: HttpClient) {}
 
   create(category: ICategory): Observable<EntityResponseType> {
     const headers = new HttpHeaders().set(
