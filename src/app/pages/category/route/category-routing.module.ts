@@ -14,21 +14,21 @@ const categoryRoutes: Routes = [
     path: "new",
     component: UpdateCategoryComponent,
     resolve: {
-      CategoryRoutingResolveService,
+      category: CategoryRoutingResolveService,
     },
   },
   {
     path: ":id/edit",
     component: UpdateCategoryComponent,
     resolve: {
-      CategoryRoutingResolveService,
+      category: CategoryRoutingResolveService,
     },
   },
   {
     path: ":id/view",
     component: UpdateCategoryComponent,
     resolve: {
-      CategoryRoutingResolveService,
+      category: CategoryRoutingResolveService,
     },
   },
 ];

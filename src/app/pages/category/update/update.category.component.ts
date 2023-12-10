@@ -12,7 +12,7 @@ import { CategoryService } from "src/app/service/category.service";
 })
 export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
-  category: any;
+  category: ICategory[] = [];
   selectedCategory: ICategory | null = null;
 
   editForm = this.fb.group({
@@ -30,11 +30,10 @@ export class UpdateCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRouter.data.subscribe(({ category }) => {
-      this.category = category;
       if (category === undefined) {
         alert("giá trị của bạn bị undefined");
       }
-      this.updateForm(this.category);
+      this.updateForm(category);
     });
     this.loadData();
   }
@@ -85,6 +84,9 @@ export class UpdateCategoryComponent implements OnInit {
 
   updateSelectedCategory(value: string): void {
     this.selectedCategory = this.category.find((item) => item.id === +value);
+    this.editForm.patchValue({
+      parent_id: this.selectedCategory ? this.selectedCategory.id : null,
+    });
   }
 
   save(): void {
@@ -124,22 +126,19 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected updateForm(category: ICategory): void {
-    // const parentCategory = this.category.find((res) => res.id === category.parent_id);
-    // const parentIdValue = parentCategory ? { id: parentCategory.id, name: parentCategory.name } : null;
-
+    const parentCategory = this.category.find((res) => res.id === category.parent_id);
+    const parentIdValue = parentCategory ? parentCategory.id : null;
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
       is_delete: category.is_delete,
-      // parent_id: parentIdValue,
+      parent_id: parentIdValue,
     });
-    // console.warn(this.editForm.controls['parent_id'].value);
-    // console.warn(this.editForm.controls['name'].value);
   }
 
   protected createFromForm(): ICategory {
-    const parentIdObject = this.editForm.get(["parent_id"])!.value;
-    const parentId = parentIdObject ? parentIdObject.id : null;
+    const parentId = this.editForm.get(["parent_id"])!.value;
+
     return {
       ...new Category(),
       id: this.editForm.get(["id"])!.value,
@@ -149,3 +148,4 @@ export class UpdateCategoryComponent implements OnInit {
     };
   }
 }
+
