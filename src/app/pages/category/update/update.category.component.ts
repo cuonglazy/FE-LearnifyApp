@@ -12,7 +12,7 @@ import { CategoryService } from "src/app/service/category.service";
 })
 export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
-  category: ICategory[] = [];
+  category: any;
   selectedCategory: ICategory | null = null;
 
   editForm = this.fb.group({
@@ -29,14 +29,18 @@ export class UpdateCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.activatedRouter.data.subscribe(({ category }) => {
+      this.category = category;
+      if (category === undefined) {
+        alert("giá trị của bạn bị undefined");
+      }
+      this.updateForm(this.category);
+    });
     this.loadData();
   }
 
   async loadData(): Promise<void> {
     await this.getCategory();
-    this.activatedRouter.data.subscribe(({ category }) => {
-      this.updateForm(category);
-    });
   }
 
   getCategory(): Promise<void> {
@@ -118,22 +122,19 @@ export class UpdateCategoryComponent implements OnInit {
   protected onSaveFinalize(): void {
     this.isSaving = false;
   }
+
   protected updateForm(category: ICategory): void {
-    const cate = this.category.find((res) => res.id === category.id);
-    if (!cate) {
-      console.warn('Không tìm thấy danh mục với id:', category.id);
-      return;
-    }
-    const nameCate = this.category.find((res) => res.id === cate.parent_id);
-    const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate.name } : null;
-    console.warn(category.name);
+    // const parentCategory = this.category.find((res) => res.id === category.parent_id);
+    // const parentIdValue = parentCategory ? { id: parentCategory.id, name: parentCategory.name } : null;
+
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
       is_delete: category.is_delete,
-      parent_id: parentIdValue,
+      // parent_id: parentIdValue,
     });
-    console.warn(category.parent_id);
+    // console.warn(this.editForm.controls['parent_id'].value);
+    // console.warn(this.editForm.controls['name'].value);
   }
 
   protected createFromForm(): ICategory {
@@ -144,32 +145,7 @@ export class UpdateCategoryComponent implements OnInit {
       id: this.editForm.get(["id"])!.value,
       name: this.editForm.get(["name"])!.value,
       is_delete: this.editForm.get(["is_delete"])!.value,
-      parent_id: parentId,
+      parent_id: parentId as number,
     };
   }
-  // protected updateForm(category: ICategory): void {
-  //   const cate = this.category.find((res) => res.id === category.id);
-  //   const nameCate = this.category.find((res) => res.id === cate.parent_id);
-  //   const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate } : null;
-  //   console.warn(category.name);
-  //   this.editForm.patchValue({
-  //     id: category.id,
-  //     name: category.name,
-  //     is_delete: category.is_delete,
-  //     parent_id: parentIdValue,
-  //   });
-  //   console.warn(category.parent_id);
-  // }
-
-  // protected createFromForm(): ICategory {
-  //   const parentIdObject = this.editForm.get(["parent_id"])!.value;
-  //   const parentId = parentIdObject ? parentIdObject.id : null;
-  //   return {
-  //     ...new Category(),
-  //     id: this.editForm.get(["id"])!.value,
-  //     name: this.editForm.get(["name"])!.value,
-  //     is_delete: this.editForm.get(["is_delete"])!.value,
-  //     parent_id: parentId as number,
-  //   };
-  // }
 }

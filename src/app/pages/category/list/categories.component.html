@@ -45,8 +45,9 @@
                 </th>
                 <td>{{ item.name }}</td>
                 <td>
-                  <span class="badge badge-dot mr-4 align-items-center">
-                    <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i> {{ item.is_delete ? 'Hoạt động' : 'Không hoạt động'}}
+                  <span class="badge badge-dot mr-4 align-items-center" [style.color]="'black'">
+                    <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i> {{ item.is_delete
+                    ? 'Hoạt động' : 'Không hoạt động'}}
                   </span>
                 </td>
                 <td>{{ item.parentName }}</td>
@@ -58,9 +59,12 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'view']" href="javascript:void(0)">Xem</a>
-                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']" href="javascript:void(0)">Cập nhật</a>
-                      <a class="dropdown-item" [routerLink]="['/system-admin/category']" href="javascript:void(0)">Xóa</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'view']"
+                        href="javascript:void(0)">Xem</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']"
+                        href="javascript:void(0)">Cập nhật</a>
+                      <button class="dropdown-item" [routerLink]="['/system-admin/category']" href="javascript:void(0)"
+                        (click)="onDelete(item.id)" [disabled]="!item.is_delete">Xóa</button>
                     </div>
                   </div>
                 </td>
