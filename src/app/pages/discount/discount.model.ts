@@ -5,8 +5,8 @@ export interface IDiscount {
     startDate?: Date;
     startEnd?: Date;
     isActive?: boolean;
+    discountCourses?: IDiscountCourse[];
 }
-
 export class Discount implements IDiscount {
     constructor(
         public id?: number,
@@ -15,8 +15,10 @@ export class Discount implements IDiscount {
         public startDate?: Date,
         public startEnd?: Date,
         public isActive?: boolean,
+        public discountCourses?: IDiscountCourse[]
     ) {
         this.isActive = this.isActive ?? true;
+        this.discountCourses = discountCourses ?? [];
     }
 }
 
