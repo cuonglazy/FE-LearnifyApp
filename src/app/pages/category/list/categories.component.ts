@@ -17,6 +17,17 @@ export class CategoriesComponent implements OnInit {
   findAll() {
     this.categoryService.findAll().subscribe((res) => {
       this.categories = res.body ? res.body : [];
+      this.categories.forEach(category => {
+        if (category.parent_id) {
+          const parentCategory = this.categories.find(c => c.id === category.parent_id);
+          if (parentCategory) {
+            category.parentName = parentCategory.name;
+          }
+          return category.parentName
+        }
+      });
     });
   }
+
 }
+
