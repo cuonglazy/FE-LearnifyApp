@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Discount, IDiscount } from '../discount.model';
 import { DiscountService } from '../../service/discount.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,14 +14,15 @@ export class UpdateDiscountComponent implements OnInit {
   selectedStatus: any;
   isSaving = false;
   dataForm: FormGroup;
+  discount: any;
   constructor(private dataService: DiscountService, protected formBuilder: FormBuilder, protected activatedRoute: ActivatedRoute) {
     this.dataForm = this.formBuilder.group({
     id: [''],
     code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(20)]],
-    percentage: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
+    percentage: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.min(1), Validators.max(100)]],
     startDate: [null, [Validators.required]],
     startEnd: [null, [Validators.required]],
-    isActive: [true],
+    isActive: [''],
     },{
       validator: this.dateRangeValidator('startDate', 'startEnd')
     })
@@ -30,6 +31,12 @@ export class UpdateDiscountComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ discount }) => {
       this.updateForm(discount);
+      this.discount = discount;
+    })
+  }
+
+  getAll():void {
+    this.dataService.findAll().subscribe(res => {
     })
   }
 
@@ -67,14 +74,25 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   save(): void {
-    const discount = this.createFromform();
+    const discount = this.createFromForm();
     if (!discount.id) {
       this.subscribeToSaveResponse(this.dataService.create(discount));
-      alert("create")
+      console.warn(discount);
     } else {
       this.subscribeToSaveResponse(this.dataService.update(discount));
-      alert("update")
+      console.warn(discount);
     }
+  }
+
+  onDelete(id: number): void {
+    this.dataService.deleteDiscountCourse(id).subscribe(
+      (response) => {
+        console.warn('Xóa thành công', response);
+      },
+      (error) => {
+        console.error('Lỗi khi xóa', error);
+      }
+    );
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDiscount>>): void {
@@ -102,11 +120,11 @@ export class UpdateDiscountComponent implements OnInit {
       percentage: discount.percentage,
       startDate: discount.startDate,
       startEnd: discount.startEnd,
-      isActive: discount.isActive
+      isActive: discount.isActive,
     })
   }
 
-  protected createFromform(): IDiscount {
+  protected createFromForm(): IDiscount {
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,

@@ -22,7 +22,7 @@ export class DiscountService {
           headers: headers,
           observe: 'response' as 'response'
         }
-        return this.http.post<IDiscount>(this.apiDiscount, discount, options);
+        return this.http.post<IDiscount>(this.apiDiscount, discount, options); 
       }
 
       insertProduct(discount: Discount): Observable<any> {
@@ -51,6 +51,15 @@ export class DiscountService {
         }
 
         return this.http.delete<any>(`${this.apiDiscount}/${id}`, options);
+      }
+
+      deleteDiscountCourse(id: number): Observable<HttpResponse<{}>> {
+        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+        const options = {
+          headers: headers,
+          observe: 'response' as 'response'
+        }
+        return this.http.delete<any>(`${this.apiPostDiscountCS}/${id}`, options)
       }
     
       findAll(): Observable<EntityArrayResponseType> {

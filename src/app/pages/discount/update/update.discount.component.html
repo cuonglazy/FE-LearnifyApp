@@ -34,28 +34,30 @@
                   <div class="form-group">
                     <label class="form-control-label" for="code">Code</label>
                     <input type="text" id="input-code" formControlName="code" class="form-control form-control-alternative" placeholder="Code">
-                    <div *ngIf="dataForm.get('code').invalid && (dataForm.get('code').dirty || dataForm.get('code').touched)">
-                      <div>
-                        <div *ngIf="dataForm.get('code').errors.required" class="text-danger">
-                          Code không được bỏ trống!
-                        </div>
-                        <div *ngIf="dataForm.get('code').errors.minlength" class="text-danger">
-                          Code không thể < 3 kí tự.
-                        </div>
-                        <div *ngIf="dataForm.get('code').errors.maxlength" class="text-danger">
-                          Code không thể > 20 kí tự!
-                        </div>
-                        <div *ngIf="dataForm.get('code')?.hasError('whitespace')" class="text-danger">
-                          Name không thể chỉ chứa khoảng trống.
-                        </div>
+                    <div *ngIf="dataForm.get('code').errors?.required" class="text-danger">Code không được bỏ trống!</div>
+                    <div *ngIf="dataForm.get('code').errors?.minlength" class="text-danger">Code không thể < 3 kí tự.</div>
+                    <div *ngIf="dataForm.get('code').errors?.maxlength" class="text-danger">Code không thể > 20 kí tự!</div>
+                    <div *ngIf="dataForm.get('code').hasError('whitespace')" class="text-danger">Code không thể chỉ chứa khoảng trống.</div>
+                    <!-- <div *ngIf="dataForm.get('code').invalid && (dataForm.get('code').dirty || dataForm.get('code').touched)">
+                      <div *ngIf="dataForm.get('code').errors?.required" class="text-danger">
+                        Code không được bỏ trống!
                       </div>
-                    </div>
-                  </div>                
+                      <div *ngIf="dataForm.get('code').errors?.minlength" class="text-danger">
+                        Code không thể < 3 kí tự.
+                      </div>
+                      <div *ngIf="dataForm.get('code').errors?.maxlength" class="text-danger">
+                        Code không thể > 20 kí tự!
+                      </div>
+                      <div *ngIf="dataForm.get('code').hasError('whitespace')" class="text-danger">
+                        Code không thể chỉ chứa khoảng trống.
+                      </div>
+                    </div> -->
+                  </div>               
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-categories">Percentage</label>
-                    <input type="text" id="input-percentage" formControlName="percentage" class="form-control form-control-alternative" placeholder="Percentage">
+                    <input type="number" id="input-percentage" formControlName="percentage" class="form-control form-control-alternative" placeholder="Percentage">
                     <div *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
                       <div>
                         <div *ngIf="dataForm.get('percentage').errors.required" class="text-danger">
@@ -66,6 +68,9 @@
                         </div>
                         <div *ngIf="dataForm.get('percentage').errors.max" class="text-danger">
                           Percentage có giá trị <= 100!
+                        </div>
+                        <div *ngIf="dataForm.get('percentage').hasError('whitespace')" class="text-danger">
+                          Percentage không thể chỉ chứa khoảng trống.
                         </div>
                       </div>
                     </div>
@@ -106,10 +111,71 @@
                     </div>
                   </div>
                 </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-sm btn-default float-right">Modal</button>
+                  </div>
+                </div>
               </div>
             </div>
         </form>
+
+                <div class="col-md-12">
+                  <div class="from-group">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Course</th>
+                          <th>Discount</th>
+                          <th>Is Delete</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of discount.discountCourses">                          
+                          <td style="display: none;">{{item.id}}</td>
+                          <td>{{item.course_id}}</td>
+                          <td>{{item.discount_id}}</td>
+                          <td>{{item.is_delete}}</td>
+                          <td><button class="btn btn-success" (click)="onDelete(item.id)">Delete</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="modal fade" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content"> 
+                      <div class="modal-header">
+                        <h4 class="modal-title">Create/Update DiscountCourse</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>                
+                      <div class="modal-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Course</th>
+                              <th>Discount</th>
+                              <th>Is Delete</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>John</td>
+                              <td>Doe</td>
+                              <td>true</td>
+                              <td>Save</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>                
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      </div>                
+                    </div>
+                  </div>
+                </div>
       </div>
     </div>
-  </div>
 </div>

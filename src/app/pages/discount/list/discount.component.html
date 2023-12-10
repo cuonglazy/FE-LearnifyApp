@@ -57,7 +57,7 @@
                 <td>{{ item.startDate }}</td>
                 <td>{{ item.startEnd }}</td>
                 <td>
-                  <span class="badge badge-dot mr-4">
+                  <span class="badge badge-dot mr-4" style="color: black;">
                     <i class="bg-warning"></i>{{ item.isActive }}
                   </span>
                 </td>
@@ -69,12 +69,11 @@
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                       <a class="dropdown-item" [routerLink]="['/system-admin/discount', item.id, 'edit']">Xem</a>
                       <a class="dropdown-item" [routerLink]="['/system-admin/discount', item.id, 'edit']">Cập nhật</a>
-                      <a class="dropdown-item">Xóa</a>
+                      <a class="dropdown-item" (click)="onDelete(item.id)">Xóa</a>
                     </div>
                   </div>
                 </td>
               </tr>
-
             </tbody>
           </table>
         </div>

@@ -24,6 +24,17 @@ export class DiscountComponent implements OnInit {
     this.getPages(this.page,this.size);
   }
 
+  onDelete(id: number): void {
+    this.dataService.delete(id).subscribe(
+      (response) => {
+        alert("Xóa Thành Công")
+      },
+      (error) => {
+        alert("Xóa Lỗi")
+      }
+    );
+  }
+
   getData(): void {
     this.dataService.findAll().subscribe((res) => {
       // this.dataDiscounts = res.body ? res.body : [];
