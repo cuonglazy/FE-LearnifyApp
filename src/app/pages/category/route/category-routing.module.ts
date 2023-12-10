@@ -26,7 +26,7 @@ const categoryRoutes: Routes = [
   },
   {
     path: ":id/view",
-    component: CategoryDetailComponent,
+    component: UpdateCategoryComponent,
     resolve: {
       CategoryRoutingResolveService,
     },

@@ -42,7 +42,7 @@ export class UpdateCategoryComponent implements OnInit {
   getCategory(): Promise<void> {
     return new Promise<void>((resolve) => {
       this.categoryService.findAll().subscribe((res) => {
-        let categories = res.body
+        const categories = res.body
           ? res.body.filter((item) => item.is_delete === true)
           : [];
         this.category = this.buildHierarchy(categories);
@@ -60,7 +60,7 @@ export class UpdateCategoryComponent implements OnInit {
           return null;
         }
         visited[cat.id] = true;
-        let children = this.buildHierarchy(
+        const children = this.buildHierarchy(
           categories,
           cat.id,
           level + 1,
@@ -86,13 +86,13 @@ export class UpdateCategoryComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const category = this.createFromForm();
-    category.parent_id = this.editForm.get('parent_id').value;
+    category.parent_id = this.editForm.get("parent_id").value;
     if (category.id !== undefined) {
-      this.subscribeToSaveResponse(this.categoryService.create(category));
-    } else {
       this.subscribeToSaveResponse(this.categoryService.update(category));
+    } else {
+      this.subscribeToSaveResponse(this.categoryService.create(category));
     }
-}
+  }
 
   previousState(): void {
     window.history.back();
@@ -118,19 +118,22 @@ export class UpdateCategoryComponent implements OnInit {
   protected onSaveFinalize(): void {
     this.isSaving = false;
   }
-
   protected updateForm(category: ICategory): void {
     const cate = this.category.find((res) => res.id === category.id);
-    const nameCate = this.category.find((res) => (res.id = cate.parent_id));
-    const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate } : null;
-
+    if (!cate) {
+      console.warn('Không tìm thấy danh mục với id:', category.id);
+      return;
+    }
+    const nameCate = this.category.find((res) => res.id === cate.parent_id);
+    const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate.name } : null;
+    console.warn(category.name);
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
       is_delete: category.is_delete,
       parent_id: parentIdValue,
     });
-    console.warn(name)
+    console.warn(category.parent_id);
   }
 
   protected createFromForm(): ICategory {
@@ -141,7 +144,32 @@ export class UpdateCategoryComponent implements OnInit {
       id: this.editForm.get(["id"])!.value,
       name: this.editForm.get(["name"])!.value,
       is_delete: this.editForm.get(["is_delete"])!.value,
-      parent_id: parentId as number,
+      parent_id: parentId,
     };
   }
+  // protected updateForm(category: ICategory): void {
+  //   const cate = this.category.find((res) => res.id === category.id);
+  //   const nameCate = this.category.find((res) => res.id === cate.parent_id);
+  //   const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate } : null;
+  //   console.warn(category.name);
+  //   this.editForm.patchValue({
+  //     id: category.id,
+  //     name: category.name,
+  //     is_delete: category.is_delete,
+  //     parent_id: parentIdValue,
+  //   });
+  //   console.warn(category.parent_id);
+  // }
+
+  // protected createFromForm(): ICategory {
+  //   const parentIdObject = this.editForm.get(["parent_id"])!.value;
+  //   const parentId = parentIdObject ? parentIdObject.id : null;
+  //   return {
+  //     ...new Category(),
+  //     id: this.editForm.get(["id"])!.value,
+  //     name: this.editForm.get(["name"])!.value,
+  //     is_delete: this.editForm.get(["is_delete"])!.value,
+  //     parent_id: parentId as number,
+  //   };
+  // }
 }
