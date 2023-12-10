@@ -14,7 +14,7 @@ export type EntityArrayResponseType = HttpResponse<IDiscount[]>;
 export class DiscountService {
     protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
     protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
-    protected token = `eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im5nb25zb250cnVvbmc3NUBnbWFpbC5jb20iLCJzdWIiOiJuZ29uc29udHJ1b25nNzVAZ21haWwuY29tIiwiZXhwIjoxNzA0NTk1MDc0fQ.aL2wQWYTvUimuijTTJLfq6VquFztKBHLsvY7RTBTwiI`;
+    protected token = `eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTcwNDgxMDE0Mn0.Poe0DZ8Fdn76crNwXsvqj5vsISwjpAMsfO0IAu7mNNI`;
     constructor(protected http: HttpClient) { }
 
       create(discount: IDiscount): Observable<EntityResponseType>{

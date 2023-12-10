@@ -137,7 +137,7 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected createFromForm(): ICategory {
-    const parentId = this.editForm.get(["parent_id"])!.value;
+    const parentId = this.editForm.get(["parent_id"]).value;
 
     return {
       ...new Category(),

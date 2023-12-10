@@ -11,13 +11,12 @@ export type EntityResponseType = HttpResponse<ICategory>;
 export type EntityArrayResponseType = HttpResponse<ICategory[]>;
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class CategoryService {
   protected resourceUrl = `${environment.apiBaseUrl}/categories`;
-  protected token =
-    "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImN1b25nMDM3MDhAZ21haWwuY29tIiwic3ViIjoiY3VvbmcwMzcwOEBnbWFpbC5jb20iLCJleHAiOjE3MDQ0MjQ2NjV9.GPUXo_VHXDvJOUXVSoA2zTbSdcWx08U1u9FcbbYaGPQ";
-  constructor(protected http: HttpClient) {}
+  protected token ="eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTcwNDgxMDE0Mn0.Poe0DZ8Fdn76crNwXsvqj5vsISwjpAMsfO0IAu7mNNI";
+    constructor(protected http: HttpClient) {}
 
   create(category: ICategory): Observable<EntityResponseType> {
     const headers = new HttpHeaders().set(

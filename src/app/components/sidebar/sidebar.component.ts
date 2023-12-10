@@ -62,18 +62,6 @@ export const ROUTES: RouteInfo[] = [
     icon: "ni-bullet-list-67 text-blue",
     class: "",
   },
-  {
-    path: "/login",
-    title: "Login",
-    icon: "ni-key-25 text-blue",
-    class: "",
-  },
-  {
-    path: "/register",
-    title: "Register",
-    icon: "ni-circle-08 text-blue",
-    class: "",
-  },
 ];
 
 @Component({

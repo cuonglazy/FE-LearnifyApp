@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { CategoryService } from "../../../service/category.service";
 import { Category } from "../category.model";
-import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-categories",
@@ -9,7 +8,6 @@ import { Subscription } from "rxjs";
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
-  deleteSubscription?: Subscription;
   constructor(protected categoryService: CategoryService) {}
 
   ngOnInit(): void {
