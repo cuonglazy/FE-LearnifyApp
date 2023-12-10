@@ -17,9 +17,7 @@ export class CategoryRoutingResolveService implements Resolve<ICategory> {
     protected route: Router
   ) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot
-  ): Observable<ICategory> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot): Observable<ICategory> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.categoryService.find(id).pipe(
