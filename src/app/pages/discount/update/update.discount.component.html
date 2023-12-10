@@ -10,7 +10,7 @@
         <div class="card-header bg-white border-0">
           <div class="row align-items-center">  
             <div class="col-8">
-              <h3 class="mb-0">Create/Update Category</h3>
+              <h3 class="mb-0">Create/Update Discount</h3>
             </div>
             <div class="col-4 text-right">
               <form [formGroup]="dataForm" (ngSubmit)="save()">
@@ -100,22 +100,21 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-status">Status</label>
-                    <div class="control">
-                      <label class="form-check-label mb-5">
-                        <input type="checkbox" formControlName="isActive" name="answer" [checked]="selectedStatus"> 
-                      </label>
+                    <!-- <div class="form-check form-switch">
+                      <input type="checkbox" id="isActive" formControlName="isActive" class="form-check-input" checked="true">
+                      <label class="form-check-label" for="isActive"></label>
+                    </div> -->
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive" formControlName="isActive">
                     </div>
                   </div>
-                </div>
+                </div>                
                 <div class="col-md-6">
                   <div class="form-group">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-sm btn-default float-right">Modal</button>
                   </div>
                 </div>
-              </div>
-            </div>
-        </form>
-                <!-- <div class="col-md-12">
+                <div class="col-md-12">
                   <div class="from-group">
                     <table class="table">
                       <thead>
@@ -137,8 +136,45 @@
                       </tbody>
                     </table>
                   </div>
-                </div> -->
+                </div>
+              </div>
+            </div>
+        </form>
                 <div class="modal fade" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content"> 
+                      <div class="modal-header">
+                        <h4 class="modal-title">Create/Update DiscountCourse</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>                
+                      <div class="modal-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Course</th>
+                              <th>Discount</th>
+                              <th>Is Delete</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>John</td>
+                              <td>Doe</td>
+                              <td>true</td>
+                              <td>Save</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>                
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      </div>                
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal fade" id="deleteModal">
                   <div class="modal-dialog">
                     <div class="modal-content"> 
                       <div class="modal-header">
