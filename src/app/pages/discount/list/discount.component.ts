@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscountService } from '../../service/discount.service';
+import { DiscountService } from 'src/app/service/discount.service';
 import { IDiscount } from '../discount.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 

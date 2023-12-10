@@ -1,79 +1,126 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-size: cover; background-position: center top;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="min-height: 200px; background-size: cover; background-position: center top;">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
- 
 </div>
 <div class="container-fluid mt--7">
-  
-    <div class="col-xl- order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">
-            <div class="col-8">
-              <h3 class="mb-0">Create/Update Category</h3>
-            </div>
-            <div class="col-4 text-right">
-              <a [routerLink]="'system-admin/category'" class="btn btn-sm btn-info mr-4">Back</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Save</a>
+
+  <div class="col-xl- order-xl-1">
+    <div class="card bg-secondary shadow">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h3 class="mb-0">Create/Update Category</h3>
+          </div>
+          <div class="col-4 text-right">
+
+            <div>
+              <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                <!-- <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
+                <button type="submit" [disabled]="editForm.invalid" href="javascript:void(0)"
+                  class="btn btn-sm btn-default float-right">Save</button> -->
+                <button *ngIf="!view" type="submit" id="cancel-save" class="btn btn-sm btn-info mr-4"
+                  (click)="previousState()"><span>cancel</span></button>
+
+                <button *ngIf="!view" type="submit" id="save-entity" class="btn btn-sm btn-default float-right"
+                  [disabled]="editForm.invalid || isSaving"><span>save</span></button>
+
+                <button *ngIf="view" type="button" class="btn btn-sm btn-info mr-4"
+                  (click)="previousState()"><span>back</span></button>
+
+                <button *ngIf="view" type="button" class="btn btn-sm btn-default float-right"
+                  (click)="changToEditMode()"><span>edit</span></button>
+
+              </form>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <form>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-parentId">Parent ID</label>
-                    <select id="input-parentId" class="form-control" [(ngModel)]="selectedParentId">
-                      <option value="">Select Parent ID</option>
-                    </select>
-                  </div>                
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-categories">Categories</label>
-                    <select id="input-categories" class="form-control" [(ngModel)]="selectedCategory">
-                      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-course">Course</label>
-                    <select id="input-course" class="form-control" [(ngModel)]="selectedCourse">
-                      <option *ngFor="let course of courses" [value]="course.id">{{ course.name }}</option>
-                    </select>
-                  </div>
+      </div>
+      <div class="card-body">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- có cháu -->
+                <!-- <div class="form-group">
+                  <label class="form-control-label" for="input-parentId">Parent ID</label>
+                  <select id="input-parentId" class="form-control" [disabled]="selectedCategory?.level >= 2" (change)="updateSelectedCategory($event.target.value)">
+                    <option value="">Select Parent ID</option>
+                    <ng-container *ngFor="let item of category">
+                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
+                      <ng-container *ngFor="let child of item.children">
+                        <option [value]="child.id">{{getIndentation(child.level)}} {{child.name}}</option>
+                        <ng-container *ngFor="let grandchild of child.children">
+                          <option [value]="grandchild.id">{{getIndentation(grandchild.level)}} {{grandchild.name}}</option>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </select> 
+                </div> -->
+                <!-- không cháu -->
+                <!-- <div class="form-group">
+                  <label class="form-control-label" for="input-parentId">Parent ID</label>
+                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
+                    (change)="updateSelectedCategory($event.target.value)" formControlName="parent_id">
+                    <ng-container *ngFor="let item of category">
+                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
+                      <ng-container *ngIf="item.children">
+                        <option *ngFor="let child of item.children" [value]="child.id">
+                          {{getIndentation(child.level)}} {{child.name}}
+                        </option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
+                </div> -->
+                <div class="form-group">
+                  <label class="form-control-label" for="input-parentId">Parent ID</label>
+                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
+                    (change)="selectedCategory.parent_id">
+                    <ng-container *ngFor="let item of category">
+                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
+                      <ng-container *ngIf="item.children">
+                        <option *ngFor="let child of item.children" [value]="child.id">
+                          {{getIndentation(child.level)}} {{child.name}}
+                        </option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
                 </div>
               </div>
             </div>
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-id">ID</label>
-                    <input type="text" id="input-id" class="form-control form-control-alternative" placeholder="ID Category">
-                  </div>
+          </div>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-name">Name</label>
+                  <input type="text" id="name" class="form-control form-control-alternative" formControlName="name"
+                    placeholder="Name">
                 </div>
-                <div class="col-lg-12">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-name">Name</label>
-                    <input type="text" id="input-name" class="form-control form-control-alternative" placeholder="Name">
-                  </div>
-                  <div class="form-group">
+                <div
+                  *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                  <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.required">
+                    Không được để trống tên
+                  </small>
+                </div>
+                <div class="form-group">
                   <label class="form-control-label" for="input-status">Status</label>
-                  <div class="control">
-                    <label class="form-check-label mb-5">
-                      <input type="checkbox" name="answer" [checked]="selectedStatus"> 
-                    </label>
+                  <div class="control" class="form-check form-switch form-switch-md mb-2">
+                    <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input"
+                      formControlName="is_delete">
                   </div>
-                </div>
+                  <div
+                    *ngIf="editForm.get('is_delete')!.invalid && (editForm.get('is_delete')!.dirty || editForm.get('is_delete')!.touched)">
+                    <small class="form-text text-danger" *ngIf="editForm.get('is_delete')?.errors?.required">
+                      Vui lòng chọn trạng thái!
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
