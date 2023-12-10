@@ -37,13 +37,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="form-control-label" for="input-section"
-                    >Section</label
-                  >
-                  <select
-                    id="section"
-                    class="form-control"
-                    [(ngModel)]="selectedSection"
-                  >
+                    >Section</label> <select id="section" class="form-control" [(ngModel)]="selectedSection">
                     <option value="">Select Section</option>
                   </select>
                 </div>
@@ -87,13 +81,13 @@
               <div class="col-lg-6">
                 <div class="form-group">
                     <label class="form-control-label" for="input-note">Note :</label>
-                    <input type="text" id="input-note" class="form-control form-control-alternative" placeholder="Note">
+                    <textarea  type="text" id="input-note" class="form-control form-control-alternative" placeholder="Note"></textarea>
                   </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                     <label class="form-control-label" for="input-comment">Comment :</label>
-                    <input type="text" id="input-comment" class="form-control form-control-alternative" placeholder="Comment">
+                    <textarea  type="text" id="input-comment" class="form-control form-control-alternative" placeholder="Comment"></textarea>
                   </div>
               </div>
             </div>

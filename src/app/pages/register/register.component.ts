@@ -8,7 +8,6 @@ import { RegisterDTO } from 'src/app/dtos/user/register.dto';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
 
