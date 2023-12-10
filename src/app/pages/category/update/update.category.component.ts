@@ -12,7 +12,6 @@ import { CategoryService } from "src/app/service/category.service";
 })
 export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
-  view = false;
   category: ICategory[] = [];
   selectedCategory: ICategory | null = null;
 
@@ -35,13 +34,7 @@ export class UpdateCategoryComponent implements OnInit {
 
   async loadData(): Promise<void> {
     await this.getCategory();
-    this.activatedRouter.data.subscribe(({ category, view }) => {
-      this.view = view;
-      if (view) {
-        Object.keys(this.editForm.controls).forEach((key) => {
-          this.editForm.controls[key].disabled();
-        });
-      }
+    this.activatedRouter.data.subscribe(({ category }) => {
       this.updateForm(category);
     });
   }
@@ -101,13 +94,6 @@ export class UpdateCategoryComponent implements OnInit {
     }
 }
 
-  changToEditMode(): void {
-    this.view = false;
-    Object.keys(this.editForm.controls).forEach((key) => {
-      this.editForm.controls[key].enable();
-    });
-  }
-
   previousState(): void {
     window.history.back();
   }
@@ -144,6 +130,7 @@ export class UpdateCategoryComponent implements OnInit {
       is_delete: category.is_delete,
       parent_id: parentIdValue,
     });
+    console.warn(name)
   }
 
   protected createFromForm(): ICategory {

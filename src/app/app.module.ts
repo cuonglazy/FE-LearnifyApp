@@ -12,7 +12,6 @@ import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
-import { NgSelectModule } from "@ng-select/ng-select";
 
 @NgModule({
   imports: [
@@ -27,7 +26,6 @@ import { NgSelectModule } from "@ng-select/ng-select";
     ReactiveFormsModule,
     CommonModule,
     AppRoutingModule,
-    NgSelectModule,
   ],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [

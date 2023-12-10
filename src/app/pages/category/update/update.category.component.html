@@ -16,21 +16,9 @@
 
             <div>
               <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-                <!-- <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
+                <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
                 <button type="submit" [disabled]="editForm.invalid" href="javascript:void(0)"
-                  class="btn btn-sm btn-default float-right">Save</button> -->
-                <button *ngIf="!view" type="submit" id="cancel-save" class="btn btn-sm btn-info mr-4"
-                  (click)="previousState()"><span>cancel</span></button>
-
-                <button *ngIf="!view" type="submit" id="save-entity" class="btn btn-sm btn-default float-right"
-                  [disabled]="editForm.invalid || isSaving"><span>save</span></button>
-
-                <button *ngIf="view" type="button" class="btn btn-sm btn-info mr-4"
-                  (click)="previousState()"><span>back</span></button>
-
-                <button *ngIf="view" type="button" class="btn btn-sm btn-default float-right"
-                  (click)="changToEditMode()"><span>edit</span></button>
-
+                  class="btn btn-sm btn-default float-right">Save</button>
               </form>
             </div>
           </div>
@@ -41,41 +29,10 @@
           <div class="pl-lg-4">
             <div class="row">
               <div class="col-md-12">
-                <!-- có cháu -->
-                <!-- <div class="form-group">
-                  <label class="form-control-label" for="input-parentId">Parent ID</label>
-                  <select id="input-parentId" class="form-control" [disabled]="selectedCategory?.level >= 2" (change)="updateSelectedCategory($event.target.value)">
-                    <option value="">Select Parent ID</option>
-                    <ng-container *ngFor="let item of category">
-                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
-                      <ng-container *ngFor="let child of item.children">
-                        <option [value]="child.id">{{getIndentation(child.level)}} {{child.name}}</option>
-                        <ng-container *ngFor="let grandchild of child.children">
-                          <option [value]="grandchild.id">{{getIndentation(grandchild.level)}} {{grandchild.name}}</option>
-                        </ng-container>
-                      </ng-container>
-                    </ng-container>
-                  </select> 
-                </div> -->
-                <!-- không cháu -->
-                <!-- <div class="form-group">
-                  <label class="form-control-label" for="input-parentId">Parent ID</label>
-                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
-                    (change)="updateSelectedCategory($event.target.value)" formControlName="parent_id">
-                    <ng-container *ngFor="let item of category">
-                      <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
-                      <ng-container *ngIf="item.children">
-                        <option *ngFor="let child of item.children" [value]="child.id">
-                          {{getIndentation(child.level)}} {{child.name}}
-                        </option>
-                      </ng-container>
-                    </ng-container>
-                  </select>
-                </div> -->
                 <div class="form-group">
                   <label class="form-control-label" for="input-parentId">Parent ID</label>
                   <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
-                    (change)="selectedCategory.parent_id">
+                    (change)="updateSelectedCategory($event.target.value)">
                     <ng-container *ngFor="let item of category">
                       <option [value]="item.id">{{getIndentation(item.level)}} {{item.name}}</option>
                       <ng-container *ngIf="item.children">
@@ -93,8 +50,8 @@
             <div class="row">
               <div class="col-lg-12">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-name">Name</label>
-                  <input type="text" id="name" class="form-control form-control-alternative" formControlName="name"
+                  <label class="form-control-label" for="input-categories">Name</label>
+                  <input type="text" id="input-name" class="form-control form-control-alternative" formControlName="name"
                     placeholder="Name">
                 </div>
                 <div
