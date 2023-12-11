@@ -9,7 +9,7 @@ const routes: Routes = [
     component: UserProfileComponent,
   },
   {
-    path: "new",
+    path: "update",
     component: UpdateUserProfileComponent,
   },
   {
