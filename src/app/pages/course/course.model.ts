@@ -10,6 +10,8 @@ export interface ICourse{
     description?: string;
     user_id?: number;
     category_id?: number;
+    category_name?: string;
+    user_name?: string;
 }
 
 export class Course implements ICourse{
@@ -25,6 +27,8 @@ export class Course implements ICourse{
         public description?: string,
         public user_id?: number,
         public category_id?: number,
+        public category_name?: string,
+        public user_name?: string,
         ){
         this.is_delete = is_delete ?? true;
     }

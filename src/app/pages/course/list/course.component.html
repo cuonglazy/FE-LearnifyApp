@@ -27,33 +27,64 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Title</th>
-                <th scope="col">Price</th>
-                <th scope="col">Enrollment Count</th>
+                <th scope="col">STT</th>
+                <th scope="col">Tiêu đề</th>
+                <th scope="col">Giá tiền</th>
+                <th scope="col">Số lượng đăng ký</th>
                 <th scope="col">Thumbnail</th>
-                <th scope="col">Description</th>
-                <th scope="col">User ID</th>
-                <th scope="col">Category ID</th>
-                <th scope="col">Is Delete</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Ngày bắt đầu</th>
+                <th scope="col">Ngày kết thúc</th>
+                <th scope="col">User</th>
+                <th scope="col">Category</th>
+                <th scope="col">Trạng thái</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let item of courses; let i = index;">
                 <th scope="row">
                   <div class="media align-items-center">
                     <div class="media-body">
-                      <span class="mb-0 text-sm">Argon Design System</span>
+                      <span class="mb-0 text-sm">{{i + 1}}</span>
                     </div>
                   </div>
                 </th>
+                <div class="media align-items-center">
+                  <td>
+                    {{item.title}}
+                  </td>
+                </div>
                 <td>
-                  Argon Design System
+                  {{item.price}}
+                </td>
+                <div class="media align-items-center">
+                  <td>
+                    {{item.enrollment_count}}
+                  </td>
+                </div>
+                <td>
+                  {{item.thumbnail}}
                 </td>
                 <td>
-                  <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> pending
+                  {{item.description}}
+                </td>
+                <td>
+                  {{item.start_time | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                  {{item.end_time | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                  {{item.user_id}}
+                </td>
+                <td>
+                  {{item.category_name}}
+                </td>
+                <td>
+                  <span class="badge badge-dot mr-4 align-items-center" [style.color]="'black'">
+                    <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i> {{ item.is_delete
+                    ? 'Hoạt động' : 'Không hoạt động'}}
                   </span>
                 </td>
                 <td>
@@ -64,13 +95,13 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="'/system-admin/course/{id}/edit'"
+                      <a class="dropdown-item" [routerLink]="['/system-admin/course',item.id,'view']"
                         href="javascript:void(0)">Xem</a>
                       <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
                       <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
                     </div>
                   </div>
-</td>
+                </td>
               </tr>
             </tbody>
           </table>
