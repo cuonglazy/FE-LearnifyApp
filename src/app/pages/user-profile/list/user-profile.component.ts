@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
                                                                         }
 
   getAllUsers(keyword: string, page: number, limit: number) {
-    this.userService.getAllUsers(keyword, page = 0, limit).subscribe({
+    this.userService.getAllUsers(keyword, page = 0, limit = 2).subscribe({
       next: (response: any) => {
         debugger
         // response.user.forEach((user: Users) => {
@@ -56,13 +56,6 @@ export class UserProfileComponent implements OnInit {
     debugger
     this.getAllUsers(this.keyword, this.currentPage, this.itemsPerPage);
   }
-
-  // onPageChange(page: number) {
-  //   debugger;
-  //   this.currentPage = page < 0 ? 0 : page;
-  //   localStorage.setItem('currentUserPage', String(this.currentPage)); 
-  //   this.getAllUsers(this.keyword, this.currentPage, this.itemsPerPage);
-  // }
 
   onPageChange(page: number) {
     debugger;
