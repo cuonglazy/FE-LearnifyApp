@@ -45,18 +45,18 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                 </div>
-                <input class="form-control" placeholder="Name Address" type="text" [(ngModel)]="fullName" name="fullName">
+                <input class="form-control" placeholder="Name Address" type="text" [(ngModel)]="fullname" name="fullname">
               </div>
-              <p class="text-danger" *ngIf="fullName.length < 2 && registerForm.form.touched">Tên phải có ít nhất 2 ký tự</p>
+              <p class="text-danger" *ngIf="fullname.length < 2 && registerForm.form.touched">Tên phải có ít nhất 2 ký tự</p>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Date Of Birth" type="date" [(ngModel)]="dob" name="dob" (input)="registerForm.form.markAsTouched(); checkAge()">
+                <input class="form-control" placeholder="Date Of Birth" type="date" [(ngModel)]="date_of_birth" name="date_of_birth" (input)="registerForm.form.markAsTouched(); checkAge()">
               </div>
-              <p class="text-danger" *ngIf="registerForm.controls['dob'].hasError('invalidAge') 
+              <p class="text-danger" *ngIf="registerForm.controls['date_of_birth'].hasError('invalidAge') 
                && registerForm.form.touched">Bạn chưa đủ 18 tuổi!</p>
             </div>
             <div class="form-group">

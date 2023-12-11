@@ -8,7 +8,7 @@ import { UserProfileComponent } from "./list/user-profile.component";
 import { UpdateUserProfileComponent } from "./update/update.user-profile.component";
 
 @NgModule({
-  imports: [UserProfileRoutingModule, ClipboardModule, FormsModule, NgbModule],
+  imports: [UserProfileRoutingModule, ClipboardModule, FormsModule, NgbModule, CommonModule],
   declarations: [UserProfileComponent, UpdateUserProfileComponent],
 })
 export class UserProfileModule {}

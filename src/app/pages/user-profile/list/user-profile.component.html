@@ -13,8 +13,8 @@
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <input type="text" placeholder="Search..." class="form-control" style="flex: 1;">
-              <a href="#!" class="btn btn-info">Search</a>
+              <input type="text" placeholder="Search..." class="form-control" style="flex: 1;" [(ngModel)]="keyword" (change)="searchUsers()">
+              <button class="btn btn-info" (click)="searchUsers()">Tìm kiếm</button>
             </div>
             <div class="text-right">
               <a [routerLink]="'/system-admin/user-profile/new'" class="btn btn-sm btn-primary">Thêm mới</a>
@@ -26,32 +26,43 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Full Name</th>
+                <th scope="col">Họ và tên</th>
                 <th scope="col">Email</th>
-                <th scope="col">Phone Number</th>
-                <th scope="col">Address</th>
-                <th scope="col"></th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col">Vai trò</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let u of users">
                 <th scope="row">
                   <div class="media align-items-center">
                     <div class="media-body">
-                      <span class="mb-0 text-sm">Argon Design System</span>
-                    </div>
+                      <span class="mb-0">{{ u.fullName }}</span>
+                    </div>  
                   </div>
                 </th>
                 <td>
-                  Argon Design System
+                  {{ u.email }}
+                </td>
+                <td>
+                  {{ u.phoneNumber }}
+                </td>
+                <td>
+                  {{ u.dateOfBirth }}
                 </td>
                 <td>
                   <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> pending
+                    <i class="bg-warning"></i>
+                    {{u.address}}
                   </span>
                 </td>
-                <td>
+                <td [ngSwitch]="u.role_id">
+                  <ng-container *ngSwitchCase="1">Admin</ng-container>
+                  <ng-container *ngSwitchCase="2">User</ng-container>
+                  <ng-container *ngSwitchCase="3">Teacher</ng-container>
+                  <ng-container *ngSwitchDefault>Unknown Role</ng-container>
                 </td>
                 <td class="text-right">
                   <div ngbDropdown placement="bottom-right">
