@@ -63,7 +63,7 @@
                         href="javascript:void(0)">Xem</a>
                       <a class="dropdown-item" [routerLink]="['/system-admin/category',item.id,'edit']"
                         href="javascript:void(0)">Cập nhật</a>
-                      <button class="dropdown-item" [routerLink]="['/system-admin/category']" href="javascript:void(0)"
+                      <button class="dropdown-item" routerLink="/system-admin/category" href="javascript:void(0)"
                         (click)="onDelete(item.id)" [disabled]="!item.is_delete">Xóa</button>
                     </div>
                   </div>

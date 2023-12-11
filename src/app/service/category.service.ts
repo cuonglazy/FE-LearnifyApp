@@ -43,9 +43,7 @@ export class CategoryService {
       observe: "response" as "response",
     };
     return this.http.put<ICategory>(
-      `${this.resourceUrl}/${getCategoryIdentifier(category)} as number`,
-      category,
-      options
+      `${this.resourceUrl}/${getCategoryIdentifier(category)}`,category,options
     );
   }
 

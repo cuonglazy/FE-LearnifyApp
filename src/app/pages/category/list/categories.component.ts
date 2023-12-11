@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
       this.categoryService.delete(id).subscribe(
         (res) => {
           alert("Xóa Thành Công");
+          this.findAll();
         },
         (error) => {
           if (error.status === 403) {

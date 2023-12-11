@@ -17,3 +17,7 @@ export class Section implements ISection{
         public courseId?: number,
     ){}
 }
+
+export function getSectionIdentifier(section: Section){
+    return section.id;
+}

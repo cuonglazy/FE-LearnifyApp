@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../../../service/section.service';
+import { Section } from '../section.model';
 
 @Component({
   selector: 'app-section',
@@ -7,6 +8,7 @@ import { SectionService } from '../../../service/section.service';
 })
 export class SectionComponent implements OnInit {
 
+  sections: Section[] = [];
   constructor(protected sectionService: SectionService) { }
 
   ngOnInit(): void {
