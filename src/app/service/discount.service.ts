@@ -13,8 +13,8 @@ export type EntityArrayResponseType = HttpResponse<IDiscount[]>;
 })
 export class DiscountService {
     protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
-    protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
-    protected token = `eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTcwNDgxMDE0Mn0.Poe0DZ8Fdn76crNwXsvqj5vsISwjpAMsfO0IAu7mNNI`;
+    protected apiDiscountCourse = `http://localhost:8080/api/v1/discount-course`;
+    protected token = localStorage.getItem("access_token");
     constructor(protected http: HttpClient) { }
 
       create(discount: IDiscount): Observable<EntityResponseType>{
@@ -31,7 +31,7 @@ export class DiscountService {
       }
     
       createDiscountCourse(discountCourse: IDiscountCourse): Observable<EntityResponseType1>{
-        return this.http.post<IDiscountCourse>(this.apiPostDiscountCS,discountCourse, {observe: 'response'});
+        return this.http.post<IDiscountCourse>(this.apiDiscountCourse,discountCourse, {observe: 'response'});
       }
     
       update(discount: IDiscount): Observable<EntityResponseType>{
@@ -60,7 +60,7 @@ export class DiscountService {
           headers: headers,
           observe: 'response' as 'response'
         }
-        return this.http.delete<any>(`${this.apiPostDiscountCS}/${id}`, options)
+        return this.http.delete<any>(`${this.apiDiscountCourse}/${id}`, options)
       }
     
       findAll(): Observable<EntityArrayResponseType> {

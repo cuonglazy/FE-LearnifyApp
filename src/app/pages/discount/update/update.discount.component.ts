@@ -30,9 +30,6 @@ export class UpdateDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ discount }) => {
-      if(discount === undefined){
-        alert('id của bạn bị undefined')
-      }
       this.updateForm(discount);
       this.discount = discount;
     })
