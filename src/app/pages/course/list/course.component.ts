@@ -29,8 +29,8 @@ export class CourseComponent implements OnInit{
       }
   
       // if (course.user_id) {
-      //   const userRes = await this.userService.find(course.user_id).toPromise();
-      //   course.user_name = userRes.body ? userRes.body.name : '';
+      //   const userRes = await this.userService.getByID(course.user_id).toPromise();
+      //   course.user_name = userRes.body ? userRes.body.fullName : '';
       // }
     });
   

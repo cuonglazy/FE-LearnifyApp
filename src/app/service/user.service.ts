@@ -13,6 +13,7 @@ import { User } from '../models/user';
 export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
+  protected token = localStorage.getItem("access_token");
   private apiGetAllUser = `http://localhost:8080/api/v1/users`; // ${environment.apiBaseUrl}/users?keyword=&page=1&limit=12
   
   private apiConfig = {
@@ -30,7 +31,6 @@ export class UserService {
     })
   }
 
-
   register(registerDTO: RegisterDTO): Observable<any> {
     return this.http.post(this.apiRegister, registerDTO, this.apiConfig)
   }
@@ -44,5 +44,17 @@ export class UserService {
                                   .set('page', page.toString())
                                   .set('limit', limit.toString());
     return this.http.get<User[]>(this.apiGetAllUser, {params});
+  }
+
+  getByID(id: number): Observable<any> {
+    const headers = new HttpHeaders().set(
+      "Authorization",
+      `Bearer ${this.token}`
+    );
+    const options = {
+      headers: headers,
+      observe: "response" as "response",
+    };
+    return this.http.get<User>(`${this.apiGetAllUser}/${id}}`, options); 
   }
 }

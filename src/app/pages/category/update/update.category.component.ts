@@ -92,13 +92,20 @@ export class UpdateCategoryComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const category = this.createFromForm();
-    category.parent_id = this.editForm.get("parent_id").value;
+    
+    // Kiểm tra xem có parent_id được chọn không
+    if (category.parent_id === undefined) {
+      category.parent_id = null;
+      alert("parent undef")
+    }
+    
     if (category.id !== undefined) {
       this.subscribeToSaveResponse(this.categoryService.update(category));
     } else {
       this.subscribeToSaveResponse(this.categoryService.create(category));
     }
   }
+  
 
   previousState(): void {
     window.history.back();
@@ -128,6 +135,7 @@ export class UpdateCategoryComponent implements OnInit {
   protected updateForm(category: ICategory): void {
     const parentCategory = this.category.find((res) => res.id === category.parent_id);
     const parentIdValue = parentCategory ? parentCategory.id : null;
+    console.warn(parentIdValue)
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
@@ -137,15 +145,23 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected createFromForm(): ICategory {
-    const parentId = this.editForm.get(["parent_id"]).value;
+    const parentId = this.editForm.get("parent_id").value;
+    console.warn('Parent ID:', parentId);
 
+    
     return {
       ...new Category(),
-      id: this.editForm.get(["id"])!.value,
-      name: this.editForm.get(["name"])!.value,
-      is_delete: this.editForm.get(["is_delete"])!.value,
-      parent_id: parentId as number,
+      id: this.editForm.get("id")!.value,
+      name: this.editForm.get("name")!.value,
+      is_delete: this.editForm.get("is_delete")!.value,
+      // parent_id: this.editForm.get("parent_id")!.value,
+      parent_id: parentId !== null ? this.findParentIdByName(parentId) : null,
     };
+  }  
+  
+  private findParentIdByName(parentName: string): number | null {
+    const parentCategory = this.category.find((res) => res.name === parentName);
+    return parentCategory ? +parentCategory.id : null;
   }
 }
 
