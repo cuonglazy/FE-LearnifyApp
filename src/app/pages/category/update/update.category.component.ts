@@ -135,7 +135,10 @@ export class UpdateCategoryComponent implements OnInit {
   protected updateForm(category: ICategory): void {
     const parentCategory = this.category.find((res) => res.id === category.parent_id);
     const parentIdValue = parentCategory ? parentCategory.id : null;
-    console.warn(parentIdValue)
+    console.warn(this.category)
+    console.warn(category)
+    console.warn(parentCategory)
+    console.warn(parentIdValue);
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
@@ -143,6 +146,7 @@ export class UpdateCategoryComponent implements OnInit {
       parent_id: parentIdValue,
     });
   }
+  
 
   protected createFromForm(): ICategory {
     const parentId = this.editForm.get("parent_id").value;
@@ -154,7 +158,6 @@ export class UpdateCategoryComponent implements OnInit {
       id: this.editForm.get("id")!.value,
       name: this.editForm.get("name")!.value,
       is_delete: this.editForm.get("is_delete")!.value,
-      // parent_id: this.editForm.get("parent_id")!.value,
       parent_id: parentId !== null ? this.findParentIdByName(parentId) : null,
     };
   }  
