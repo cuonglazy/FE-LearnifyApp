@@ -135,18 +135,17 @@ export class UpdateCategoryComponent implements OnInit {
     console.warn('Save finalize');
     this.isSaving = false;
   }
-  
 
   protected updateForm(category: ICategory): void {
-    const parentCategory = this.category.find((res) => res.id === category.parent_id);
-  
+    const parentCategory = this.findCategoryById(category.parent_id, this.category);
+    
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
       is_delete: category.is_delete,
       parent_id: parentCategory ? parentCategory.id : null,
     });
-  }  
+  }
   
   protected createFromForm(): ICategory {
     const parentId = this.editForm.get("parent_id").value;
@@ -159,11 +158,21 @@ export class UpdateCategoryComponent implements OnInit {
       parent_id: parentId,
     };
   }
-  
-  
-  private findParentIdByName(parentName: string): number | null {
-    const parentCategory = this.category.find((res) => res.name === parentName);
-    return parentCategory ? +parentCategory.id : null;
+
+  findCategoryById(id: number, categories: ICategory[]): ICategory | null {
+    for (let category of categories) {
+      if (category.id === id) {
+        return category;
+      }
+      if (category.children) {
+        let found = this.findCategoryById(id, category.children);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
   }
+  
 }
 

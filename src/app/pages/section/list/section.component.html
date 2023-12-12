@@ -46,12 +46,19 @@
                   </div>
                 </th>
                 <td>
-                  Argon Design System
+                  {{item.title}}
                 </td>
                 <td>
-                  <span class="badge badge-dot mr-4">
-                    <i class="bg-warning"></i> pending
-                  </span>
+                  {{item.quantityLesson}}
+                </td>
+                <td>
+                  {{item.totalMinutes}}
+                </td>
+                <td>
+                  {{item.resource}}
+                </td>
+                <td>
+                  {{item.courseId}}
                 </td>
                 <td>
                 </td>
@@ -61,7 +68,7 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="'/system-admin/category/{id}/edit'"
+                      <a class="dropdown-item" [routerLink]="['/system-admin/category/',item.id,'/edit']"
                         href="javascript:void(0)">Xem</a>
                       <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
                       <a class="dropdown-item" href="javascript:void(0)">Xóa</a>

@@ -13,7 +13,6 @@
             <h3 class="mb-0">Create/Update Category</h3>
           </div>
           <div class="col-4 text-right">
-
             <div>
               <form (ngSubmit)="save()" [formGroup]="editForm">
                 <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
@@ -36,12 +35,12 @@
                     <ng-container *ngFor="let item of category">
                       <option [value]="item.id.toString()">{{getIndentation(item.level)}} {{item.name}}</option>
                       <ng-container *ngIf="item.children">
-                        <option *ngFor="let child of item.children" [value]="child.id.toString()" [disabled]="true">
+                        <option *ngFor="let child of item.children" [value]="child.id.toString()">
                           {{getIndentation(child.level)}} {{child.name}}
                         </option>
                       </ng-container>
                     </ng-container>
-                  </select>                           
+                  </select>
                 </div>
               </div>
             </div>
