@@ -32,3 +32,7 @@ export interface IDiscountCourse {
 export function getDiscountIdentifier(discount: IDiscount): number | undefined {
     return discount.id;
 }
+
+export function getDiscountCourseIdentifier(discountCourse: IDiscountCourse): number | undefined {
+    return discountCourse.id;
+}

@@ -11,10 +11,10 @@ export type EntityArrayResponseType = HttpResponse<ICourse[]>;
 })
 export class CourseService {
   protected resourceUrl = `${environment.apiBaseUrl}/courses`;
-  protected token ="eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTcwNDgxMDE0Mn0.Poe0DZ8Fdn76crNwXsvqj5vsISwjpAMsfO0IAu7mNNI";
+  protected token = localStorage.getItem("access_token");
   constructor(protected http: HttpClient) { }
 
-  findAll(req?: any): Observable<EntityArrayResponseType> {
+  findAll(): Observable<EntityArrayResponseType> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`

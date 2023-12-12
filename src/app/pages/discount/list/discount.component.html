@@ -44,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of this.dataDiscounts">
+              <tr *ngFor="let item of dataDiscounts">
                 <td style="display: none;">
                   <div class="media align-items-center">
                     <div class="media-body">
@@ -58,7 +58,9 @@
                 <td>{{ item.startEnd }}</td>
                 <td>
                   <span class="badge badge-dot mr-4" style="color: black;">
-                    <i class="bg-warning"></i>{{ item.isActive }}
+                    <div class="form-check form-switch" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive" [checked]="item.isActive" disabled="true">
+                    </div>                    
                   </span>
                 </td>
                 <td class="text-right">
