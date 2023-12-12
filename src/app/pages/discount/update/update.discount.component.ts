@@ -44,10 +44,6 @@ export class UpdateDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ discount }) => {
-<<<<<<< HEAD
-      this.updateForm(discount);
-      this.discount = discount;
-=======
       this.updateFromForm(discount);
       this.discountCourses = discount.discountCourses;
       this.discount = discount.discountCourses;
@@ -71,7 +67,6 @@ export class UpdateDiscountComponent implements OnInit {
         this.course = updatedCourses;
 
       })
->>>>>>> c29bea1f466731e687c4bc10ce70f66dd6dfa309
     })
 
   }

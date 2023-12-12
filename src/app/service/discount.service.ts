@@ -13,11 +13,7 @@ export type EntityArrayResponseType = HttpResponse<IDiscount[]>;
 })
 export class DiscountService {
     protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
-<<<<<<< HEAD
-    protected apiDiscountCourse = `http://localhost:8080/api/v1/discount-course`;
-=======
     protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
->>>>>>> c29bea1f466731e687c4bc10ce70f66dd6dfa309
     protected token = localStorage.getItem("access_token");
     constructor(protected http: HttpClient) { }
 
@@ -29,17 +25,6 @@ export class DiscountService {
         }
         return this.http.post<IDiscount>(this.apiDiscount, discount, options); 
       }
-<<<<<<< HEAD
-
-      insertProduct(discount: Discount): Observable<any> {
-        return this.http.post(this.apiDiscount, discount);
-      }
-    
-      createDiscountCourse(discountCourse: IDiscountCourse): Observable<EntityResponseType1>{
-        return this.http.post<IDiscountCourse>(this.apiDiscountCourse,discountCourse, {observe: 'response'});
-      }
-=======
->>>>>>> c29bea1f466731e687c4bc10ce70f66dd6dfa309
     
       update(discount: IDiscount): Observable<EntityResponseType>{
         const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
@@ -60,18 +45,6 @@ export class DiscountService {
 
         return this.http.delete<any>(`${this.apiDiscount}/${id}`, options);
       }
-<<<<<<< HEAD
-
-      deleteDiscountCourse(id: number): Observable<HttpResponse<{}>> {
-        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
-        const options = {
-          headers: headers,
-          observe: 'response' as 'response'
-        }
-        return this.http.delete<any>(`${this.apiDiscountCourse}/${id}`, options)
-      }
-=======
->>>>>>> c29bea1f466731e687c4bc10ce70f66dd6dfa309
     
       findAll(): Observable<EntityArrayResponseType> {
         const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
