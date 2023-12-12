@@ -33,9 +33,9 @@
                 <th scope="col">Số lượng đăng ký</th>
                 <th scope="col">Thumbnail</th>
                 <th scope="col">Mô tả</th>
-                <th scope="col">Ngày bắt đầu</th>
-                <th scope="col">Ngày kết thúc</th>
-                <th scope="col">User</th>
+                <th style="display: none;" scope="col">Ngày bắt đầu</th>
+                <th style="display: none;" scope="col">Ngày kết thúc</th>
+                <th style="display: none;" scope="col">User</th>
                 <th scope="col">Category</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col"></th>
@@ -43,67 +43,36 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of courses; let i = index;">
-                <th scope="row">
-                  <div class="media align-items-center">
-                    <div class="media-body">
-                      <span class="mb-0 text-sm">{{i + 1}}</span>
-                    </div>
-                  </div>
-                </th>
-                <div class="media align-items-center">
-                  <td>
-                    {{item.title}}
-                  </td>
-                </div>
-                <td>
-                  {{item.price}}
-                </td>
-                <div class="media align-items-center">
-                  <td>
-                    {{item.enrollment_count}}
-                  </td>
-                </div>
-                <td>
-                  {{item.thumbnail}}
-                </td>
-                <td>
-                  {{item.description}}
-                </td>
-                <td>
-                  {{item.start_time | date: 'dd/MM/yyyy'}}
-                </td>
-                <td>
-                  {{item.end_time | date: 'dd/MM/yyyy'}}
-                </td>
-                <td>
-                  {{item.user_id}}
-                </td>
-                <td>
-                  {{item.category_name}}
-                </td>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ item.title }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.enrollment_count }}</td>
+                <td>{{ item.thumbnail }}</td>
+                <td>{{ item.description }}</td>
+                <td style="display: none;">{{ item.start_time | date: 'dd/MM/yyyy' }}</td>
+                <td style="display: none;">{{ item.end_time | date: 'dd/MM/yyyy' }}</td>
+                <td style="display: none;">{{ item.user_id }}</td>
+                <td>{{ item.category_name }}</td>
                 <td>
                   <span class="badge badge-dot mr-4 align-items-center" [style.color]="'black'">
-                    <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i> {{ item.is_delete
-                    ? 'Hoạt động' : 'Không hoạt động'}}
+                    <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i>
+                    {{ item.is_delete ? 'Hoạt động' : 'Không hoạt động'}}
                   </span>
-                </td>
-                <td>
                 </td>
                 <td class="text-right">
                   <div ngbDropdown placement="bottom-right">
                     <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
-                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="['/system-admin/course',item.id,'view']"
-                        href="javascript:void(0)">Xem</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
+                    <div ngbDropdownMenu class="dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" [routerLink]="['/system-admin/course', item.id, 'view']">Xem</a>
+                      <a class="dropdown-item">Cập nhật</a>
+                      <a class="dropdown-item">Xóa</a>
                     </div>
                   </div>
                 </td>
               </tr>
-            </tbody>
+            </tbody> 
           </table>
         </div>
         <div class="card-footer py-4">
