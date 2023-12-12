@@ -7,6 +7,8 @@ import { LoginResponse } from 'src/app/responses/users/login.response';
 import { TokenService } from 'src/app/service/token.service';
 import { RoleService } from 'src/app/service/role.service';
 import { Role } from 'src/app/models/role';
+import { UserResponse } from 'src/app/responses/users/user.response';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,13 +28,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   */
 
-  email: string = 'admin@gmail.com';
+  email: string = 'ngosontruong75@gmail.com';
   password: string = '123456';
   roles: Role[] = [];
   rememberMe: boolean = true;
   selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
   roleList: any;
-  // userResponse?: UserResponse
+  userResponse? : UserResponse //Optional variable
 
   constructor(
     private userService: UserService,
@@ -92,11 +94,30 @@ export class LoginComponent implements OnInit, OnDestroy {
         const { token } = response;
         if (this.rememberMe) {
           this.tokenService.setToken(token);
+          debugger;
+          this.userService.getUserDetails(token).subscribe({
+            next: (response: any) => {
+              debugger
+              this.userResponse = {
+                ...response,
+                date_of_birth: new Date(response.date_of_birth),
+              };
+              this.userService.saveUserResponseToLocalStorage(this.userResponse);
+              this.router.navigate(['/system-admin/dashboard']);
+            },
+            complete: () => {
+              debugger;
+            },
+            error: (error: any) => {
+              debugger;
+              alert(error.error.message);
+            }
+          })
         }                
       },
       complete: () => {
         debugger;
-        this.router.navigate(['/system-admin/dashboard']);
+        
       },
       error: (error: any) => {
         debugger;

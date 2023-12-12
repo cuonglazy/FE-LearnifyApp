@@ -57,13 +57,6 @@ export class UserProfileComponent implements OnInit {
     this.getAllUsers(this.keyword, this.currentPage, this.itemsPerPage);
   }
 
-  // onPageChange(page: number) {
-  //   debugger;
-  //   this.currentPage = page < 0 ? 0 : page;
-  //   localStorage.setItem('currentUserPage', String(this.currentPage)); 
-  //   this.getAllUsers(this.keyword, this.currentPage, this.itemsPerPage);
-  // }
-
   onPageChange(page: number) {
     debugger;
     this.currentPage = page;

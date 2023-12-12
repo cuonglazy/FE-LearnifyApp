@@ -11,11 +11,11 @@ export type EntityArrayResponseType = HttpResponse<ISection[]>;
   providedIn: "root",
 })
 export class SectionService {
-  protected resourceUrl = `${environment.apiBaseUrl}/section`;
+  protected resourceUrl = `${environment.apiBaseUrl}`;
   constructor(protected http: HttpClient) {}
 
-  findAll(req?: any): Observable<EntityArrayResponseType> {
-    return this.http.get<ISection[]>(`${this.resourceUrl}`, {
+  findAll(): Observable<EntityArrayResponseType> {
+    return this.http.get<ISection[]>(`${this.resourceUrl}/sections`, {
       observe: "response",
     });
   }
