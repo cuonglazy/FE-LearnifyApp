@@ -12,6 +12,12 @@ export class SectionComponent implements OnInit {
   constructor(protected sectionService: SectionService) { }
 
   ngOnInit(): void {
+    this.getAll();
   }
 
+  getAll():void{
+    this.sectionService.findAll().subscribe((res)=>{
+      this.sections = res.body ? res.body : [];
+    })
+  }
 }

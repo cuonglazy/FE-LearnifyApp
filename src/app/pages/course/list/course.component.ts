@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Course } from '../course.model';
+import { Course, ICourse } from '../course.model';
 import { CourseService } from 'src/app/service/course.service';
 import { CategoryService } from 'src/app/service/category.service';
 import { UserService } from 'src/app/service/user.service';
@@ -11,31 +11,36 @@ import { UserService } from 'src/app/service/user.service';
 export class CourseComponent implements OnInit{
 
   courses: Course[] = [];
-
   constructor(protected courseService: CourseService, protected categoryService: CategoryService, protected userService: UserService) { }
  
   ngOnInit(): void {
-    this.findAll();
+    this.getData();
   }
   
-  async findAll() {
-    const courses = await this.courseService.findAll().toPromise();
-    this.courses = courses.body ? courses.body : [];
-  
-    const observables = this.courses.map(async (course) => {
-      if (course.category_id) {
-        const categoryRes = await this.categoryService.find(course.category_id).toPromise();
-        course.category_name = categoryRes.body ? categoryRes.body.name : '';
-      }
-  
-      // if (course.user_id) {
-      //   const userRes = await this.userService.getByID(course.user_id).toPromise();
-      //   course.user_name = userRes.body ? userRes.body.fullName : '';
-      // }
-    });
-  
-    await Promise.all(observables);
+  getData(): void {
+    this.courseService.findAll().subscribe((res) => {
+      this.courses = res.body ? res.body : [];
+    })
   }
+
+  // async findAll() {
+  //   const courses = await this.courseService.findAll().toPromise();
+  //   this.courses = courses.body ? courses.body : [];
+  
+  //   const observables = this.courses.map(async (course) => {
+  //     if (course.category_id) {
+  //       const categoryRes = await this.categoryService.find(course.category_id).toPromise();
+  //       course.category_name = categoryRes.body ? categoryRes.body.name : '';
+  //     }
+  
+  //     // if (course.user_id) {
+  //     //   const userRes = await this.userService.getByID(course.user_id).toPromise();
+  //     //   course.user_name = userRes.body ? userRes.body.fullName : '';
+  //     // }
+  //   });
+  
+  //   await Promise.all(observables);
+  // }
   
   // findAll() {
   //   this.courseService.findAll().subscribe((res) => {

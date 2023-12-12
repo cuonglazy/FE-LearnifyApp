@@ -22,8 +22,8 @@
             <span class="avatar avatar-sm rounded-circle">
               <img alt="Image placeholder" src="assets/img/theme/team-4-800x800.jpg">
             </span>
-            <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+            <div class="media-body ml-2 d-none d-lg-block" *ngIf="userResponse">
+              <span class="mb-0 text-sm  font-weight-bold">{{userResponse.fullname}}</span>
             </div>
           </div>
         </a>
@@ -31,11 +31,11 @@
           <div class=" dropdown-header noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </div>
-          <a routerLinkActive="active" [routerLink]="['/login']" class="dropdown-item">
+          <a routerLinkActive="active" [routerLink]="['/login']" class="dropdown-item" *ngIf="!userResponse">
             <i class="ni ni-single-02"></i>
             <span>Đăng nhập</span>
           </a>
-          <a routerLinkActive="active" [routerLink]="['/register']" class="dropdown-item">
+          <a routerLinkActive="active" [routerLink]="['/register']" class="dropdown-item" *ngIf="!userResponse">
             <i class="ni ni-settings-gear-65"></i>
             <span>Đăng ký</span>
           </a>
@@ -43,10 +43,9 @@
             <i class="ni ni-settings-gear-65"></i>
             <span>Thông tin cá nhân</span>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="" class="dropdown-item">
+          <a href="" class="dropdown-item" *ngIf="userResponse">
             <i class="ni ni-user-run"></i>
-            <span>Đăng xuất</span>
+            <span (click)="onLogOut()">Đăng xuất</span>
           </a>
         </div>
       </li>

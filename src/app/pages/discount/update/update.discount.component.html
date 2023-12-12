@@ -21,7 +21,7 @@
           </div> 
         </div>
         <div class="card-body">
-          <form [formGroup]="dataForm" (ngSubmit)="save()">
+          <form [formGroup]="dataForm">
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-md-6" style="display: none;">
@@ -121,13 +121,16 @@
                           <th>Action</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        <tr *ngFor="let item of discount.discountCourses">                          
-                          <td style="display: none;">{{item.id}}</td>
-                          <td>{{item.course_id}}</td>
-                          <td>{{item.discount_id}}</td>
-                          <td>{{item.is_delete}}</td>
-                          <td><button class="btn btn-success" (click)="onDelete(item.id)">Delete</button></td>
+                      <tbody formGroup="">
+                        <tr *ngFor="let item of discountCourses">
+                          <td>{{item.nameCourse}}</td>
+                          <td>{{item.nameDiscount}}</td>
+                          <td>
+                            <input type="checkbox" [checked]="item.is_delete" (change)="onCheckboxChange(item.id, $event.target.checked)">
+                          </td>
+                          <td>
+                            <button class="btn btn-warning" (click)="onDelete(item.id)">Delete</button>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -138,7 +141,7 @@
         </form>
                 <div class="modal fade" id="myModal">
                   <div class="modal-dialog">
-                    <div class="modal-content"> 
+                    <div class="modal-content" style="width: 811px;"> 
                       <div class="modal-header">
                         <h4 class="modal-title">Create/Update DiscountCourse</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -150,49 +153,20 @@
                               <th>Course</th>
                               <th>Discount</th>
                               <th>Is Delete</th>
-                              <th>Action</th>
+                              <!-- <th>Action</th> -->
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>John</td>
-                              <td>Doe</td>
-                              <td>true</td>
-                              <td>Save</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>                
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                      </div>                
-                    </div>
-                  </div>
-                </div>
-
-                <div class="modal fade" id="deleteModal">
-                  <div class="modal-dialog">
-                    <div class="modal-content"> 
-                      <div class="modal-header">
-                        <h4 class="modal-title">Create/Update DiscountCourse</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>                
-                      <div class="modal-body">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Course</th>
-                              <th>Discount</th>
-                              <th>Is Delete</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>John</td>
-                              <td>Doe</td>
-                              <td>true</td>
-                              <td>Save</td>
+                          <tbody [formGroup]="dataFormDC">
+                            <tr *ngFor="let item of course">
+                              <td [value]="item.id">{{item.title}}
+                              </td>
+                              <td [innerHTML]="dataFormDC.get('discount_id').value">Doe</td>
+                              <td [innerHTML]="dataFormDC.get('id').value" class="d-none">true</td>
+                              <td>
+                                <!-- <input type="checkbox" [checked]="true" (change)="onCheckboxChange(dataFormDC.get('id').value, $event.target.checked)" >  -->
+                                <input type="checkbox" [checked]="false" (change)="saveDC(dataFormDC.get('id').value,item.id,$event.target.checked)">
+                              </td>
+                              <!-- <td (click)="saveDC(item.id,dataFormDC.get('id').value,)">Save</td> -->
                             </tr>
                           </tbody>
                         </table>

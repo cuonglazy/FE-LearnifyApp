@@ -24,5 +24,4 @@ export class TokenInterceptors implements HttpInterceptor {
         return next.handle(req);
     }
     //đăng ký 
-
 }
