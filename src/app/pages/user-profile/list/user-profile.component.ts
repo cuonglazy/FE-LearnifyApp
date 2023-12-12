@@ -29,7 +29,7 @@ export class UserProfileComponent implements OnInit {
                                                                         }
 
   getAllUsers(keyword: string, page: number, limit: number) {
-    this.userService.getAllUsers(keyword, page = 0, limit = 2).subscribe({
+    this.userService.getAllUsers(keyword, page = 0, limit).subscribe({
       next: (response: any) => {
         debugger
         // response.user.forEach((user: Users) => {

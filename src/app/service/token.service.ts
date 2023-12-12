@@ -9,7 +9,6 @@ export class TokenService {
     private jwtHelperService = new JwtHelperService();
     
     constructor() {
-
     }
 
     getUserId(): number {
