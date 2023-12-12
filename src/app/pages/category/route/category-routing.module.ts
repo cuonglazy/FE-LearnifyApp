@@ -1,4 +1,4 @@
-import { CategoryRoutingResolveService } from './category-routing-resolve.service';
+import { CategoryRoutingResolveService } from "./category-routing-resolve.service";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { UpdateCategoryComponent } from "../update/update.category.component";
@@ -13,22 +13,22 @@ const categoryRoutes: Routes = [
   {
     path: "new",
     component: UpdateCategoryComponent,
-    resolve:{
-      CategoryRoutingResolveService,
-    },
-  },
-  {
-    path: ":id/view",
-    component: UpdateCategoryComponent,
-    resolve:{
-      CategoryRoutingResolveService,
+    resolve: {
+      category: CategoryRoutingResolveService,
     },
   },
   {
     path: ":id/edit",
     component: UpdateCategoryComponent,
-    resolve:{
-      CategoryRoutingResolveService,
+    resolve: {
+      category: CategoryRoutingResolveService,
+    },
+  },
+  {
+    path: ":id/view",
+    component: UpdateCategoryComponent,
+    resolve: {
+      category: CategoryRoutingResolveService,
     },
   },
 ];

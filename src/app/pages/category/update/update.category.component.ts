@@ -12,7 +12,6 @@ import { CategoryService } from "src/app/service/category.service";
 })
 export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
-  view = false;
   category: ICategory[] = [];
   selectedCategory: ICategory | null = null;
 
@@ -30,26 +29,23 @@ export class UpdateCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.activatedRouter.data.subscribe(({ category }) => {
+      if (category === undefined) {
+        alert("giá trị của bạn bị undefined");
+      }
+      this.updateForm(category);
+    });
     this.loadData();
   }
 
   async loadData(): Promise<void> {
     await this.getCategory();
-    this.activatedRouter.data.subscribe(({ category, view }) => {
-      this.view = view;
-      if (view) {
-        Object.keys(this.editForm.controls).forEach((key) => {
-          this.editForm.controls[key].disabled();
-        });
-      }
-      this.updateForm(category);
-    });
   }
 
   getCategory(): Promise<void> {
     return new Promise<void>((resolve) => {
       this.categoryService.findAll().subscribe((res) => {
-        let categories = res.body
+        const categories = res.body
           ? res.body.filter((item) => item.is_delete === true)
           : [];
         this.category = this.buildHierarchy(categories);
@@ -67,7 +63,7 @@ export class UpdateCategoryComponent implements OnInit {
           return null;
         }
         visited[cat.id] = true;
-        let children = this.buildHierarchy(
+        const children = this.buildHierarchy(
           categories,
           cat.id,
           level + 1,
@@ -88,24 +84,20 @@ export class UpdateCategoryComponent implements OnInit {
 
   updateSelectedCategory(value: string): void {
     this.selectedCategory = this.category.find((item) => item.id === +value);
+    this.editForm.patchValue({
+      parent_id: this.selectedCategory ? this.selectedCategory.id : null,
+    });
   }
 
   save(): void {
     this.isSaving = true;
     const category = this.createFromForm();
-    category.parent_id = this.editForm.get('parent_id').value;
+    category.parent_id = this.editForm.get("parent_id").value;
     if (category.id !== undefined) {
-      this.subscribeToSaveResponse(this.categoryService.create(category));
-    } else {
       this.subscribeToSaveResponse(this.categoryService.update(category));
+    } else {
+      this.subscribeToSaveResponse(this.categoryService.create(category));
     }
-}
-
-  changToEditMode(): void {
-    this.view = false;
-    Object.keys(this.editForm.controls).forEach((key) => {
-      this.editForm.controls[key].enable();
-    });
   }
 
   previousState(): void {
@@ -134,10 +126,8 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected updateForm(category: ICategory): void {
-    const cate = this.category.find((res) => res.id === category.id);
-    const nameCate = this.category.find((res) => (res.id = cate.parent_id));
-    const parentIdValue = nameCate ? { id: nameCate.id, name: nameCate } : null;
-
+    const parentCategory = this.category.find((res) => res.id === category.parent_id);
+    const parentIdValue = parentCategory ? parentCategory.id : null;
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
@@ -147,8 +137,8 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected createFromForm(): ICategory {
-    const parentIdObject = this.editForm.get(["parent_id"])!.value;
-    const parentId = parentIdObject ? parentIdObject.id : null;
+    const parentId = this.editForm.get(["parent_id"]).value;
+
     return {
       ...new Category(),
       id: this.editForm.get(["id"])!.value,
@@ -158,3 +148,4 @@ export class UpdateCategoryComponent implements OnInit {
     };
   }
 }
+

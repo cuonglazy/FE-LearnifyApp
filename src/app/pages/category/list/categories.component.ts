@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { CategoryService } from "../../../service/category.service";
 import { Category } from "../category.model";
 
@@ -14,20 +14,37 @@ export class CategoriesComponent implements OnInit {
     this.findAll();
   }
 
+  onDelete(id: number): void {
+    if (confirm("Bạn có chắc chắn muốn xóa danh mục này không?")) {
+      this.categoryService.delete(id).subscribe(
+        (res) => {
+          alert("Xóa Thành Công");
+        },
+        (error) => {
+          if (error.status === 403) {
+            alert("Bạn không có quyền xóa danh mục này");
+          } else {
+            alert("Xóa Lỗi");
+          }
+        }
+      );
+    }
+  }
+
   findAll() {
     this.categoryService.findAll().subscribe((res) => {
       this.categories = res.body ? res.body : [];
-      this.categories.forEach(category => {
+      this.categories.forEach((category) => {
         if (category.parent_id) {
-          const parentCategory = this.categories.find(c => c.id === category.parent_id);
+          const parentCategory = this.categories.find(
+            (c) => c.id === category.parent_id
+          );
           if (parentCategory) {
             category.parentName = parentCategory.name;
           }
-          return category.parentName
+          return category.parentName;
         }
       });
     });
   }
-
 }
-

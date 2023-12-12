@@ -14,10 +14,11 @@ export class UpdateDiscountComponent implements OnInit {
   selectedStatus: any;
   isSaving = false;
   dataForm: FormGroup;
+  discount: any;
   constructor(private dataService: DiscountService, protected formBuilder: FormBuilder, protected activatedRoute: ActivatedRoute) {
     this.dataForm = this.formBuilder.group({
     id: [''],
-    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(20)]],
+    code: [null, [Validators.required, this.noWhiteSpacesValidator, Validators.minLength(3), Validators.maxLength(10)]],
     percentage: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
     startDate: [null, [Validators.required]],
     startEnd: [null, [Validators.required]],
@@ -29,7 +30,11 @@ export class UpdateDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ discount }) => {
+      if(discount === undefined){
+        alert('id của bạn bị undefined')
+      }
       this.updateForm(discount);
+      this.discount = discount;
     })
   }
 
@@ -70,11 +75,20 @@ export class UpdateDiscountComponent implements OnInit {
     const discount = this.createFromform();
     if (!discount.id) {
       this.subscribeToSaveResponse(this.dataService.create(discount));
-      alert("create")
     } else {
       this.subscribeToSaveResponse(this.dataService.update(discount));
-      alert("update")
     }
+  }
+
+  onDelete(id: number): void {
+    this.dataService.deleteDiscountCourse(id).subscribe(
+      (response) => {
+        console.warn('Xóa thành công', response);
+      },
+      (error) => {
+        console.error('Lỗi khi xóa', error);
+      }
+    );
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDiscount>>): void {

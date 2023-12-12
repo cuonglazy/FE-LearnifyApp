@@ -17,17 +17,15 @@ export class CategoryRoutingResolveService implements Resolve<ICategory> {
     protected route: Router
   ) {}
 
-  resolve(
-    route: ActivatedRouteSnapshot
-  ): Observable<ICategory> | Observable<never> {
-    const id = route.params["id"];
+  resolve(route: ActivatedRouteSnapshot): Observable<ICategory> | Observable<never> {
+    const id = route.params['id'];
     if (id) {
       return this.categoryService.find(id).pipe(
         mergeMap((category: HttpResponse<Category>) => {
           if (category.body) {
             return of(category.body);
           } else {
-            this.route.navigate(["404"]);
+            this.route.navigate(['404']);
             return EMPTY;
           }
         })

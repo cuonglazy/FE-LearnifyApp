@@ -8,5 +8,12 @@ export interface ISection{
 }
 
 export class Section implements ISection{
-    
+    constructor(
+        public id?: number,
+        public title?: string,
+        public quantityLesson?: number,
+        public totalMinutes?: number,
+        public resource?: string,
+        public courseId?: number,
+    ){}
 }

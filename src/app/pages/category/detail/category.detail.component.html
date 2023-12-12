@@ -1,1 +1,56 @@
-<p>category.detail works!</p>
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="min-height: 200px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+</div>
+<div class="container-fluid mt--7">
+
+  <div class="col-xl- order-xl-1">
+    <div class="card bg-secondary shadow">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h3 class="mb-0">Create/Update Category</h3>
+          </div>
+          <div class="col-4 text-right">
+
+            <div *ngIf="category">
+              <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
+              <button type="submit" [routerLink]="['/system-admin/category',category.id,'/edit']"
+                href="javascript:void(0)" class="btn btn-sm btn-default float-right">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" *ngIf="category">
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-md-12">
+              <label class="form-control-label" for="input-categories">Parent ID</label>
+              <input type="text" id="parent_id" class="form-control form-control-alternative" value="{{category.parent_id}}"
+                disabled="parent_id">
+            </div>
+          </div>
+        </div>
+        <div class="pl-lg-4">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label class="form-control-label" for="input-categories">Name</label>
+                <input type="text" id="name" class="form-control form-control-alternative" value="{{category.name}}"
+                  disabled="name">
+              </div>
+              <div class="form-group">
+                <label class="form-control-label" for="input-status">Status</label>
+                <div class="control" class="form-check form-switch form-switch-md mb-2">
+                  <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input"
+                    value="{{category.is_delete}}" disabled="is_delete">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
