@@ -11,10 +11,6 @@ const routes: Routes = [
     component: UserProfileComponent,
   },
   {
-    path: "/update",
-    component: UpdateUserProfileComponent,
-  },
-  {
     path: ":id/edit",
     component: UserUpdateComponent,
     resolve: {

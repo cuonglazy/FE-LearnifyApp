@@ -21,6 +21,7 @@ import { UpdateSectionComponent } from "./update/update.section.component";
     ReactiveFormsModule,
     NgbModule,
     SectionRoutingModule,
+    CommonModule,
   ],
 })
 export class SectionModule {}

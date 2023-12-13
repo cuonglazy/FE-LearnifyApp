@@ -1,8 +1,13 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-    <div class="container-fluid">
-  
-    </div>
+  <div class="container-fluid">
+
   </div>
+</div>
+<div class="row">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt-5">
+  <!-- Table -->
   <div class="row">
   </div>
   <!-- Page content -->
@@ -13,45 +18,47 @@
         <div class="card shadow">
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <input type="text" placeholder="Search..." class="form-control" style="flex: 1;">
-                <a href="#!" class="btn btn-info">Search</a>
+              <div style="display: flex; align-items: center; gap: 10px;" [formGroup]="dataForm">
+                <input type="text" placeholder="Search Title..." class="form-control" style="flex: 1;"
+                  formControlName="searchTitle">
+                <a class="btn btn-info" (click)="search()">Search</a>
               </div>
               <div class="text-right">
                 <a [routerLink]="'/system-admin/section/new'" class="btn btn-sm btn-primary">Thêm mới</a>
               </div>
             </div>
           </div>
-  
+
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">STT</th>
-                  <th scope="col">Tên</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col">Parent Id</th>
-                  <th scope="col"></th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Quantity Lesson</th>
+                  <th scope="col">Total minutes</th>
+                  <th scope="col">Resource</th>
+                  <th scope="col">Course Id</th>
+                  <th scope="col">Is Delete</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
+                <tr *ngFor="let item of dataSection">
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">
-                        <span class="mb-0 text-sm">Argon Design System</span>
+                        <span class="mb-0 text-sm">{{item.title}}</span>
                       </div>
                     </div>
                   </th>
+                  <td>{{item.quantity_lesson}}</td>
+                  <td>{{item.total_minutes}}</td>
+                  <td>{{item.resource}}</td>
+                  <td>{{item.courseName}}</td>
                   <td>
-                    Argon Design System
-                  </td>
-                  <td>
-                    <span class="badge badge-dot mr-4">
-                      <i class="bg-warning"></i> pending
-                    </span>
-                  </td>
-                  <td>
+                    <div class="form-check form-switch" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive"
+                        [checked]="item.is_delete" disabled="true">
+                    </div>
                   </td>
                   <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
@@ -59,14 +66,33 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" [routerLink]="'/system-admin/category/{id}/edit'"
-                          href="javascript:void(0)">Xem</a>
-                        <a class="dropdown-item" href="javascript:void(0)">Cập nhật</a>
-                        <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
+                        <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Xem</a>
+                        <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Cập nhật</a>
+                        <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#myModal">Xóa</button></a>
                       </div>
                     </div>
                   </td>
                 </tr>
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Xác Nhận Xóa!</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        <span class="text-danger">Bạn Chắc Chắc Muốn Xóa Section Này Không?</span>
+                      </div>
+                      <div class="modal-footer">
+                        <a class="btn btn-warning" (click)="deleteItem()" data-bs-dismiss="modal">Xóa</a>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </tbody>
             </table>
           </div>
@@ -99,3 +125,4 @@
       </div>
     </div>
   </div>
+</div>
