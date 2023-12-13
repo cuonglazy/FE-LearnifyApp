@@ -29,7 +29,7 @@ export class RegisterDTO {
 
     @IsDate()
     @IsNotEmpty()
-    dob: Date;
+    date_of_birth: Date;
 
     role_id: number = 1;
 
@@ -41,7 +41,7 @@ export class RegisterDTO {
         this.retype_password = data.retype_password;
         this.facebook_account_id = data.facebook_account_id || 0;
         this.google_account_id = data.google_account_id || 0;
-        this.dob = data.dob;
+        this.date_of_birth = data.date_of_birth;
         this.role_id = data.role_id || 1
     }   
 }

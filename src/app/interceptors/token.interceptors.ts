@@ -12,6 +12,7 @@ export class TokenInterceptors implements HttpInterceptor {
     intercept(
         req: HttpRequest<any>,
         next: HttpHandler): Observable<HttpEvent<any>> {
+        debugger
         const token = this.tokenService.getToken();
         if (token != null) {
             req = req.clone({
@@ -23,5 +24,4 @@ export class TokenInterceptors implements HttpInterceptor {
         return next.handle(req);
     }
     //đăng ký 
-
 }
