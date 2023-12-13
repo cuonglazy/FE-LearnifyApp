@@ -13,79 +13,69 @@
                 <h3 class="mb-0">Create/Update Course</h3>
               </div>
               <div class="col-4 text-right">
-                <a href="/#/system-admin/course" class="btn btn-sm btn-info mr-4">Back</a>
-                <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Save</a>
+                <form [formGroup]="dataForm" (ngSubmit)="save()">
+                  <a routerLink="/system-admin/section" class="btn btn-sm btn-info mr-4">Back</a>
+                  <button type="submit" class="btn btn-sm btn-default float-right">Save</button>
+                </form>
               </div>
             </div>
           </div>
           <div class="card-body">
-            <form>
+            <form [formGroup]="dataForm">
               <div class="pl-lg-4">
                 <div class="row">
                   <div class="col-md-12">    
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-6 d-none">
                     <div class="form-group">
-                      <label class="form-control-label" for="input-id">ID :</label>
-                      <input type="text" id="input-id" class="form-control form-control-alternative" placeholder="ID Lesson">
+                      <label class="form-control-label" >ID :</label>
+                      <input type="text" formControlName="id" class="form-control form-control-alternative" placeholder="ID Lesson">
                     </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="form-control-label" for="input-title">Title :</label>
-                        <input type="text" id="input-title" class="form-control form-control-alternative" placeholder="Title">
+                        <label class="form-control-label">Title :</label>
+                        <input type="text" formControlName="title" class="form-control form-control-alternative" placeholder="Title">
+                      </div>
+                  </div>
+                  <div class="col-lg-6 d-none">
+                    <div class="form-group">
+                        <label class="form-control-label">Quantity lesson :</label>
+                        <input type="text" formControlName="quantity_lesson" class="form-control form-control-alternative" placeholder="Quantity lesson">
+                      </div>
+                  </div>
+                  <div class="col-lg-6 d-none">
+                    <div class="form-group">
+                        <label class="form-control-label">Total Minutes :</label>
+                        <input type="text" formControlName="total_minutes" class="form-control form-control-alternative" placeholder="Total Minutes">
                       </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="form-control-label" for="input-price">Price :</label>
-                        <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price">
+                        <label class="form-control-label">Resource :</label>
+                        <input type="text" formControlName="resource" class="form-control form-control-alternative" placeholder="Resource">
                       </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="form-control-label" for="input-enrollmentCount">Enrollment Count :</label>
-                        <input type="text" id="input-enrollmentCount" class="form-control form-control-alternative" placeholder="Enrollment Count">
+                        <label class="form-control-label">Course :</label>
+                        <select class="form-control" formControlName="course_id">
+                          <option *ngFor="let item of dataCourse" [value]="item.id">{{item.title}}</option>
+                        </select>
                       </div>
                   </div>
                   <div class="col-lg-6">
                     <div class="form-group">
-                        <label class="form-control-label" for="input-thumbnail">Thumbnail :</label>
-                        <input type="text" id="input-thumbnail" class="form-control form-control-alternative" placeholder="Thumbnail">
+                      <label class="form-control-label" for="input-status">Status</label>
+                      <div class="form-check form-switch" style="margin-left: 20px;">
+                        <input class="form-check-input" type="checkbox" id="mySwitch" name="is_delete" formControlName="is_delete">
                       </div>
+                    </div> 
                   </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="form-control-label" for="input-userID">User ID :</label>
-                        <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User ID">
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="form-control-label" for="input-categoryID">Category ID :</label>
-                        <input type="text" id="input-categoryID" class="form-control form-control-alternative" placeholder="Category ID">
-                      </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="form-group">
-                        <label class="form-control-label" for="input-description">Description :</label>
-                        <textarea  type="text" id="input-description" class="form-control form-control-alternative" placeholder="Description"></textarea>
-                      </div>
-                  </div>
-                  <div class="col-lg-12">
-                    <div class="form-group">
-                    <label class="form-control-label" for="input-status">Status</label>
-                    <div class="control">
-                      <label class="form-check-label mb-5">
-                        <input type="checkbox" name="answer" > 
-                      </label>
-                        </div>
-                        </div>
-                    </div>
                  </div>
                 </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>

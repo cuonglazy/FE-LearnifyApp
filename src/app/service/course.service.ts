@@ -14,7 +14,7 @@ export class CourseService {
   protected token = localStorage.getItem("access_token");
   constructor(protected http: HttpClient) { }
 
-  findAll(): Observable<EntityArrayResponseType> {
+  findAll(): Observable<any> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`
