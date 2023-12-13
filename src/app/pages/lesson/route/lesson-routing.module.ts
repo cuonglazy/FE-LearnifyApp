@@ -11,7 +11,7 @@ const lessonRoutes: Routes = [
   },
   {
     path: "new",
-    component: LessonComponent,
+    component: UpdateLessonComponent,
   },
   {
     path: ":id/edit",
@@ -19,7 +19,7 @@ const lessonRoutes: Routes = [
   },
   {
     path: ":id/view",
-    component: LessonDetailComponent,
+    component: UpdateLessonComponent,
   },
 ];
 

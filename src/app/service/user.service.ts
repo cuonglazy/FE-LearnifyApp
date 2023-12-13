@@ -32,7 +32,6 @@ export class UserService {
     })
   }
 
-
   register(registerDTO: RegisterDTO): Observable<any> {
     return this.http.post(this.apiRegister, registerDTO, this.apiConfig)
   }

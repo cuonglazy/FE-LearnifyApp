@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../../../service/section.service';
-import { ISection } from '../section.model';
-import { warn } from 'console';
-import { CourseService } from 'src/app/service/course.service';
-import { map } from 'rxjs';
+import { ISection, Section } from '../section.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { CourseService } from 'src/app/service/course.service';
 
 @Component({
   selector: 'app-section',
