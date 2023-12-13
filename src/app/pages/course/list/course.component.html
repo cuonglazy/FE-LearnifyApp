@@ -66,8 +66,8 @@
                     </a>
                     <div ngbDropdownMenu class="dropdown-menu-right dropdown-menu-arrow">
                       <a class="dropdown-item" [routerLink]="['/system-admin/course', item.id, 'view']">Xem</a>
-                      <a class="dropdown-item">Cập nhật</a>
-                      <a class="dropdown-item">Xóa</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/course', item.id, 'edit']">Cập nhật</a>
+                      <a class="dropdown-item" (click)="onDelete()">Xóa</a>
                     </div>
                   </div>
                 </td>

@@ -14,6 +14,7 @@ export type EntityArrayResponseType = HttpResponse<ICategory[]>;
   providedIn: 'root'
 })
 export class CategoryService {
+  [x: string]: any;
   protected resourceUrl = `${environment.apiBaseUrl}/categories`;
   protected token = localStorage.getItem("access_token");
   constructor(protected http: HttpClient) {}
@@ -57,7 +58,7 @@ export class CategoryService {
     return this.http.delete(`${this.resourceUrl}/${id}`, options)
   }
 
-  findAll(req?: any): Observable<EntityArrayResponseType> {
+  findAllCategory(req?: any): Observable<EntityArrayResponseType> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`
