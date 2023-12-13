@@ -44,7 +44,7 @@ export class UpdateCourseComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.categoryService.findAllCategory().subscribe((res) => {
+    this.categoryService.findAll().subscribe((res) => {
       this.categories = res.body || [];
     });
   }

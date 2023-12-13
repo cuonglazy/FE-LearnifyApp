@@ -16,7 +16,7 @@ export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
   private apiGetAllUser = `${environment.apiBaseUrl}/users`; // ${environment.apiBaseUrl}/users?keyword=&page=1&limit=12
-  private apiUserDetails = `${environment.apiBaseUrl}/users/details`;
+  private apiUserDetails = `${environment.apiBaseUrl}/users/details`
   private apiGetUserById = `${environment.apiBaseUrl}/users`;
   
   private apiConfig = {

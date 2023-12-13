@@ -1,9 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { UserProfileComponent } from "../list/user-profile.component";
-import { UpdateUserProfileComponent } from "../update-user-profile/update.user-profile.component";
-import { UserProfileRoutingResolveService } from "./user-profile-routing-resolve.service";
-import { UserUpdateComponent } from "../user-update/user-update.component";
+import { UserEditComponent } from "../user-edit/user-edit.component";
+import { UserProfileRoutingResolveService } from "./user-profile-routing.resolve.service";
 
 const routes: Routes = [
   {
@@ -12,11 +11,11 @@ const routes: Routes = [
   },
   {
     path: ":id/edit",
-    component: UserUpdateComponent,
-    resolve: {
+    component: UserEditComponent,
+    resolve:{
       user: UserProfileRoutingResolveService,
     }
-  }
+  },
 ];
 
 @NgModule({

@@ -30,7 +30,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="form-control-label" for="input-parentId">Parent ID</label>
-                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2" 
+                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
                     (change)="updateSelectedCategory($event.target.value)" formControlName="parent_id">
                     <ng-container *ngFor="let item of category">
                       <option [value]="item.id.toString()">{{getIndentation(item.level)}} {{item.name}}</option>
