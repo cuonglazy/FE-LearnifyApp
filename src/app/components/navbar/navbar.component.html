@@ -27,7 +27,7 @@
             </div>
           </div>
         </a>
-        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu>
+        <div class="dropdown-menu-arrow dropdown-menu-right" ngbDropdownMenu style="margin-left: -60px; margin-top: 5px;">
           <div class=" dropdown-header noti-title">
             <h6 class="text-overflow m-0">Welcome!</h6>
           </div>
@@ -39,11 +39,11 @@
             <i class="ni ni-settings-gear-65"></i>
             <span>Đăng ký</span>
           </a>
-          <a routerLinkActive="active" [routerLink]="['/system-admin/user-profile']" class="dropdown-item">
+          <a routerLinkActive="active" [routerLink]="['/system-admin/user-profile/new']" class="dropdown-item">
             <i class="ni ni-settings-gear-65"></i>
             <span>Thông tin cá nhân</span>
           </a>
-          <a href="" class="dropdown-item" *ngIf="userResponse">
+          <a href="http://localhost:4202/login" class="dropdown-item" *ngIf="userResponse">
             <i class="ni ni-user-run"></i>
             <span (click)="onLogOut()">Đăng xuất</span>
           </a>

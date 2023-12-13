@@ -3,7 +3,7 @@ import { Role } from "src/app/models/role";
 export interface UserResponse {
     id: number;
     fullname: string;
-    // phone_number: string;
+    phone_number: string;
     // email: string;
     address: string;
     // password: string;

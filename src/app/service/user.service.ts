@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.util.service';
 import { User } from '../models/user';
 import { UserResponse } from '../responses/users/user.response';
+import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class UserService {
   private apiRegister = `${environment.apiBaseUrl}/users/register`;
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
   private apiGetAllUser = `${environment.apiBaseUrl}/users`; // ${environment.apiBaseUrl}/users?keyword=&page=1&limit=12
-  private apiUserDetails = `${environment.apiBaseUrl}/users/details`
+  private apiUserDetails = `${environment.apiBaseUrl}/users/details`;
+  private apiGetUserById = `${environment.apiBaseUrl}/users`;
   
   private apiConfig = {
     headers: this.createHeaders()
@@ -41,6 +43,10 @@ export class UserService {
     return this.http.post(this.apiLogin, loginDTO, this.apiConfig)
   }
 
+  getUserById(id: number): Observable<any> {
+    return this.http.get<User>(`${this.apiGetUserById}/${id}`, this.apiConfig)
+  }
+
   getAllUsers(keyword: string, page: number, limit: number): Observable<any> {
     const params = new HttpParams().set('keyword', keyword)
                                   .set('page', page.toString())
@@ -51,6 +57,17 @@ export class UserService {
   getUserDetails(token: string): Observable<any> {
     return this.http.post(this.apiUserDetails, {
       headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    })
+  }
+
+  updateUserDetail(token: string, updateUserDTO: UpdateUserDTO) {
+    debugger
+    let userResponse = this.getUserResponseFromLocalStorage();        
+    return this.http.put(`${this.apiUserDetails}/${userResponse?.id}`,updateUserDTO,{
+      headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       })

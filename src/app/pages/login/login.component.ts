@@ -77,12 +77,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
   login() {
-    // const message = `email: ${this.email}` +
-    //   `password: ${this.password}` +
-    //   `role_id: ${this.selectedRole?.id}`
-    //alert(message);
-    debugger
-
     const loginDTO: LoginDTO = {
       email: this.email,
       password: this.password,
