@@ -3,6 +3,8 @@ import { SectionService } from '../../../service/section.service';
 import { ISection } from '../section.model';
 import { CourseService } from 'src/app/service/course.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LessonService } from 'src/app/service/lesson.service';
+import { ILesson } from '../../lesson/lesson.model';
 
 @Component({
   selector: 'app-section',
@@ -11,10 +13,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SectionComponent implements OnInit {
   itemIdToDelete: number;
   dataSection: ISection[] = [];
+  dataLesson: ILesson[] = [];
   dataSectionOrigin: ISection[] = [];
   dataCourse: any[] = [];
   dataForm: FormGroup;
-  constructor(protected sectionService: SectionService,protected courseService: CourseService,protected fb: FormBuilder) {
+  constructor(protected sectionService: SectionService,protected courseService: CourseService, protected lessonService: LessonService ,protected fb: FormBuilder) {
     this.dataForm = this.fb.group({
       searchTitle: [''] 
     });
@@ -23,6 +26,13 @@ export class SectionComponent implements OnInit {
   ngOnInit(): void {
     this.getAll();
     this.getAllCourse();
+    this.getAllLesson();
+  }
+
+  getAllLesson():void {
+    this.lessonService.findAll().subscribe((res) =>{
+      this.dataLesson = res.body ? res.body : [];
+    })
   }
 
   getAll():void {
@@ -68,14 +78,14 @@ export class SectionComponent implements OnInit {
 
   deleteItem() {
     this.sectionService.delete(this.itemIdToDelete).subscribe(()=>{
-      this.dataCourse.forEach((lesson) => {
+      this.dataLesson.forEach((lesson) => {
         if (lesson.section_id === this.itemIdToDelete) {
           alert("Section này đang chứa Lesson bạn không thể xóa nó!");
-          alert("Tôi Đã Update Is Delete Của nó thành True");
+          alert("Tôi Đã Update Is Delete Của nó thành False");
         } else {
-            console.log(`Lesson ${lesson.id} không có section_id khớp!`);
+          alert("Xóa Thành Công!")
         }
-      });
+      });   
       this.getAll();
     });
   }
