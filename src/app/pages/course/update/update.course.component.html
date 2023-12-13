@@ -15,8 +15,8 @@
           </div>
           <div class="col-4 text-right">
             <form formGroup="dataForm" (ngSubmit)="save()">
-            <a routerLink="/system-admin/course" class="btn btn-sm btn-info mr-4">Back</a>
-            <a routerLink="/system-admin/course"  class="btn btn-sm btn-default float-right">Save</a>
+            <a (click)="previousState()" class="btn btn-sm btn-info mr-4">Back</a>
+            <button type="submit" routerLink="/system-admin/course" (click)="save()" class="btn btn-sm btn-default float-right">Save</button>
           </form>
           </div>
         </div>
@@ -33,7 +33,7 @@
                     style="max-width: 100%; height: auto;">
                   <!-- Nút chọn file -->
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="input-thumbnail" (change)="onFileSelected($event)">
+                    <input type="file" class="custom-file-input" id="input-thumbnail" (change)="onFileSelected($event)" formControlName="thumbnail">
                     <label class="custom-file-label" for="input-thumbnail">Upload Images</label>
                   </div>
                 </div>
@@ -41,25 +41,25 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-title">Title :</label>
-                  <input type="text" id="input-title" class="form-control form-control-alternative" placeholder="Title">
+                  <input type="text" id="input-title" formControlName="title" class="form-control form-control-alternative" placeholder="Title">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-price">Price :</label>
-                  <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price">
+                  <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price" formControlName="price">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-userID">User :</label>
-                  <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User">
+                  <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User" formControlName="user_name">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-categoryID">Category:</label>
-                  <select id="input-categoryID" class="form-control form-control-alternative" [(ngModel)]="course?.category.id">
+                  <select id="input-categoryID" class="form-control form-control-alternative" [(ngModel)]="course?.Category.id">
                     <option *ngFor="let category of categories" [value]="category.id">
                       {{ category.name }}
                     </option>
@@ -70,20 +70,20 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-description">Description :</label>
                   <textarea type="text" id="input-description" class="form-control form-control-alternative"
-                    placeholder="Description"></textarea>
+                    placeholder="Description" formControlName="description"></textarea>
                 </div>
               </div>
               <div class="col-lg-6" style="display: none;">
                 <div class="form-group">
                   <label class="form-control-label" for="input-enrollmentCount">Enrollment Count :</label>
                   <input type="text" id="input-enrollmentCount" class="form-control form-control-alternative"
-                    placeholder="Enrollment Count">
+                    placeholder="Enrollment Count" formControlName="enrollment_count">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group" style="display: none;">
                   <label class="form-control-label" for="input-id">ID :</label>
-                  <input type="text" id="input-id" class="form-control form-control-alternative" placeholder="ID Lesson">
+                  <input type="text" id="input-id" class="form-control form-control-alternative" formControlName="id">
                 </div>
               </div>
               <div class="col-lg-12">
