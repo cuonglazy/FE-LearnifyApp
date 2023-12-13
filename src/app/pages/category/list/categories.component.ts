@@ -25,7 +25,7 @@ export class CategoriesComponent implements OnInit {
   ) {
     this.searchForm = this.formBuilder.group({
       keyword: [""],
-      page: [0],
+      page:  [0],
       size: [10],
     });
   }
@@ -73,38 +73,6 @@ export class CategoriesComponent implements OnInit {
       ).subscribe();
     });
   }
-  
-  // ngOnInit(): void {
-  //   this.loadPage();
-  // }
-  
-  // loadPage(): void {
-  //   const formValue = this.searchForm.value;
-  //   this.categoryService.findAllPage(formValue).pipe(
-  //     map((res: HttpResponse<any>) => {
-  //       this.totalItems = Number(res.headers.get('X-Total-Count'));
-  //       this.page = formValue.page;
-  //       if (res.body) {
-  //         this.totalPages = res.body['totalPages'];
-  //         this.categories = res.body['categories'] ? res.body['categories'] : [];
-  //         this.allCategory = [...this.allCategory, ...this.categories]
-  //         this.categories.forEach((category) => {
-  //           if (category.parent_id) {
-  //             const parentCategory = this.allCategory.find(
-  //               (c) => c.id === category.parent_id
-  //             );
-  //             if (parentCategory) {
-  //               category.parentName = parentCategory.name;
-  //             }
-  //             return category.parentName;
-  //           }
-  //         });
-  //       }
-  //       return null;
-  //     })
-  //     ).subscribe();
-  // }
-  
   
   getPageArray(): number[] {
     const pages = [];

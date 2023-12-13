@@ -13,11 +13,12 @@
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
             <div style="display: flex; align-items: center; gap: 10px;">
-              <input type="text" placeholder="Search..." class="form-control" style="flex: 1;" [(ngModel)]="keyword" (change)="searchUsers()">
+              <input type="text" placeholder="Search..." class="form-control" style="flex: 1;" [(ngModel)]="keyword"
+                (change)="searchUsers()">
               <button class="btn btn-info" (click)="searchUsers()">Tìm kiếm</button>
             </div>
             <div class="text-right">
-              <a [routerLink]="'/system-admin/user-profile/new'" class="btn btn-sm btn-primary">Thêm mới</a>
+              <a [routerLink]="['/system-admin/user-profile/update']" class="btn btn-sm btn-primary">Thêm mới</a>
             </div>
           </div>
         </div>
@@ -40,7 +41,7 @@
                   <div class="media align-items-center">
                     <div class="media-body">
                       <span class="mb-0">{{ u.fullName }}</span>
-                    </div>  
+                    </div>
                   </div>
                 </th>
                 <td>
@@ -87,7 +88,7 @@
               <li class="page-item disabled" *ngIf="currentPage > 1">
                 <a class="page-link" tabindex="-1" (click)="onPageChange(1)">
                   <i class="fas fa-angle-left"></i>
-                  <span class="sr-only" >First</span>
+                  <span class="sr-only">First</span>
                 </a>
               </li>
               <li class="page-item active" *ngIf="currentPage > 1">
@@ -95,7 +96,8 @@
               </li>
               <ng-container *ngFor="let page of visiblePages">
                 <li class="page-item" [ngClass]="{'active': page === currentPage}">
-                  <a class="page-link" (click)="onPageChange(page)">{{ page }} <span class="sr-only">(current)</span></a>
+                  <a class="page-link" (click)="onPageChange(page)">{{ page }} <span
+                      class="sr-only">(current)</span></a>
                 </li>
               </ng-container>
               <li class="page-item" *ngIf="currentPage < totalPages">

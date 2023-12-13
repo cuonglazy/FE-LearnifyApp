@@ -45,7 +45,7 @@ onFileSelected($event: any) {
   }
 
   loadCategories(): void {
-    this.categoryService.findAllCategory().subscribe((res) => {
+    this.categoryService.findAll().subscribe((res) => {
       this.categories = res.body ? res.body : [];
     });
   }

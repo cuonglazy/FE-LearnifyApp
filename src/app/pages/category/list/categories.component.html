@@ -47,13 +47,13 @@
                   </div>
                 </th>
                 <td>{{ item.name }}</td>
+                <td>{{ item.parentName }}</td>
                 <td>
                   <span class="badge badge-dot mr-4 align-items-center" [style.color]="'black'">
                     <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i> {{ item.is_delete
                     ? 'Hoạt động' : 'Không hoạt động'}}
                   </span>
                 </td>
-                <td>{{ item.parentName }}</td>
                 <td>
                 </td>
                 <td class="text-right">
