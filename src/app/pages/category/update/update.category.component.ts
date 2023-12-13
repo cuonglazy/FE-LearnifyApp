@@ -2,7 +2,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { Category, ICategory } from "../category.model";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Observable, finalize } from "rxjs";
+import { Observable, catchError, finalize, throwError } from "rxjs";
 import { HttpResponse } from "@angular/common/http";
 import { CategoryService } from "src/app/service/category.service";
 
@@ -29,18 +29,18 @@ export class UpdateCategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRouter.data.subscribe(({ category }) => {
-      if (category === undefined) {
-        alert("giá trị của bạn bị undefined");
-      }
-      this.updateForm(category);
-    });
     this.loadData();
   }
-
+  
   async loadData(): Promise<void> {
     await this.getCategory();
+    this.activatedRouter.data.subscribe(({ category }) => {
+      if (category) {
+        this.updateForm(category);
+      }
+    });
   }
+  
 
   getCategory(): Promise<void> {
     return new Promise<void>((resolve) => {
@@ -92,13 +92,6 @@ export class UpdateCategoryComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const category = this.createFromForm();
-    
-    // Kiểm tra xem có parent_id được chọn không
-    if (category.parent_id === undefined) {
-      category.parent_id = null;
-      alert("parent undef")
-    }
-    
     if (category.id !== undefined) {
       this.subscribeToSaveResponse(this.categoryService.update(category));
     } else {
@@ -114,57 +107,72 @@ export class UpdateCategoryComponent implements OnInit {
   protected subscribeToSaveResponse(
     result: Observable<HttpResponse<ICategory>>
   ): void {
-    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
-      error: () => this.onSaveError(),
-    });
+    result
+      .pipe(
+        catchError((error) => {
+          this.onSaveError(error);
+          return throwError(error);
+        }),
+        finalize(() => this.onSaveFinalize())
+      )
+      .subscribe({
+        next: () => this.onSaveSuccess(),
+      });
   }
+  
 
   protected onSaveSuccess(): void {
+    console.warn('Save success');
     this.previousState();
   }
-
-  protected onSaveError(): void {
-    // Api for inheritance.
+  
+  protected onSaveError(error: any): void {
+    console.error('Save error:', error);
+    // Xử lý lỗi hoặc log thông báo lỗi.
   }
-
+  
   protected onSaveFinalize(): void {
+    console.warn('Save finalize');
     this.isSaving = false;
   }
 
   protected updateForm(category: ICategory): void {
-    const parentCategory = this.category.find((res) => res.id === category.parent_id);
-    const parentIdValue = parentCategory ? parentCategory.id : null;
-    console.warn(this.category)
-    console.warn(category)
-    console.warn(parentCategory)
-    console.warn(parentIdValue);
+    const parentCategory = this.findCategoryById(category.parent_id, this.category);
+    
     this.editForm.patchValue({
       id: category.id,
       name: category.name,
       is_delete: category.is_delete,
-      parent_id: parentIdValue,
+      parent_id: parentCategory ? parentCategory.id : null,
     });
   }
   
-
   protected createFromForm(): ICategory {
     const parentId = this.editForm.get("parent_id").value;
     console.warn('Parent ID:', parentId);
-
-    
     return {
       ...new Category(),
       id: this.editForm.get("id")!.value,
       name: this.editForm.get("name")!.value,
       is_delete: this.editForm.get("is_delete")!.value,
-      parent_id: parentId !== null ? this.findParentIdByName(parentId) : null,
+      parent_id: parentId,
     };
-  }  
-  
-  private findParentIdByName(parentName: string): number | null {
-    const parentCategory = this.category.find((res) => res.name === parentName);
-    return parentCategory ? +parentCategory.id : null;
   }
+
+  findCategoryById(id: number, categories: ICategory[]): ICategory | null {
+    for (let category of categories) {
+      if (category.id === id) {
+        return category;
+      }
+      if (category.children) {
+        let found = this.findCategoryById(id, category.children);
+        if (found) {
+          return found;
+        }
+      }
+    }
+    return null;
+  }
+  
 }
 

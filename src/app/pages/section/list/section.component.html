@@ -1,8 +1,13 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-    <div class="container-fluid">
-  
-    </div>
+  <div class="container-fluid">
+
   </div>
+</div>
+<div class="row">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt-5">
+  <!-- Table -->
   <div class="row">
   </div>
   <!-- Page content -->
@@ -14,7 +19,8 @@
           <div class="card-header border-0">
             <div class="d-flex justify-content-between">
               <div style="display: flex; align-items: center; gap: 10px;" [formGroup]="dataForm">
-                <input type="text" placeholder="Search Title..." class="form-control" style="flex: 1;" formControlName="searchTitle">
+                <input type="text" placeholder="Search Title..." class="form-control" style="flex: 1;"
+                  formControlName="searchTitle">
                 <a class="btn btn-info" (click)="search()">Search</a>
               </div>
               <div class="text-right">
@@ -22,7 +28,7 @@
               </div>
             </div>
           </div>
-  
+
           <div class="table-responsive">
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
@@ -50,8 +56,9 @@
                   <td>{{item.courseName}}</td>
                   <td>
                     <div class="form-check form-switch" style="margin-left: 20px;">
-                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive" [checked]="item.is_delete" disabled="true">
-                    </div> 
+                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive"
+                        [checked]="item.is_delete" disabled="true">
+                    </div>
                   </td>
                   <td class="text-right">
                     <div ngbDropdown placement="bottom-right">
@@ -61,19 +68,24 @@
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Xem</a>
                         <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Cập nhật</a>
+<<<<<<< HEAD
                         <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Xóa</button></a>
+=======
+                        <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#myModal">Xóa</button></a>
+>>>>>>> 2023700efad84cad8c7d69b5dcaff7d99a235bc1
                       </div>
                     </div>
                   </td>
                 </tr>
                 <div class="modal" id="myModal">
                   <div class="modal-dialog">
-                    <div class="modal-content">                
+                    <div class="modal-content">
                       <!-- Modal Header -->
                       <div class="modal-header">
                         <h4 class="modal-title">Xác Nhận Xóa!</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>                
+                      </div>
                       <!-- Modal body -->
                       <div class="modal-body">
                         <span class="text-danger">Bạn Chắc Chắc Muốn Xóa Section Này Không?</span>
@@ -81,7 +93,7 @@
                       <div class="modal-footer">
                         <a class="btn btn-warning" (click)="deleteItem()" data-bs-dismiss="modal">Xóa</a>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                      </div>                
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -117,3 +129,4 @@
       </div>
     </div>
   </div>
+</div>

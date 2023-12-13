@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SectionService } from '../../../service/section.service';
 import { ISection } from '../section.model';
-import { warn } from 'console';
 import { CourseService } from 'src/app/service/course.service';
-import { map } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
