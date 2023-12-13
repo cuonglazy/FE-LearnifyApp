@@ -35,9 +35,7 @@ export class UpdateCategoryComponent implements OnInit {
   async loadData(): Promise<void> {
     await this.getCategory();
     this.activatedRouter.data.subscribe(({ category }) => {
-      if (category) {
         this.updateForm(category);
-      }
     });
   }
   
@@ -59,7 +57,6 @@ export class UpdateCategoryComponent implements OnInit {
       .filter((cat) => cat.parent_id === parentId)
       .map((cat) => {
         if (visited[cat.id]) {
-          console.warn("Circular reference detected", cat);
           return null;
         }
         visited[cat.id] = true;
