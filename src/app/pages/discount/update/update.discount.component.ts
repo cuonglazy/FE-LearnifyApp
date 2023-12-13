@@ -71,8 +71,6 @@ export class UpdateDiscountComponent implements OnInit {
 
   }
 
-
-
   previousState(): void {
     window.history.back();
   }

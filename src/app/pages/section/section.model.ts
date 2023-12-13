@@ -1,19 +1,25 @@
 export interface ISection{
     id?: number;
     title?: string;
-    quantityLesson?: number;
-    totalMinutes?: number;
+    quantity_lesson?: number;
+    total_minutes?: number;
     resource?: string;
-    courseId?: number; 
+    course_id?: number;
+    is_delete?: boolean;
 }
 
 export class Section implements ISection{
     constructor(
         public id?: number,
         public title?: string,
-        public quantityLesson?: number,
-        public totalMinutes?: number,
+        public quantity_lesson?: number,
+        public total_minutes?: number,
         public resource?: string,
-        public courseId?: number,
+        public course_id?: number,
+        public is_delete?: boolean
     ){}
+}
+
+export function getSectionIdentifier(section: ISection): number | undefined {
+    return section.id;
 }
