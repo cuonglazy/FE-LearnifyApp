@@ -12,7 +12,7 @@ import { ILesson } from '../../lesson/lesson.model';
 })
 export class SectionComponent implements OnInit {
   page = 0;
-  size = 3;
+  size = 10;
   currentPage = this.page + 1;
   displayPage: number = 1;
   totalPages: any;
@@ -49,7 +49,6 @@ export class SectionComponent implements OnInit {
 
   confirmDelete(itemId: number) {
     this.itemIdToDelete = itemId;
-    console.warn(this.itemIdToDelete);
   }
 
   deleteItem() {
@@ -91,6 +90,7 @@ export class SectionComponent implements OnInit {
       page: this.page,
       size: this.size
     }
+
     this.sectionService.findPage(res).subscribe((response)=>{
       this.totalPages = response.body['totalPages'],
       this.dataPage = response.body['section']
@@ -134,5 +134,10 @@ export class SectionComponent implements OnInit {
       this.page = newPage;
       this.loadPage();
     }
+  }
+
+  onSizeChange(selectedSize: number): void {
+    this.size = selectedSize;
+    this.loadPage();
   }
 }

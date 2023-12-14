@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class DiscountComponent implements OnInit {
   page = 0;
-  size = 3;
+  size = 10;
   currentPage = this.page + 1;
   displayPage: number = 1;
   totalPages: any;
@@ -101,5 +101,10 @@ export class DiscountComponent implements OnInit {
       this.page = newPage;
       this.loadPage();
     }
+  }
+
+  onSizeChange(selectedSize: number): void {
+    this.size = selectedSize;
+    this.loadPage();
   }
 }

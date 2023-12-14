@@ -57,7 +57,7 @@ export class CategoryService {
     return this.http.delete(`${this.resourceUrl}/${id}`, options)
   }
 
-  findAll(req?: any): Observable<EntityArrayResponseType> {
+  findAll(): Observable<EntityArrayResponseType> {
     const headers = new HttpHeaders().set(
       "Authorization",
       `Bearer ${this.token}`

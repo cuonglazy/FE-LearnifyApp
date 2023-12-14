@@ -1,11 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ICategory } from 'src/app/pages/category/category.model';
+import { CategoryService } from 'src/app/service/category.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  category: ICategory[] = [];
+  treeCategories: any[] = [];
+  constructor(private categoryService: CategoryService){
+
+  }
+
+  ngOnInit(): void {
+      this.getAllCategory();
+  }
+
+  getAllCategory(){
+    this.categoryService.findAll().subscribe((res) => {
+      this.category = res.body ? res.body : [];
+      this.treeCategories = this.buildTree(res.body,null);
+      console.warn(this.treeCategories);
+    })
+  }
+
+  buildTree(categories: any[],parentId: number | null): any[]{
+    const tree: any[] = [];
+    categories.filter(category => category.parent_id === parentId).forEach(category => {
+      const children = this.buildTree(categories,category.id);
+      
+      if(children.length){
+        category.children = children;
+      }
+
+      tree.push(category);
+    })
+    return tree;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   courses : any = [
     {
       "img_teacher": "../../assets/images/pic-1.jpg",
