@@ -42,7 +42,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of dataSection">
+                <tr *ngFor="let item of dataPage">
                   <th scope="row">
                     <div class="media align-items-center">
                       <div class="media-body">
@@ -68,8 +68,7 @@
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                         <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Xem</a>
                         <a class="dropdown-item" [routerLink]="['/system-admin/section', item.id, 'edit']">Cập nhật</a>
-                        <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal"
-                            data-bs-target="#myModal">Xóa</button></a>
+                        <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Xóa</button></a>
                       </div>
                     </div>
                   </td>
@@ -94,32 +93,36 @@
                   </div>
                 </div>
               </tbody>
-            </table>
-          </div>
+            </table>            
+          </div>          
           <div class="card-footer py-4">
-            <nav aria-label="...">
-              <ul class="pagination justify-content-end mb-0">
-                <li class="page-item disabled">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                    <i class="fas fa-angle-left"></i>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0)">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">
-                    <i class="fas fa-angle-right"></i>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <div class="d-flex align-items-center">
+              <select class="form-select mr-3" style="width: 100px;" [(ngModel)]="size" (ngModelChange)="onSizeChange($event)">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+              </select>
+              <div class="ml-auto"></div> <!-- Thêm phần này để tạo khoảng trống bên phải -->
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item" [class.disabled]="page === 0">
+                    <a class="page-link" tabindex="-1" (click)="navigateToPage(page - 1)">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <li class="page-item" *ngFor="let i of getPageArray(); let index = index" [class.active]="i === page">
+                    <a class="page-link" (click)="navigateToPage(i)">{{ i }}</a>
+                  </li>
+                  <li class="page-item" [class.disabled]="page === totalPages">
+                    <a class="page-link" (click)="navigateToPage(page + 1)">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </div>

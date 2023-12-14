@@ -13,7 +13,7 @@
       <div class="card shadow">
         <div class="card-header border-0">
           <div class="d-flex justify-content-between">
-            <form [formGroup]="searchForm" (ngSubmit)="loadPage()">
+            <form [formGroup]="searchForm" (ngSubmit)="search()">
               <div style="display: flex; align-items: center; gap: 10px;">
                 <input type="text" placeholder="Search..." class="form-control" style="flex: 1;"
                   formControlName="keyword">

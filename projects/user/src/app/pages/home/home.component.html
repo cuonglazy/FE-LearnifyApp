@@ -41,8 +41,8 @@
       </div> -->
 
       <div class="box">
-         <ul class="nav">
-            <li><i class="fas fa-code"></i><span>Phát triển</span>
+         <!-- <ul class="nav">
+            <li><span>Phát triển</span>
                <ul>
                   <li>Frontend
                     <ul>
@@ -59,25 +59,46 @@
                   <li>FullStack</li>
                 </ul>
             </li>
-            <li><i class="fas fa-chart-simple"></i><span>Kinh doanh</span>
-              <ul>
-                <li>Web Design
-                  <ul>
-                    <li>Sub Service 1</li>
-                    <li>Sub Service 2</li>
+          </ul> -->
+          <ul class="nav">
+            <ng-container *ngFor="let category of treeCategories">
+               <li><span>{{ category.name }}</span>
+                  <ul *ngIf="category.children && category.children.length > 0">
+                     <ng-container *ngFor="let child of category.children">
+                        <li>
+                           <span>{{ child.name }}</span>
+                           <ul *ngIf="child.children && child.children.length > 0">
+                             <ng-container *ngFor="let grandchild of child.children">
+                               <li>
+                                 <span>{{ grandchild.name }}</span>
+                               </li>
+                             </ng-container>
+                           </ul>
+                         </li>
+                     </ng-container>
                   </ul>
-                </li>
-                <li>Graphic Design</li>
-                <li>SEO</li>
+               </li>
+            </ng-container>
+          </ul>
+          <!-- <ng-container *ngFor="let category of treeCategories">
+            <li>
+              <i class="fas fa-code"></i><span>{{ category.name }}</span>
+              <ul *ngIf="category.children && category.children.length > 0">
+                <ng-container *ngFor="let child of category.children">
+                  <li>
+                    <span>{{ child.name }}</span>
+                    <ul *ngIf="child.children && child.children.length > 0">
+                      <ng-container *ngFor="let grandchild of child.children">
+                        <li>
+                          <span>{{ grandchild.name }}</span>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </li>
+                </ng-container>
               </ul>
             </li>
-            <li><i class="fas fa-pen"></i><span>Thiết kế</span></li>
-            <li><i class="fas fa-chart-line"></i><span>Tiếp thị</span></li>
-            <li><i class="fas fa-music"></i><span>Âm nhạc</span></li>
-            <li><i class="fas fa-camera"></i><span>Nhiếp Ảnh</span></li>
-            <li><i class="fas fa-cog"></i><span>Phần mềm</span></li>
-            <li><i class="fas fa-vial"></i><span>Khoa Học</span></li>
-          </ul>
+          </ng-container> -->
       </div>
 
    </div>
