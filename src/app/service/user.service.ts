@@ -16,6 +16,7 @@ export class UserService {
   private apiLogin = `${environment.apiBaseUrl}/users/login`;
   private apiGetAllUser = `${environment.apiBaseUrl}/users`; // ${environment.apiBaseUrl}/users?keyword=&page=1&limit=12
   private apiUserDetails = `${environment.apiBaseUrl}/users/details`
+  private apiGetUserById = `${environment.apiBaseUrl}/users`;
   
   private apiConfig = {
     headers: this.createHeaders()
@@ -38,6 +39,10 @@ export class UserService {
 
   login(loginDTO: LoginDTO): Observable<any> {
     return this.http.post(this.apiLogin, loginDTO, this.apiConfig)
+  }
+
+  getUserById(id: number): Observable<any> {
+    return this.http.get<User>(`${this.apiGetUserById}/${id}`, this.apiConfig)
   }
 
   getAllUsers(keyword: string, page: number, limit: number): Observable<any> {

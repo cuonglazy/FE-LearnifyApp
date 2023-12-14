@@ -13,7 +13,6 @@
             <h3 class="mb-0">Create/Update Category</h3>
           </div>
           <div class="col-4 text-right">
-
             <div>
               <form (ngSubmit)="save()" [formGroup]="editForm">
                 <a [routerLink]="['/system-admin/category']" class="btn btn-sm btn-info mr-4">Back</a>
@@ -32,20 +31,16 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-parentId">Parent ID</label>
                   <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level >= 2"
-                    (change)="updateSelectedCategory($event.target.value)">
+                    (change)="updateSelectedCategory($event.target.value)" formControlName="parent_id">
                     <ng-container *ngFor="let item of category">
-                      <option value="{{item.id.toString()}}">{{getIndentation(item.level)}} {{item.name}}</option>
-                      <option [ngValue]="item.id.toString()" [disabled]="item.level >= 2">
-                        {{getIndentation(item.level)}} {{item.name}}
-                      </option>
+                      <option [value]="item.id.toString()">{{getIndentation(item.level)}} {{item.name}}</option>
                       <ng-container *ngIf="item.children">
-                        <option *ngFor="let child of item.children" [value]="child.id.toString()" [disabled]="true">
+                        <option *ngFor="let child of item.children" [value]="child.id.toString()">
                           {{getIndentation(child.level)}} {{child.name}}
                         </option>
                       </ng-container>
                     </ng-container>
                   </select>
-                  <!-- <input type="text" formControlName="parent_id"> -->
                 </div>
               </div>
             </div>

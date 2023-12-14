@@ -5,7 +5,7 @@ export interface ICategory {
   parent_id?: number | null;
   parentName?: string;
   level?: number;
-  children?: number;
+  children?: ICategory[];
 }
 
 export class Category implements ICategory {
@@ -16,7 +16,7 @@ export class Category implements ICategory {
     public parent_id?: number | null,
     public parentName?: string,
     public level?: number,
-    public children?: number,
+    public children?: ICategory[],
   ) {
     this.is_delete = is_delete ?? true;
   }

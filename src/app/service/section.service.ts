@@ -1,8 +1,8 @@
 import { Observable } from "rxjs";
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { ISection } from "../pages/section/section.model";
+import { ISection, getSectionIdentifier } from "../pages/section/section.model";
 
 export type EntityResponseType = HttpResponse<ISection>;
 export type EntityArrayResponseType = HttpResponse<ISection[]>;
@@ -12,11 +12,61 @@ export type EntityArrayResponseType = HttpResponse<ISection[]>;
 })
 export class SectionService {
   protected resourceUrl = `${environment.apiBaseUrl}`;
+  protected token = localStorage.getItem("access_token");
+
   constructor(protected http: HttpClient) {}
 
-  findAll(): Observable<EntityArrayResponseType> {
+  create(section: ISection): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+    const options = {
+      headers: headers,
+      observe: 'response' as 'response'
+    }
+    return this.http.post<ISection>(`${this.resourceUrl}/section`, section, options); 
+  }
+
+  update(section: ISection): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+    const options = {
+      headers: headers,
+      observe: 'response' as 'response'
+    }
+    return this.http.put<ISection>(`${this.resourceUrl}/section/${getSectionIdentifier(section) as number}`,section , options);
+  }
+
+  findAll(): Observable<any> {
     return this.http.get<ISection[]>(`${this.resourceUrl}/sections`, {
       observe: "response",
     });
+  } 
+
+  findPage(req:any): Observable<EntityArrayResponseType>{
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+    let params = new HttpParams();
+    params = params.set('keyword', req.keyword);
+    params = params.set('page', req.page.toString());
+    params = params.set('size', req.size.toString());
+    return this.http.get<ISection[]>(`${this.resourceUrl}/sections/pages`,{ headers, observe: 'response', params });
+  }
+
+  findAllLesson(): Observable<EntityArrayResponseType> {
+    return this.http.get<ISection[]>(`${this.resourceUrl}/lessons`, {
+      observe: "response",
+    });
+  } 
+
+  findOne(id:number): Observable<any> {
+    return this.http.get<ISection[]>(`${this.resourceUrl}/section/${id}`, {
+      observe: "response",
+    });
+  }
+
+  delete(id: number): Observable<HttpResponse<{}>> {
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+    const options = {
+      headers: headers,
+      observe: 'response' as 'response'
+    }
+    return this.http.delete<any>(`${this.resourceUrl}/section/${id}`, options);
   }
 }
