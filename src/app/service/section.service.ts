@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { ISection, getSectionIdentifier } from "../pages/section/section.model";
@@ -39,6 +39,15 @@ export class SectionService {
       observe: "response",
     });
   } 
+
+  findPage(req:any): Observable<EntityArrayResponseType>{
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+    let params = new HttpParams();
+    params = params.set('keyword', req.keyword);
+    params = params.set('page', req.page.toString());
+    params = params.set('size', req.size.toString());
+    return this.http.get<ISection[]>(`${this.resourceUrl}/sections/pages`,{ headers, observe: 'response', params });
+  }
 
   findAllLesson(): Observable<EntityArrayResponseType> {
     return this.http.get<ISection[]>(`${this.resourceUrl}/lessons`, {

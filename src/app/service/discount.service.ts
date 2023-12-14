@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Discount, IDiscount, IDiscountCourse, getDiscountCourseIdentifier, getDiscountIdentifier } from "../pages/discount/discount.model";
@@ -69,14 +69,14 @@ export class DiscountService {
       findCode(code: string): Observable<EntityResponseType> {
         return this.http.get<IDiscount>(`${this.apiDiscount}/code/${code}`,{observe: 'response'})
       }
-    
-      findPages(page:any,size:any): Observable<EntityArrayResponseType> {
-        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
-        const options = {
-          headers: headers,
-          observe: 'response' as 'response'
-        } 
-        return this.http.get<IDiscount[]>(`${this.apiDiscount}/pages?page=${page}&size=${size}`,options);
+
+      findPage(req:any): Observable<EntityArrayResponseType>{
+        const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+        let params = new HttpParams();
+        params = params.set('keyword', req.keyword);
+        params = params.set('page', req.page.toString());
+        params = params.set('size', req.size.toString());
+        return this.http.get<IDiscount[]>(`${this.apiDiscount}/pages`,{ headers, observe: 'response', params });
       }
 
       //  Discount Course
@@ -93,15 +93,6 @@ export class DiscountService {
         }
         return this.http.put<IDiscount>(`${this.apiPostDiscountCS}/${getDiscountCourseIdentifier(discountCourse) as number}`,discountCourse , options);
       }
-
-      // updateIsDelete(id: number, isDelete: boolean): Observable<HttpResponse<{}>>{
-      //   const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
-      //   const options = {
-      //     headers: headers,
-      //     observe: 'response' as 'response'
-      //   }
-      //   return this.http.put<any>(`${this.apiPostDiscountCS}/${id}/${isDelete}`, options);
-      // }
       
       updateIsDelete(id: number,isDelete: boolean): Observable<HttpResponse<{}>> {
         const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)

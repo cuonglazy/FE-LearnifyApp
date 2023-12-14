@@ -13,6 +13,7 @@ export class CategoriesComponent implements OnInit {
   categories: ICategory[] = [];
   allCategory: ICategory[] = [];
   totalItems: number;
+  searching: boolean = false;
   itemsPerPage: number = 10;
   page: number = 1;
   displayPage: number = 1;
@@ -44,8 +45,20 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
+  search():void {
+    this.searching = true;
+    this.loadPage();
+  }
+
   loadPage(): Promise<void> {
     return new Promise<void>((resolve) => {
+      if(this.searching == true){
+        this.searchForm.get('keyword')!.setValue(this.searchForm.get("keyword")!.value);
+        this.searchForm.get('page')!.setValue(0);
+      }else{
+        this.searchForm.get('keyword')!.setValue("");
+      }
+
       const formValue = this.searchForm.value;
       this.categoryService.findAllPage(formValue).pipe(
         map((res: HttpResponse<any>) => {
@@ -66,6 +79,7 @@ export class CategoriesComponent implements OnInit {
                 }
               }
             });
+            console.warn(this.categories);
           }
           resolve();
           return null;
@@ -87,6 +101,7 @@ export class CategoriesComponent implements OnInit {
   
   navigateToPage(newPage: number): void {
     let pageToRequest = newPage;
+    this.searching = false;
     if (newPage === 1 && this.displayPage > 0) {
       pageToRequest = 0;
     }
