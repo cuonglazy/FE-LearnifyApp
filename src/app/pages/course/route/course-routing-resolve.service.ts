@@ -28,7 +28,7 @@ export class CourseRoutingResolveService implements Resolve<ICourse>{
           }
         })
       );
-    } 
+    }
     return of(new Course());
   }
 }

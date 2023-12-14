@@ -27,7 +27,7 @@ export class CourseComponent implements OnInit{
     })
   }
 
-  onDelete(id: number): void {
+  Delete(id: number): void {
     this.courseService.delete(id).subscribe(
       (response) => {
         alert("Delete Successfuly!");

@@ -1,11 +1,12 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-  style="min-height: 200px; background-size: cover; background-position: center top;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="
+    min-height: 200px;
+    background-size: cover;
+    background-position: center top;
+  ">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
-
 </div>
 <div class="container-fluid mt--7">
-
   <div class="col-xl- order-xl-1">
     <div class="card bg-secondary shadow">
       <div class="card-header bg-white border-0">
@@ -14,55 +15,91 @@
             <h3 class="mb-0">Create/Update Course</h3>
           </div>
           <div class="col-4 text-right">
-            <form formGroup="dataForm" (ngSubmit)="save()">
-            <a (click)="previousState()" class="btn btn-sm btn-info mr-4">Back</a>
-            <button type="submit" routerLink="/system-admin/course" (click)="save()" class="btn btn-sm btn-default float-right">Save</button>
-          </form>
+            <form [formGroup]="dataForm" (ngSubmit)="save()">
+              <a (click)="previousState()" class="btn btn-sm btn-info mr-4">Back</a>
+              <button type="submit" routerLink="/system-admin/course" (click)="save()"
+                class="btn btn-sm btn-default float-right">
+                Save
+              </button>
+            </form>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <form formGroup="dataForm" (ngSubmit)="save()">
+        <form [formGroup]="dataForm" (ngSubmit)="save()">
           <div class="pl-lg-4">
-            <div class="row"> 
+            <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-title">Thumbnail:</label>
                   <!-- Hiển thị ảnh đã chọn -->
                   <img *ngIf="thumbnail" [src]="thumbnail" alt="Thumbnail" class="img-thumbnail mb-2"
-                    style="max-width: 100%; height: auto;">
+                    style="max-width: 100%; height: auto" />
                   <!-- Nút chọn file -->
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="input-thumbnail" (change)="onFileSelected($event)" formControlName="thumbnail">
-                    <label class="custom-file-label" for="input-thumbnail">Upload Images</label>
+                    <input type="file" class="custom-file-input" id="input-thumbnail" (change)="onFileSelected($event)"
+                      formControlName="thumbnail" />
+                    <label class="custom-file-label" for="input-thumbnail">Choose Images</label>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-title">Title :</label>
-                  <input type="text" id="input-title" formControlName="title" class="form-control form-control-alternative" placeholder="Title">
+                  <input type="text" id="input-title" formControlName="title"
+                    class="form-control form-control-alternative" placeholder="Title" />
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-price">Price :</label>
-                  <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price" formControlName="price">
+                  <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price"
+                    formControlName="price" />
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-userID">User :</label>
-                  <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User" formControlName="user_name">
+                  <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User"
+                    formControlName="user_id" />
                 </div>
               </div>
-              <div class="col-lg-6">
+              <!-- <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-categoryID">Category:</label>
-                  <select id="input-categoryID" class="form-control form-control-alternative" [(ngModel)]="course?.Category.id">
+                  <select id="input-categoryID" class="form-control form-control-alternative"
+                    formControlName="category_id">
                     <option *ngFor="let category of categories" [value]="category.id">
                       {{ category.name }}
                     </option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-categoryID">Category:</label>
+                  <select id="input-categoryID" class="form-control form-control-alternative"
+                    formControlName="category_id" >
+                    <ng-container *ngFor="let category of categories">
+                      <option *ngIf="category.level === 0" [value]="category.id">
+                        {{ category.name }}
+                      </option>
+                      <option *ngIf="category.level >= 1" [value]="category.id" >
+                        {{ getIndentation(category.level) }} {{ category.name }}
+                      </option>
+                      <ng-container *ngIf="category.children">
+                        <option *ngFor="let child of category.children" [value]="child.id"
+                          [disabled]="child.level >= 2">
+                          {{ getIndentation(child.level) }} {{ child.name }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="category.grandchildren">
+                        <option *ngFor="let child of category.grandchildren" [value]="child.id"
+                          [disabled]="child.level >= 3">
+                          {{ getIndentation(child.level) }} {{ child.name }}
+                        </option>
+                      </ng-container>
+                    </ng-container>
                   </select>
                 </div>
               </div>
@@ -73,30 +110,31 @@
                     placeholder="Description" formControlName="description"></textarea>
                 </div>
               </div>
-              <div class="col-lg-6" style="display: none;">
+              <div class="col-lg-6" style="display: none">
                 <div class="form-group">
                   <label class="form-control-label" for="input-enrollmentCount">Enrollment Count :</label>
                   <input type="text" id="input-enrollmentCount" class="form-control form-control-alternative"
-                    placeholder="Enrollment Count" formControlName="enrollment_count">
+                    placeholder="Enrollment Count" formControlName="enrollment_count" />
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="form-group" style="display: none;">
+                <div class="form-group" style="display: none">
                   <label class="form-control-label" for="input-id">ID :</label>
-                  <input type="text" id="input-id" class="form-control form-control-alternative" formControlName="id">
+                  <input type="text" id="input-id" class="form-control form-control-alternative" formControlName="id" />
                 </div>
               </div>
               <div class="col-lg-12">
                 <div class="form-group">
                   <label class="form-control-label" for="input-status">Status</label>
                   <div class="control" class="form-check form-switch form-switch-md mb-5">
-                    <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input" formControlName="is_delete">
+                    <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input"
+                      formControlName="is_delete" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </form> 
+        </form>
       </div>
     </div>
   </div>

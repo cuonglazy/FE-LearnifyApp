@@ -14,7 +14,7 @@ export type EntityArrayResponseType = HttpResponse<ICourse[]>;
 })
 export class CourseService {
   protected resourceUrl = `${environment.apiBaseUrl}/courses`;
-  protected token = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiY3VvbmdAZW1haWwuY29tIiwic3ViIjoiY3VvbmdAZW1haWwuY29tIiwiZXhwIjoxNzA1MDI2MjYxfQ.T2khNmw-1JOx85GWLdWzOAiBmXvZgL8SLSzBNhj8q3Y';
+  protected token = localStorage.getItem("access_token");
   constructor(
     protected http: HttpClient,
     private categoryService: CategoryService
@@ -51,11 +51,7 @@ export class CourseService {
 
   findOne(id: number): Observable<any> {
     const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
-    const options = {
-      headers: headers,
-      observe: 'response' as 'response'
-    }
-    return this.http.get<ICourse>(`${this.resourceUrl}/${id}`,options);
+    return this.http.get<ICourse>(`${this.resourceUrl}/${id}`, {headers, observe: 'response'});
   }
 
   findAll(): Observable<EntityArrayResponseType> {
