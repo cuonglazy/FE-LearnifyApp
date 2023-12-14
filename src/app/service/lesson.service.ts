@@ -1,6 +1,6 @@
+import { ILesson, getLessonIdentifier } from './../pages/lesson/lesson.model';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ILesson } from '../pages/lesson/lesson.model';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -15,7 +15,7 @@ export class LessonService {
   protected token = localStorage.getItem("access_token");
   constructor(protected http:HttpClient) { }
 
-  findAll(req?: any): Observable<EntityArrayResponseType>{
+  findAll(): Observable<EntityArrayResponseType>{
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
     return this.http.get<ILesson[]>(`${this.resourceUrl}`, {headers, observe: 'response'})
   }
@@ -35,5 +35,15 @@ export class LessonService {
       }
     }
     return this.http.get<ILesson[]>(`${this.resourceUrl}/page`, { headers, observe: 'response', params });
+  }
+
+  findById(id: number): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
+    return this.http.get<ILesson>(`${this.resourceUrl}/${id}`, {headers , observe: 'response'});
+  }
+
+  update(lesson: ILesson): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
+    return this.http.put<ILesson>(`${this.resourceUrl}/${getLessonIdentifier(lesson)}`, lesson, {headers, observe: 'response'});
   }
 }

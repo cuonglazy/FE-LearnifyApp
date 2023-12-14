@@ -1,104 +1,103 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-    <div class="container-fluid">
-  
-    </div>
+  <div class="container-fluid">
+
   </div>
+</div>
+<div class="row">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt-5">
+  <!-- Table -->
   <div class="row">
-  </div>
-  <!-- Page content -->
-  <div class="container-fluid mt-5">
-    <!-- Table -->
-    <div class="row">
-      <div class="col">
-        <div class="card shadow">
-          <div class="card-header border-0">
-            <div class="d-flex justify-content-between">
-              <form [formGroup]="searchForm" (ngSubmit)="loadPage()">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <input type="text" placeholder="Search..." class="form-control" style="flex: 1;" formControlName="keyword">
-                  <button type="submit" class="btn btn-info">Search</button>
-                </div>
-              </form>
-              <div class="text-right">
-                <a [routerLink]="'/system-admin/lesson/new'" class="btn btn-sm btn-primary">Thêm mới</a>
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="d-flex justify-content-between">
+            <form [formGroup]="searchForm" (ngSubmit)="loadPage()">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="text" placeholder="Search..." class="form-control" style="flex: 1;"
+                  formControlName="keyword">
+                <button type="submit" class="btn btn-info">Search</button>
               </div>
+            </form>
+            <div class="text-right">
+              <a [routerLink]="'/system-admin/lesson/new'" class="btn btn-sm btn-primary">Thêm mới</a>
             </div>
           </div>
-  
-          <div class="table-responsive">
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">STT</th>
-                  <th scope="col">Tiêu đề</th>
-                  <th scope="col">Thời gian</th>
-                  <th scope="col">Đường dẫn video</th>
-                  <th scope="col">Bài học</th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of lessons; let i = index">
-                  <th scope="row">
-                    <div class="media align-items-center">
-                      <div class="media-body">
-                        <span class="mb-0 text-sm">{{ i + 1 }}</span>
-                      </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">STT</th>
+                <th scope="col">Tiêu đề</th>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Đường dẫn video</th>
+                <th scope="col">Bài học</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of lessons; let i = index">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{ i + 1 }}</span>
                     </div>
-                  </th>
-                  <td>
-                    {{ item.title }}
-                  </td>
-                  <td>
-                    {{ item.time }}
-                  </td>
-                  <td>
-                    {{ item.video_url }}
-                  </td>
-                  <td>
-                    {{ item.section_id }}
-                  </td>
-                  <td>
-                  </td>
-                  <td class="text-right">
-                    <div ngbDropdown placement="bottom-right">
-                      <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
-                        <i class="fas fa-ellipsis-v"></i>
-                      </a>
-                      <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" [routerLink]="'/system-admin/lesson/{id}/edit'"
-                          href="javascript:void(0)">Xem</a>
-                        <a class="dropdown-item" routerLink="/system-admin/lesson/new">Cập nhật</a>
-                        <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
-                      </div>
+                  </div>
+                </th>
+                <td>
+                  {{ item.title }}
+                </td>
+                <td>
+                  {{ item.time }}
+                </td>
+                <td>
+                  {{ item.video_url }}
+                </td>
+                <td>
+                  {{ item.section_id }}
+                </td>
+                <td>
+                </td>
+                <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" [routerLink]="['/system-admin/lesson', item.id ,'new']">Cập nhật</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-footer py-4">
-            <nav aria-label="...">
-              <ul class="pagination justify-content-end mb-0">
-                <li class="page-item" [class.disabled]="page === 0">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="navigateToPage(page - 1)">
-                    <i class="fas fa-angle-left"></i>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item" *ngFor="let i of getPageArray(); let index = index" [class.disabled]="i === page">
-                  <a class="page-link" href="javascript:void(0)" (click)="navigateToPage(i)">{{i}}</a>
-                </li>
-                <li class="page-item" [class.disabled]="page === totalPages">
-                  <a class="page-link" href="javascript:void(0)" (click)="navigateToPage(page + 1)">
-                    <i class="fas fa-angle-right"></i>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <li class="page-item" [class.disabled]="page === 0">
+                <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="navigateToPage(page - 1)">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item" *ngFor="let i of getPageArray(); let index = index" [class.disabled]="i === page">
+                <a class="page-link" href="javascript:void(0)" (click)="navigateToPage(i)">{{i}}</a>
+              </li>
+              <li class="page-item" [class.disabled]="page === totalPages">
+                <a class="page-link" href="javascript:void(0)" (click)="navigateToPage(page + 1)">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div>
   </div>
+</div>

@@ -14,6 +14,7 @@ export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
   category: ICategory[] = [];
   selectedCategory: ICategory | null = null;
+  isUpdating = false;
 
   editForm = this.fb.group({
     id: [],
@@ -66,10 +67,20 @@ export class UpdateCategoryComponent implements OnInit {
           level + 1,
           visited
         );
+        const grandChildren = this.buildHierarchy(
+          categories,
+          cat.id,
+          level + 2,
+          visited
+        );
         return {
           ...cat,
           level: level,
           children: children,
+          child: {
+            ...cat,
+            grandChildren: grandChildren,
+          },
         };
       })
       .filter((cat) => cat !== null);
@@ -85,6 +96,7 @@ export class UpdateCategoryComponent implements OnInit {
       parent_id: this.selectedCategory ? this.selectedCategory.id : null,
     });
   }
+  
 
   save(): void {
     this.isSaving = true;
