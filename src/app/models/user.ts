@@ -1,4 +1,5 @@
 import { Role } from "./role";
+import { UserImage } from "./user.image";
 export interface User {
     id?: number;
     fullname?: string;
@@ -10,27 +11,26 @@ export interface User {
     date_of_birth?: Date;
     facebook_account_id?: number;
     google_account_id?: number;
-    image_url?: string;
     url?: string;
     role_id?: Role;
-    // user_image?: UserImage;
+    image_url?: UserImage[];
 }
 
-export interface UserImage {
-    id?: number;
-    image_url: string;
-    user_id: number;
-}
+// export interface UserImage {
+//     id?: number;
+//     image_url?: UserImage[];
+//     // user_id: number;
+// }
 
-export class IUserImage implements User {
-    constructor (
-        public id?: number,
-        public image_url?: string,
-        public user_id?: number,
-    ) {
+// export class IUserImage implements UserImage {
+//     constructor (
+//         public id?: number,
+//         public image_url?: UserImage[],
+//         // public user_id?: number,
+//     ) {
 
-    }
-}
+//     }
+// }
 
 export class IUser implements User {
     constructor (public id?: number,
@@ -43,10 +43,9 @@ export class IUser implements User {
         public date_of_birth?: Date,
         public facebook_account_id?: number,
         public google_account_id?: number,
-        public image_url?: string,
         public url?: string,
         public role_id?: Role,
-        // public user_image?: UserImage
+        public image_url?: UserImage[]
         ) {
         this.active = this.active ?? true;
 

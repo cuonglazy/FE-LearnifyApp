@@ -16,14 +16,14 @@
     <div class="row">
       <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
         <div class="card card-profile shadow">
-          <form action="" > 
+          <form action="" [formGroup]="userProfileForm"> 
             <!-- [formGroup]="userImageData" (ngSubmit)="postImageForUser(userImageData.image_url)" -->
             <div class="row justify-content-center">
               <div class="col-lg-3 order-lg-2">
-                <div class="card-profile-image">
+                <div class="card-profile-image" *ngFor="let image of userImageData">
                   <a href="javascript:void(0)">
-                    <input type="file" id="image-file" accept="image/*" style="display: none;">
-                    <img id="image-play" src="" class="rounded-circle">
+                    <!-- <input type="file" id="image-file" accept="image/*" style="display: none;"> -->
+                    <img id="image-play" [src]="image.image_url" class="rounded-circle">
                   </a>
                 </div>
               </div>
@@ -56,7 +56,6 @@
                 </div>
               </div>
             </div>
-            <form>
               <div class="text-center">
                 <h3>
                   {{userCloneData?.fullname}}<span class="font-weight-light">, {{userCloneData.date_of_birth}}</span>
@@ -74,7 +73,6 @@
                 <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
                 <a href="javascript:void(0)">Show more</a>
               </div>
-            </form>
           </div>
         </div>
       </div>

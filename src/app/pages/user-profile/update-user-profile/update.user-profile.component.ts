@@ -6,7 +6,9 @@ import { TokenService } from 'src/app/service/token.service';
 import { UserService } from 'src/app/service/user.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpdateUserDTO } from 'src/app/dtos/user/update.user.dto';
-import { User, UserImage } from 'src/app/models/user';
+import { User } from 'src/app/models/user';
+import { UserImage } from 'src/app/models/user.image';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-update.user-profile',
@@ -44,10 +46,16 @@ export class UpdateUserProfileComponent implements OnInit {
     let token: string = this.tokenService.getToken() ?? ''
     this.userService.getUserDetails(token).subscribe({
       next: (response: any) => {
-        this.userService.getImageByUserId(response.id).subscribe((dataResponse) => {
-          this.userImageData = dataResponse.body
-        })
-                                  
+        // this.userService.getImageByUserId(response.id).subscribe((dataResponse) => {
+        //   this.userImageData = dataResponse.body
+        // })
+        if(response.user_images && response.user_images.length > 0) {
+            response.user_images.forEach((user_image:UserImage) => {
+              user_image.image_url = `${environment.apiBaseUrl}/users/readImage/${user_image.image_url}`
+            });
+        }
+        this.userImageData = response.user_images;
+
         this.userResponse = {  
           ...response,
           date_of_birth: new Date(response.date_of_birth),
@@ -58,6 +66,7 @@ export class UpdateUserProfileComponent implements OnInit {
           email: this.userResponse?.email ?? '',
           password: this.userResponse?.password ?? '',
           address: this.userResponse?.address ?? '',
+          image_url: this.userResponse?.image_url ?? '',
           date_of_birth: this.userResponse?.date_of_birth.toISOString().substring(0, 10),
         })
         this.userService.saveUserResponseToLocalStorage(this.userResponse);
@@ -89,41 +98,6 @@ export class UpdateUserProfileComponent implements OnInit {
   //     }
   //   );
   // }
-
-  // openFilePicker(): void {
-  //   const fileInput: HTMLElement = document.getElementById('image-file');
-  //   fileInput.click();
-  // }
-  
-  // headleFileInput(event: any): void {
-  //   const files: FileList = event.target.files;
-  //   if (files.length > 0) {
-  //     const file: File = files[0];
-  //     const imagePlay: HTMLImageElement = document.getElementById('image-play') as HTMLImageElement;
-  
-  //     const reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       // Đảm bảo rằng e.target.result là URL hợp lệ cho hình ảnh
-  //       if (typeof e.target.result === 'string') {
-  //         imagePlay.src = e.target.result;
-  //       }
-  //     };
-  
-  //     // Đọc file hình ảnh và gán URL cho imagePlay.src
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
-  // onFileSelected(event: any): void {
-  //   // Retrieve the selected image file
-  //   this.selectedImage = event.target.files[0];
-  // }
-
-  // uploadImage(): void {
-  //   if (this.selectedImage) {
-  //       this.postImageForUser(this.selectedImage);
-  //     };
-  //   }
   
 
   passwordMatchValidator(): ValidatorFn {
@@ -169,22 +143,27 @@ export class UpdateUserProfileComponent implements OnInit {
     }
   }
 
-  // onFileSelected(event: any): void {
-  //   // Retrieve the selected image file
-  //   this.selectedImage = event.target.files[0];
+  // openFilePicker(): void {
+  //   const fileInput: HTMLElement = document.getElementById('image-file');
+  //   fileInput.click();
   // }
-
-  // uploadImage(): void {
-  //   if (this.selectedImage) {
-  //     // Call the service method to upload the image
+  
+  // headleFileInput(event: any): void {
+  //   const files: FileList = event.target.files;
+  //   if (files.length > 0) {
+  //     const file: File = files[0];
+  //     const imagePlay: HTMLImageElement = document.getElementById('image-play') as HTMLImageElement;
+  
   //     const reader = new FileReader();
-
-  //     reader.onloadend = () => {
-  //       const imageString = reader.result as string;
-  //       this.postImageForUser(imageString);
+  //     reader.onload = (e) => {
+  //       // Đảm bảo rằng e.target.result là URL hợp lệ cho hình ảnh
+  //       if (typeof e.target.result === 'string') {
+  //         imagePlay.src = e.target.result;
+  //       }
   //     };
-
-  //     reader.readAsDataURL(this.selectedImage);
+  
+  //     // Đọc file hình ảnh và gán URL cho imagePlay.src
+  //     reader.readAsDataURL(file);
   //   }
   // }
 }
