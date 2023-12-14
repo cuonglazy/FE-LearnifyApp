@@ -13,13 +13,16 @@ const lessonRoutes: Routes = [
   {
     path: "new",
     component: UpdateLessonComponent,
+    resolve:{
+      lesson: LessonRoutingResolveService,
+    },
   },
   {
     path: ":id/edit",
     component: UpdateLessonComponent,
     resolve:{
       lesson: LessonRoutingResolveService,
-    }
+    },
   },
 ];
 

@@ -15,6 +15,20 @@ export class LessonService {
   protected token = localStorage.getItem("access_token");
   constructor(protected http:HttpClient) { }
 
+  create(lesson: ILesson): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+    return this.http.post<ILesson>(this.resourceUrl, lesson, {headers, observe: 'response'})
+  }
+  update(lesson: ILesson): Observable<EntityResponseType>{
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
+    return this.http.put<ILesson>(`${this.resourceUrl}/${getLessonIdentifier(lesson)}`, lesson, {headers, observe: 'response'});
+  }
+
+  delete(id: number): Observable<EntityResponseType> {
+    const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
+    return this.http.delete(`${this.resourceUrl}/${id}`, {headers, observe: 'response'});
+  }
+
   findAll(): Observable<EntityArrayResponseType>{
     const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
     return this.http.get<ILesson[]>(`${this.resourceUrl}`, {headers, observe: 'response'})
@@ -42,8 +56,4 @@ export class LessonService {
     return this.http.get<ILesson>(`${this.resourceUrl}/${id}`, {headers , observe: 'response'});
   }
 
-  update(lesson: ILesson): Observable<EntityResponseType>{
-    const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
-    return this.http.put<ILesson>(`${this.resourceUrl}/${getLessonIdentifier(lesson)}`, lesson, {headers, observe: 'response'});
-  }
 }

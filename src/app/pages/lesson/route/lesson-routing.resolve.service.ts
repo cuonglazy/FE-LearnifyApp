@@ -9,13 +9,16 @@ import { HttpResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class LessonRoutingResolveService implements Resolve<Lesson>{
-  constructor(protected service: LessonService, protected router: Router) {}
-  resolve(route: ActivatedRouteSnapshot): Observable<Lesson> | Observable<never> {
-    const id = route.params.get['id'];
+export class LessonRoutingResolveService implements Resolve<ILesson>{
+
+  constructor(protected service: LessonService, protected router: Router) 
+  {}
+  
+  resolve(route: ActivatedRouteSnapshot): Observable<ILesson> | Observable<never> {
+    const id = route.params['id'];
     if (id) {
       return this.service.findById(id).pipe(
-        mergeMap((lesson: HttpResponse<ILesson>) => {
+        mergeMap((lesson: HttpResponse<Lesson>) => {
           if (lesson.body) {
             return of(lesson.body);
           } else {
