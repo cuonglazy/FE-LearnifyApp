@@ -12,12 +12,12 @@ export class UserProfileRoutingResolveService implements Resolve<User> {
     constructor(protected service: UserService, protected router: Router) {}
   
     resolve(route: ActivatedRouteSnapshot): Observable<User> | Observable<never> {
-      const id = route.paramMap.get['id'];
+      const id = route.params['id'];
       if (id) {
         return this.service.getUserById(id).pipe(
           mergeMap((user: HttpResponse<IUser>) => {
-            if (user.body) {
-              return of(user.body);
+            if (user) {
+              return of(user);
             } else {
               this.router.navigate(['404']);
               return EMPTY;

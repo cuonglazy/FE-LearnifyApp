@@ -1,4 +1,13 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, finalize } from 'rxjs';
+import { UpdateUserDTO } from 'src/app/dtos/user/update.user.dto';
+import { IUser, User } from 'src/app/models/user';
+import { UserResponse } from 'src/app/responses/users/user.response';
+import { TokenService } from 'src/app/service/token.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -6,9 +15,121 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserEditComponent implements OnInit {
 
-  constructor() { }
+  userEditForm: FormGroup;
+  userResponse?: UserResponse | null;
+  token:string = '';
+  isSaving = false;
+  userCloneData: any;
+
+  constructor(
+    private userService: UserService,
+    private tokenService: TokenService,
+    private router: Router,
+    private formBuider: FormBuilder,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.userEditForm = this.formBuider.group({
+      id: [''],
+      fullname: [''],
+      phone_number: ['', Validators.minLength(10)],
+      email: ['', Validators.minLength(6)],
+      date_of_birth: [Date.now()],
+      password: ['', [Validators.minLength(6)]],
+      retypePassword: ['', [Validators.minLength(6)]],
+      address: ['']
+    })
+  }
 
   ngOnInit(): void {
+    this.activatedRoute.data.subscribe((userData) => {
+      this.updateForm(userData.user)
+      console.warn(userData);
+      this.userCloneData = userData.user;
+    });
+  }
+  
+  protected updateForm(user: User): void {
+    this.userEditForm.patchValue({
+      //Cach 1: dung spread operator
+      ...user,
+      //Cach 2:
+      // id: user.id,
+      // fullname: user.fullname,
+      // email: user.email ?? user.email,
+      // phone_number: user.phone_number,
+      // date_of_birth: user.date_of_birth,
+      // address: user.address,
+      // password: user.password
+    })
+    console.log(this.userEditForm);
+    
+  }
+
+  passwordMatchValidator(): ValidatorFn {
+    return (formGroup: AbstractControl): ValidationErrors | null => {
+      const password = formGroup.get('password')?.value;
+      const retypedPassword = formGroup.get('retype_password')?.value;
+      if (password !== retypedPassword) {
+        return { passwordMismatch: true };
+      }
+  
+      return null;
+    };
+  }
+
+  save(): void {
+    const user = this.createForm();
+    // Update profile cho chinh minh
+    // const token = this.tokenService.getToken();
+    // if(user.id) {
+    //   this.subscribeToSaveResponse(this.userService.updateUserDetail(token ,user))
+    // } 
+    // if(!user.id) {
+    //   alert('Người dùng chưa tồn tại để cập nhật!')
+    // }
+
+    //Update profile theo ID
+    if(user.id) {
+      this.subscribeToSaveResponse(this.userService.updateUserById(user.id, user))
+    } 
+    if(!user.id) {
+      alert('Người dùng chưa tồn tại để cập nhật!')
+    }
+  }
+
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<User>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
+      next: () => this.onSaveSuccess(),
+      error: () => this.onSaveError(),
+    })
+  }
+
+  protected onSaveSuccess(): void {
+    this.previousState();
+  }
+
+  protected onSaveError(): void {
+  }
+
+  protected onSaveFinalize(): void {
+    this.isSaving = false;
+  }
+
+  previousState(): void {
+    window.history.back();
+  }
+
+  createForm(): User {
+    return {
+      ...new IUser(),
+      id: this.userEditForm.get(['id'])!.value,
+      fullname: this.userEditForm.get(['fullname'])!.value,
+      email: this.userEditForm.get(['email'])!.value,
+      phone_number: this.userEditForm.get(['phone_number'])!.value,
+      date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
+      address: this.userEditForm.get(['address'])!.value,
+      password: this.userEditForm.get(['password'])!.value
+    }
   }
 
 }
