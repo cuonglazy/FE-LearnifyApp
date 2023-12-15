@@ -1,6 +1,6 @@
 import { Course, ICourse } from './../course.model';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { CourseService } from 'src/app/service/course.service';
 import { EMPTY, Observable, mergeMap, of } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';

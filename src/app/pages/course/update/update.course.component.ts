@@ -1,3 +1,4 @@
+import { Validators } from '@angular/forms';
 import { Category, ICategory } from './../../category/category.model';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -7,7 +8,8 @@ import { CourseService } from 'src/app/service/course.service';
 import { Course, ICourse } from '../course.model';
 import { Observable, finalize } from 'rxjs';
 import { CategoryService } from 'src/app/service/category.service';
- 
+import { UserService } from 'src/app/service/user.service';
+
 @Component({
   selector: 'app-update.course',
   templateUrl: './update.course.component.html',
@@ -18,33 +20,42 @@ export class UpdateCourseComponent implements OnInit {
   course: ICourse;
   categories: Category[] = [];
   thumbnail: any;
-  category: ICategory [];
- 
+  category: ICategory[];
+  selectedCategory: Category;
+
   constructor(
     private courseService: CourseService,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private categoryService: CategoryService,
+    private userService: UserService
   ) {
     this.dataForm = this.formBuilder.group({
-      id: [],
-      thumbnail: [],
-      title: [],
-      price: [],
-      description: [],
-      category_id: [],
-      user_id: [],
-      is_delete: [],
+      id: [''],
+      thumbnail: [null, [Validators.required]],
+      title: [null, [Validators.required]],
+      price: [null, [Validators.required, Validators.min(100)]],
+      category_id: [null],
+      user_id: [null, [Validators.required]],
+      description: [null, Validators.maxLength(255)],
+      is_delete: [true],
     });
   }
- 
+
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({course}) =>{
+    this.activatedRoute.data.subscribe(({ course }) => {
       this.updateForm(course);
     })
+
+    const loggedInUser = this.userService.getUserResponseFromLocalStorage();
+    if (loggedInUser) {
+      this.dataForm.patchValue({
+        user_id: loggedInUser.id,
+      });
+    }
     this.loadCategories();
   }
- 
+
   loadCategories(): void {
     this.categoryService.findAll().subscribe((res) => {
       this.categories = res.body || [];
@@ -62,16 +73,21 @@ export class UpdateCourseComponent implements OnInit {
         }
         visited[cat.id] = true;
         const children = this.buildHierarchy(categories, cat.id, level + 1, visited);
+        const grandChildren = this.buildHierarchy(categories, cat.id, level + 2, visited
+        );
         return {
           ...cat,
           level: level,
           children: children,
+          child: {
+            ...cat,
+            grandChildren: grandChildren,
+          },
         };
       })
       .filter((cat) => cat !== null);
   }
-  
-  
+
   getIndentation(level: number): string {
     return "—".repeat(level);
   }
@@ -79,14 +95,14 @@ export class UpdateCourseComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
- 
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICourse>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
       error: () => this.onSaveError(),
     });
   }
- 
+
   save(): void {
     this.isSaving = true;
     const course = this.createFromForm();
@@ -96,28 +112,19 @@ export class UpdateCourseComponent implements OnInit {
       this.subscribeToSaveResponse(this.courseService.update(course));
     }
   }
- 
-  onDelete(id: number): void {
-    this.courseService.delete(id).subscribe((res) =>{
-      console.warn('Delete Successfully!', res);
-    },
-    (error) => {
-      console.error('Delete Failed!', error);
-    })
-  }
- 
+
   onFileSelected(event): void {
     console.log(event)
   }
- 
+
   protected onSaveSuccess(): void {
     this.previousState();
   }
- 
+
   protected onSaveError(): void {
     // Handle error as needed
   }
- 
+
   protected onSaveFinalize(): void {
     this.isSaving = false;
   }
@@ -134,7 +141,7 @@ export class UpdateCourseComponent implements OnInit {
       is_delete: course.is_delete,
     });
   }
- 
+
   protected createFromForm(): ICourse {
     return {
       ...new Course(),
@@ -147,5 +154,5 @@ export class UpdateCourseComponent implements OnInit {
       category_id: this.dataForm.get(['category_id'])!.value,
       is_delete: this.dataForm.get(['is_delete'])!.value,
     };
-  }  
+  }
 }

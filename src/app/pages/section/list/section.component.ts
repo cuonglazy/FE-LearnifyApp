@@ -97,7 +97,7 @@ export class SectionComponent implements OnInit {
 
       this.courseService.findAll().subscribe((response) => {
         this.dataCourse = response.body ? response.body : [];
-
+        
         const result = this.dataPage.map((item1) => {
           const matchingObject2 = this.dataCourse.find((item2) => item2.id === item1.course_id);
           return {
@@ -107,7 +107,6 @@ export class SectionComponent implements OnInit {
         });
         this.dataPage = result;
       })
-
     })
   }
 

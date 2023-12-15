@@ -13,6 +13,7 @@ export interface ICourse{
     category_id?: number;
     category_name?: string;
     user_name?: string;
+    section_id?: number;
     Category?: ICategory[];
 }
 

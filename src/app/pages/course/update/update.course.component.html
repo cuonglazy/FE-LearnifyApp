@@ -17,8 +17,7 @@
           <div class="col-4 text-right">
             <form [formGroup]="dataForm" (ngSubmit)="save()">
               <a (click)="previousState()" class="btn btn-sm btn-info mr-4">Back</a>
-              <button type="submit" routerLink="/system-admin/course" (click)="save()"
-                class="btn btn-sm btn-default float-right">
+              <button type="submit" class="btn btn-sm btn-default float-right">
                 Save
               </button>
             </form>
@@ -31,7 +30,8 @@
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-title">Thumbnail:</label>
+                  <label class="form-control-label" for="input-title">Thumbnail:</label><span
+                    class="text-danger">*</span>
                   <!-- Hiển thị ảnh đã chọn -->
                   <img *ngIf="thumbnail" [src]="thumbnail" alt="Thumbnail" class="img-thumbnail mb-2"
                     style="max-width: 100%; height: auto" />
@@ -45,59 +45,51 @@
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-title">Title :</label>
+                  <label class="form-control-label" for="input-title">Title :</label> <span class="text-danger">*</span>
                   <input type="text" id="input-title" formControlName="title"
                     class="form-control form-control-alternative" placeholder="Title" />
+                  <div *ngIf="dataForm.get('title').hasError('required') && dataForm.get('title').touched"
+                    class="text-danger">Title is required.
+                  </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="form-control-label" for="input-price">Price :</label>
-                  <input type="text" id="input-price" class="form-control form-control-alternative" placeholder="Price"
-                    formControlName="price" />
+                  <span class="text-danger">*</span>
+                  <input type="number" id="input-price" class="form-control form-control-alternative"
+                    placeholder="Price" formControlName="price" />
+                  <div *ngIf="dataForm.get('price').hasError('required') && dataForm.get('price').touched"
+                    class="text-danger">Price is required.
+                  </div>
+                  <div *ngIf="dataForm.get('price').hasError('min') && dataForm.get('price').touched"
+                    class="text-danger">Giá bài học phải lớn hơn 100 VND.
+                  </div>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-userID">User :</label>
+                  <label class="form-control-label" for="input-userID">User :</label><span class="text-danger">*</span>
                   <input type="text" id="input-userID" class="form-control form-control-alternative" placeholder="User"
-                    formControlName="user_id" />
+                    formControlName="user_id" [value]="dataForm.get('user_id').value" readonly />
                 </div>
               </div>
-              <!-- <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-categoryID">Category:</label>
-                  <select id="input-categoryID" class="form-control form-control-alternative"
-                    formControlName="category_id">
-                    <option *ngFor="let category of categories" [value]="category.id">
-                      {{ category.name }}
-                    </option>
-                  </select>
-                </div>
-              </div> -->
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="form-control-label" for="input-categoryID">Category:</label>
-                  <select id="input-categoryID" class="form-control form-control-alternative"
-                    formControlName="category_id" >
-                    <ng-container *ngFor="let category of categories">
-                      <option *ngIf="category.level === 0" [value]="category.id">
-                        {{ category.name }}
-                      </option>
-                      <option *ngIf="category.level >= 1" [value]="category.id" >
-                        {{ getIndentation(category.level) }} {{ category.name }}
-                      </option>
-                      <ng-container *ngIf="category.children">
-                        <option *ngFor="let child of category.children" [value]="child.id"
-                          [disabled]="child.level >= 2">
-                          {{ getIndentation(child.level) }} {{ child.name }}
-                        </option>
-                      </ng-container>
-                      <ng-container *ngIf="category.grandchildren">
-                        <option *ngFor="let child of category.grandchildren" [value]="child.id"
-                          [disabled]="child.level >= 3">
-                          {{ getIndentation(child.level) }} {{ child.name }}
-                        </option>
+                  <label class="form-control-label" for="input-categoryID">Category:</label><span
+                    class="text-danger">*</span>
+                  <select id="parent_id" class="form-control" [disabled]="selectedCategory?.level === 0"
+                     formControlName="parent_id">
+                    <ng-container *ngFor="let item of categories">
+                      <option [disabled]="true" [value]="item.id.toString()">{{getIndentation(item.level)}} {{item.name}}</option>
+                      <ng-container *ngFor="let child of item.children">
+                        <option [disabled]="true" [value]="child.id.toString()">{{getIndentation(child.level)}} {{child.name}}</option>
+                        <ng-container *ngIf="child.children">
+                          <option *ngFor="let grandchild of child.children" [value]="grandchild.id.toString()"
+                            >
+                            {{getIndentation(grandchild.level)}} {{grandchild.name}}
+                          </option>
+                        </ng-container>
                       </ng-container>
                     </ng-container>
                   </select>
@@ -125,10 +117,10 @@
               </div>
               <div class="col-lg-12">
                 <div class="form-group">
-                  <label class="form-control-label" for="input-status">Status</label>
-                  <div class="control" class="form-check form-switch form-switch-md mb-5">
-                    <input type="checkbox" id="is_delete" name="is_delete" class="form-check-input"
-                      formControlName="is_delete" />
+                  <label class="form-control-label" for="input-status">Status</label><span class="text-danger">*</span>
+                  <div class="form-check form-switch" style="margin-left: 20px;">
+                    <input class="form-check-input" type="checkbox" id="mySwitch" name="is_delete"
+                      formControlName="is_delete">
                   </div>
                 </div>
               </div>
