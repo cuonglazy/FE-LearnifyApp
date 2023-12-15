@@ -1,4 +1,4 @@
-import { Category, ICategory } from './../category/category.model';
+import { ICategory } from './../category/category.model';
 export interface ICourse{
     id?: number;
     title?: string;
@@ -13,7 +13,8 @@ export interface ICourse{
     category_id?: number;
     category_name?: string;
     user_name?: string;
-    Category?: ICategory [];
+    section_id?: number;
+    Category?: ICategory[];
 }
 
 export class Course implements ICourse{
