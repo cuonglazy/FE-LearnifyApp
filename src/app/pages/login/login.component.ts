@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   */
 
-  email: string = 'ngosontruong75@gmail.com';
+  email: string = 'admin@gmail.com';
   password: string = '123456';
   roles: Role[] = [];
   rememberMe: boolean = true;
@@ -97,7 +97,11 @@ export class LoginComponent implements OnInit, OnDestroy {
                 date_of_birth: new Date(response.date_of_birth),
               };
               this.userService.saveUserResponseToLocalStorage(this.userResponse);
-              this.router.navigate(['/system-admin/dashboard']);
+              if(this.userResponse?.role_id.name.toLowerCase() == 'admin') {
+                this.router.navigate(['/system-admin/dashboard']);   
+              } else if(this.userResponse?.role_id.name == 'user') {
+                this.router.navigate(['/']);                      
+              }
             },
             complete: () => {
               debugger;

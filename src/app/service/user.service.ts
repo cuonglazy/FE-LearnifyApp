@@ -5,10 +5,12 @@ import { RegisterDTO } from '../dtos/user/register.dto';
 import { LoginDTO } from '../dtos/user/login.dto';
 import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.util.service';
-import { User, UserImage } from '../models/user';
+import { User } from '../models/user';
+import { UserImage } from '../models/user.image'; 
 import { UserResponse } from '../responses/users/user.response';
 import { UpdateUserDTO } from '../dtos/user/update.user.dto';
 import { map } from 'rxjs';
+import { warn } from 'console';
 
 export type EntityResponseType = HttpResponse<User>
 
@@ -23,12 +25,13 @@ export class UserService {
   private apiGetUserById = `${environment.apiBaseUrl}/users`;
   private apiPostImageForUser = `${environment.apiBaseUrl}/users/uploads`
   private apiGetImageOfUser = `${environment.apiBaseUrl}/users/image`
-  
+  protected token = localStorage.getItem("access_token");
+
   private apiConfig = {
     headers: this.createHeaders()
   }
 
-  constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {
+  constructor(private http: HttpClient, private httpUtilService: HttpUtilService,) {
 
   }
 
@@ -39,24 +42,15 @@ export class UserService {
     })
   }
 
-  // postImageForUser(userId: number, image: File): Observable<any> {
-  //   const formData = new FormData();
-  //   formData.append('userId', userId.toString());
+  public uploadImage(image: File): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const formData = new FormData();
+
+    formData.append('files', image);
     
-  //   // Convert the image file to a Base64 string
-  //   return this.getBase64(image).pipe(
-  //     map((base64Image: string) => {
-  //       formData.append('image', base64Image);
-
-  //       // You may need to adjust the headers based on your API requirements
-  //       const headers = new HttpHeaders();
-  //       headers.append('Content-Type', 'multipart/form-data');
-
-  //       return this.http.post<User>(`${this.apiPostImageForUser}/${userId}`, formData, { headers })
-  //     })
-  //   );
-  // }
-  
+    return  this.http.post<User>(`${this.apiPostImageForUser}/${this.token}`, formData, { headers });
+   }
   
   register(registerDTO: RegisterDTO): Observable<any> {
     return this.http.post(this.apiRegister, registerDTO, this.apiConfig)
@@ -81,7 +75,7 @@ export class UserService {
     return this.http.get<User[]>(this.apiGetAllUser, {params});
   }
 
-  getUserDetails(token: string): Observable<any> {
+  getUserDetails(token: string): Observable<any> { //
     return this.http.post(this.apiUserDetails, {
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -152,22 +146,23 @@ export class UserService {
     }
   }
 
-  // private getBase64(file: File): Observable<string> {
-  //   return new Observable<string>((observer) => {
-  //     const reader = new FileReader();
+  private getBase64(files: File): Observable<string> {
+    return new Observable<string>((observer) => {
+      const reader = new FileReader();
 
-  //     reader.onloadend = () => {
-  //       // Convert the array buffer to a Base64 string
-  //       const base64String = reader.result?.toString().split(',')[1];
-  //       observer.next(base64String);
-  //       observer.complete();
-  //     };
+      reader.onloadend = () => {
+        // Convert the array buffer to a Base64 string
+        const base64String = reader.result?.toString().split(',')[1];
+        observer.next(base64String);
+        observer.complete();
+      };
 
-  //     reader.onerror = (error) => {
-  //       observer.error(error);
-  //     };
+      reader.onerror = (error) => {
+        observer.error(error);
+      };
 
-  //     reader.readAsDataURL(file);
-  //   });
-  // }
+      reader.readAsDataURL(files);
+    });
+  }
+
 }

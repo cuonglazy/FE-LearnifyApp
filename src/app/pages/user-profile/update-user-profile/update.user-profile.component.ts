@@ -10,18 +10,23 @@ import { User } from 'src/app/models/user';
 import { UserImage } from 'src/app/models/user.image';
 import { environment } from 'src/environments/environment';
 
+class ImageSnippet {
+  constructor(public src: string, public file: File) {}
+}
 @Component({
   selector: 'app-update.user-profile',
   templateUrl: './update.user-profile.component.html',
 })
+
 export class UpdateUserProfileComponent implements OnInit {
   userProfileForm: FormGroup;
   imageForm: FormGroup;
   userResponse?: UserResponse | null;
-  token:string = '';
+  token: string = '';
   userCloneData: any;
-  userImageData: any; // Assuming userImageData is of type 'any'
-  selectedImage: File | null = null;
+  selectedFile: ImageSnippet;
+  userImageData: any; 
+  selectedImageFile: File | null = null;
 
   constructor(
     private userService: UserService,
@@ -43,18 +48,20 @@ export class UpdateUserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     debugger
-    let token: string = this.tokenService.getToken() ?? ''
-    this.userService.getUserDetails(token).subscribe({
+    this.token = this.tokenService.getToken() ?? ''
+    this.userService.getUserDetails(this.token).subscribe({
       next: (response: any) => {
-        // this.userService.getImageByUserId(response.id).subscribe((dataResponse) => {
-        //   this.userImageData = dataResponse.body
-        // })
+
+        /*
+          Phần load ảnh ra HTML và đọc ảnh bằng API
+        */
         if(response.user_images && response.user_images.length > 0) {
             response.user_images.forEach((user_image:UserImage) => {
               user_image.image_url = `${environment.apiBaseUrl}/users/readImage/${user_image.image_url}`
             });
         }
         this.userImageData = response.user_images;
+        
 
         this.userResponse = {  
           ...response,
@@ -82,23 +89,6 @@ export class UpdateUserProfileComponent implements OnInit {
       }
     })
   }
-  
-  
-  // private postImageForUser(image: File): void {
-  //   const userId = this.userImageData['user_id'];
-
-  //   this.userService.postImageForUser(userId, image).subscribe(
-  //     (response) => {
-  //       // Handle the response as needed
-  //       console.log('Image upload successful', response);
-  //     },
-  //     (error) => {
-  //       // Handle errors
-  //       console.error('Image upload failed', error);
-  //     }
-  //   );
-  // }
-  
 
   passwordMatchValidator(): ValidatorFn {
     return (formGroup: AbstractControl): ValidationErrors | null => {
@@ -142,6 +132,50 @@ export class UpdateUserProfileComponent implements OnInit {
       }
     }
   }
+  
+  onFileSelected(imageInput: any): void {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+      
+      this.userService.uploadImage(this.selectedFile.file).subscribe(
+        (res) => {
+          console.warn("thanh cong");
+          this.ngOnInit()
+        },
+        (err) => {
+          console.warn("that bai");
+        
+        })
+    });
+    reader.readAsDataURL(file);
+  }
+
+  // saveImage(): void {
+  //   // Add any additional logic for saving if needed
+  //   // Call the postImageForUser function with the selected file
+  //   if (this.selectedImageFile) {
+  //     this.postImageForUser(this.selectedImageFile); // Replace with the appropriate user details
+  //   }
+  // }
+
+  // // Add this function to call the service method
+  // postImageForUser(files: File): void {
+  //   this.userService.postImageForUser(files)
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log('Image uploaded successfully:', response.files);
+  //         // Handle success, if needed
+  //       },
+  //       (error: any) => {
+  //         console.error('Error uploading image:', error);
+  //         // Handle error, if needed
+  //       }
+  //     );
+  // }
 
   // openFilePicker(): void {
   //   const fileInput: HTMLElement = document.getElementById('image-file');
