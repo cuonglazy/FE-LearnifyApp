@@ -1,5 +1,5 @@
 import { Course } from './../pages/course/course.model';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ICourse, getCourseIdentifier } from '../pages/course/course.model';
 import { environment } from 'src/environments/environment';
@@ -68,4 +68,12 @@ export class CourseService {
     return this.http.get<ICourse[]>(this.resourceUrl, options);
   }
 
+  findPage(req:any): Observable<EntityArrayResponseType>{
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+    let params = new HttpParams();
+    params = params.set('keyword', req.keyword);
+    params = params.set('page', req.page.toString());
+    params = params.set('size', req.size.toString());
+    return this.http.get<Course[]>(`${this.resourceUrl}/pages`,{ headers, observe: 'response', params });
+  }
 }

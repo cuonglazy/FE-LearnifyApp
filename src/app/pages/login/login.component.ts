@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   */
 
-  email: string = 'ngosontruong75@gmail.com';
+  email: string = 'admin@gmail.com';
   password: string = '123456';
   roles: Role[] = [];
   rememberMe: boolean = true;

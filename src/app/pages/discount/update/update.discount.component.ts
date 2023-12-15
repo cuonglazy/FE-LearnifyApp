@@ -177,8 +177,6 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   createFromForm(): IDiscount {
-    this.ngOnInit();
-    
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,

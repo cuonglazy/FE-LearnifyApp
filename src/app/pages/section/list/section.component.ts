@@ -60,9 +60,10 @@ export class SectionComponent implements OnInit {
         } else {
           alert("Xóa Thành Công!")
         }
+        this.loadPage();
       });   
     });
-    this.loadPage();
+    
   }
 
 
@@ -132,6 +133,7 @@ export class SectionComponent implements OnInit {
   navigateToPage(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
+      this.searching = true;
       this.loadPage();
     }
   }
