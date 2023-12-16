@@ -18,9 +18,9 @@
       <div class="column">
          <div class="tutor">
             <img src="../../assets/images/pic-2.jpg" alt="" />
-            <div>
+            <div *ngIf="dataCourse">
                <a href="teacher-profile">
-                  <h3>Giảng Viên A</h3>
+                  <h3>{{user.fullname}}</h3>
                </a>
                <span>{{dataCourse.start_time}}</span>
             </div>
