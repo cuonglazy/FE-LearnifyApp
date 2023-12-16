@@ -6,6 +6,11 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminLayoutComponent } from "./layouts/admin-layout/admin-layout.component";
 import { AuthLayoutComponent } from "./layouts/auth-layout/auth-layout.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+import { AuthGuardFn } from "./pages/guards/auth.guard";
+import { RegisterComponent } from "./pages/register/register.component";
+import { CategoriesComponent } from "./pages/category/list/categories.component";
+import { AdminGuard } from "./pages/guards/admin.guard";
 
 const routes: Routes = [
   {
@@ -24,7 +29,7 @@ const routes: Routes = [
             (m) => m.AdminLayoutModule
           ),
       },
-    ],
+    ], 
   },
   {
     path: "",
@@ -38,7 +43,7 @@ const routes: Routes = [
           ),
       },
     ],
-  },
+  }
 ];
 
 @NgModule({

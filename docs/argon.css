@@ -19988,9 +19988,8 @@ textarea[resize='horizontal']
         background: #fff;
         box-shadow: none;
     }
-    .navbar .dropdown-menu-right:before
-    {
-        right: 20px;
+    .navbar .dropdown-menu-right:before {
+        right: 50px;
         left: auto;
     }
     .navbar:not(.navbar-nav-hover) .dropdown-menu.show

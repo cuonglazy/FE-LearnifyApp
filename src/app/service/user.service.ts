@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegisterDTO } from '../dtos/user/register.dto';
@@ -7,6 +7,11 @@ import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.util.service';
 import { IUser, User } from '../models/user';
 import { UserResponse } from '../responses/users/user.response';
+import { UpdateUserDTO } from '../dtos/user/update.user.dto';
+import { map } from 'rxjs';
+import { warn } from 'console';
+
+export type EntityResponseType = HttpResponse<User>
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +24,15 @@ export class UserService {
   private apiGetUserById = `${environment.apiBaseUrl}/users`;
   private apiGetTeacherInfo = `${environment.apiBaseUrl}/users/teacher-info`;
   
+  private apiPostImageForUser = `${environment.apiBaseUrl}/users/uploads`
+  private apiGetImageOfUser = `${environment.apiBaseUrl}/users/image`
+  protected token = localStorage.getItem("access_token");
+
   private apiConfig = {
     headers: this.createHeaders()
   }
 
-  constructor(private http: HttpClient, private httpUtilService: HttpUtilService) {
+  constructor(private http: HttpClient, private httpUtilService: HttpUtilService,) {
 
   }
 
@@ -34,6 +43,16 @@ export class UserService {
     })
   }
 
+  public uploadImage(image: File): Observable<any> {
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    const formData = new FormData();
+
+    formData.append('files', image);
+    
+    return  this.http.post<User>(`${this.apiPostImageForUser}/${this.token}`, formData, { headers });
+   }
+  
   register(registerDTO: RegisterDTO): Observable<any> {
     return this.http.post(this.apiRegister, registerDTO, this.apiConfig)
   }
@@ -46,6 +65,10 @@ export class UserService {
     return this.http.get<User>(`${this.apiGetUserById}/${id}`, this.apiConfig)
   }
 
+  getImageByUserId(userId: any): Observable<any> {
+    return this.http.get<User>(`${this.apiGetImageOfUser}/${userId}`, this.apiConfig)
+  }
+
   getAllUsers(keyword: string, page: number, limit: number): Observable<any> {
     const params = new HttpParams().set('keyword', keyword)
                                   .set('page', page.toString())
@@ -53,13 +76,31 @@ export class UserService {
     return this.http.get<User[]>(this.apiGetAllUser, {params});
   }
 
-  getUserDetails(token: string): Observable<any> {
+  getUserDetails(token: string): Observable<any> { //
     return this.http.post(this.apiUserDetails, {
       headers: new Headers({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       })
     })
+  }
+
+  // func này chỉ để cập nhật cho chính mình (private profile)
+  //update User theo token
+  updateUserDetail(token: string, user: User): Observable<any> {
+    debugger
+    let userResponse = this.getUserResponseFromLocalStorage();        
+    return this.http.put(`${this.apiUserDetails}/${userResponse?.id}`, user ,
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    })
+  }
+
+  updateUserById(id: number, user: User): Observable<any> {
+    return this.http.put(`${this.apiUserDetails}/${id}`, user, this.apiConfig)
   }
 
   saveUserResponseToLocalStorage(userResponse?: UserResponse) {
@@ -109,4 +150,23 @@ export class UserService {
   GetAllTeacherInfo():Observable<any>{
     return this.http.get<User[]>(this.apiGetTeacherInfo);
   }
+  private getBase64(files: File): Observable<string> {
+    return new Observable<string>((observer) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Convert the array buffer to a Base64 string
+        const base64String = reader.result?.toString().split(',')[1];
+        observer.next(base64String);
+        observer.complete();
+      };
+
+      reader.onerror = (error) => {
+        observer.error(error);
+      };
+
+      reader.readAsDataURL(files);
+    });
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, Directive, Input, NgModule, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, Input, NgModule, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoginDTO } from 'src/app/dtos/user/login.dto';
 import { UserService } from 'src/app/service/user.service';
@@ -35,12 +35,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   selectedRole: Role | undefined; // Biến để lưu giá trị được chọn từ dropdown
   roleList: any;
   userResponse? : UserResponse //Optional variable
+  readonly windowRef = this.el.nativeElement.ownerDocument.defaultView;
 
   constructor(
     private userService: UserService,
     private router: Router,
     private tokenService: TokenService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private el: ElementRef
     ) {}
 
     ngOnInit() {
@@ -77,12 +79,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
   login() {
-    // const message = `email: ${this.email}` +
-    //   `password: ${this.password}` +
-    //   `role_id: ${this.selectedRole?.id}`
-    //alert(message);
-    debugger
-
     const loginDTO: LoginDTO = {
       email: this.email,
       password: this.password,
@@ -103,7 +99,12 @@ export class LoginComponent implements OnInit, OnDestroy {
                 date_of_birth: new Date(response.date_of_birth),
               };
               this.userService.saveUserResponseToLocalStorage(this.userResponse);
-              this.router.navigate(['/system-admin/dashboard']);
+              if(this.userResponse?.role_id.name == 'admin') {
+                this.router.navigate(['/system-admin/dashboard']);   
+              } else if(this.userResponse?.role_id.name == 'user') {
+                this.windowRef.location.href = 'http://localhost:4201/home';       
+                // this.router.navigate(['/system-admin/dashboard']);   
+              }
             },
             complete: () => {
               debugger;
