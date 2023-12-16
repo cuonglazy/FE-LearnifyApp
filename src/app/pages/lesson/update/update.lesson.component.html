@@ -81,14 +81,14 @@
                 </div>
                 <div class="col-md-12">
                   <div class="form-group"
-                    [class.has-error]="editForm.get('section_id').invalid && editForm.get('section_id').touched">
+                    [class.has-error]="editForm.get('sectionId').invalid && editForm.get('sectionId').touched">
                     <label class="form-control-label" for="input-section">Bài học :</label>
-                    <select id="section" class="form-control" formControlName="section_id">
+                    <select id="section" class="form-control" formControlName="sectionId">
                       <option value="Chọn bài học" disabled selected hidden></option>
                       <option *ngFor="let item of section" [value]="item.id">{{item.title}}</option>
                     </select>
-                    <!-- Hiển thị thông báo lỗi nếu trường section_id không hợp lệ -->
-                    <div *ngIf="editForm.get('section_id').invalid && editForm.get('section_id').touched"
+                    <!-- Hiển thị thông báo lỗi nếu trường sectionId không hợp lệ -->
+                    <div *ngIf="editForm.get('sectionId').invalid && editForm.get('sectionId').touched"
                       class="text-danger">
                       Bài học là trường bắt buộc.
                     </div>

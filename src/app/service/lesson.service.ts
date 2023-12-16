@@ -44,7 +44,8 @@ export class LessonService {
 
   update(lesson: ILesson): Observable<EntityResponseType>{
     const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
-    return this.http.put<ILesson>(`${this.resourceUrl}/${getLessonIdentifier(lesson)}`, lesson, {headers, observe: 'response'});
+    const formdata = this.buildLessonFormData(lesson)
+    return this.http.put<ILesson>(`${this.resourceUrl}/${getLessonIdentifier(lesson)}`, formdata, {headers, observe: 'response'});
   }
 
   private buildLessonFormData(lesson: ILesson): FormData {
@@ -55,7 +56,7 @@ export class LessonService {
     formData.append('title', lesson.title || '');
     formData.append('time', lesson.time?.toString() || '');
     formData.append('video_url', lesson.video_url || '');
-    formData.append('section_id', lesson.section_id?.toString() || '');
+    formData.append('sectionId', lesson.sectionId?.toString() || '');
   
     // Nếu có tệp video, thêm nó vào FormData
     if (lesson.videoFile) {

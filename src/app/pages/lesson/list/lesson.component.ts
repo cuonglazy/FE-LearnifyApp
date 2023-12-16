@@ -89,7 +89,7 @@ export class LessonComponent implements OnInit {
     const s = Math.floor(d % 3600 % 60);
 
     if (h === 0 && m === 0 && s === 0) {
-        return "0 phút";
+        return "0 phút, 0 giây";
     }
 
     const hDisplay = h > 0 ? h + (h === 1 ? " hour " : " giờ ") : "";

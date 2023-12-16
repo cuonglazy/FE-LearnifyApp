@@ -25,7 +25,7 @@ export class UpdateLessonComponent implements OnInit {
     title: ["", [Validators.required]],
     time: [],
     video_url: ["", [Validators.required]],
-    section_id: [],
+    sectionId: [],
     videoFile: [null],
   })
 
@@ -75,15 +75,11 @@ export class UpdateLessonComponent implements OnInit {
     const file = files.item(0);
     const videoPlayer: HTMLVideoElement = document.getElementById('video-player') as HTMLVideoElement;
     const videoSource: HTMLSourceElement = document.getElementById('video_url') as HTMLSourceElement;
-  
     // Lấy tên tệp
     const fileName = file?.name || 'N/A';
-
-  
     // Tạo URL cho tệp video và gán nó vào nguồn video
     const url = URL.createObjectURL(file);
     videoSource.src = url;
-  
     // Cập nhật video player
     videoPlayer.load();
   
@@ -111,23 +107,31 @@ export class UpdateLessonComponent implements OnInit {
 
   // chuyển đổi time string thành number 
   parseTimeStringToSeconds(timeString: string): number {
-    const matches = timeString.match(/(\d+p)?(\d+s)?/);
-  
-    // Lấy giá trị của phút và giây từ các nhóm trùng khớp
-    const minutes = matches[1] ? parseInt(matches[1]) : 0;
-    const seconds = matches[2] ? parseInt(matches[2]) : 0;
-  
-    // Chuyển đổi thành số giây
-    return minutes * 60 + seconds;
-  }
+    // Sử dụng biểu thức chính quy để phân tích chuỗi thời gian
+    const timeArray: string[] = timeString.split(', ');
+  let totalSeconds = 0;
 
+  timeArray.forEach((timePart) => {
+    const value = parseInt(timePart, 10);
+    if (timePart.includes("hour")) {
+      totalSeconds += value * 3600;
+    } else if (timePart.includes("minute")) {
+      totalSeconds += value * 60;
+    } else if (timePart.includes("second")) {
+      totalSeconds += value;
+    }
+  });
+
+  return totalSeconds;
+  }
+  
+  
   
   // Chuyển đổi giây thành chuỗi hh:mm:ss
   secondsToHms(d: number | string): string {
     if (typeof d !== 'number') {
       return d.toString(); // Không cần chuyển đổi
     }
-  
     const h = Math.floor(d / 3600);
     const m = Math.floor(d % 3600 / 60);
     const s = Math.floor(d % 3600 % 60);
@@ -137,8 +141,6 @@ export class UpdateLessonComponent implements OnInit {
     const sDisplay = s > 0 ? s + (s === 1 ? " second" : " giây") : "";
     return hDisplay + mDisplay + sDisplay;
   }
-  
-
 
     previousState(): void {
       window.history.back();
@@ -172,16 +174,17 @@ export class UpdateLessonComponent implements OnInit {
       protected onSaveFinalize(): void {
         this.isSaving = false;
       }
-  protected updateForm(lesson: ILesson): void{
-    this.editForm.patchValue({
-      id: lesson.id,
-      title: lesson.title,
-      time: lesson.time,
-      video_url:lesson.video_url,
-      section_id: lesson.section_id,
+      protected updateForm(lesson: ILesson): void{
+        const videoPlayer: HTMLVideoElement = document.getElementById('video-player') as HTMLVideoElement;
+        const videoSource: HTMLSourceElement = document.getElementById('video_url') as HTMLSourceElement;
+        const timeAsString = this.secondsToHms(lesson.time);
+        this.editForm.patchValue({
+          id: lesson.id,
+          title: lesson.title,
+          time: timeAsString,
+          video_url:lesson.video_url,
+          sectionId: lesson.sectionId,
     });
-    const videoPlayer: HTMLVideoElement = document.getElementById('video-player') as HTMLVideoElement;
-    const videoSource: HTMLSourceElement = document.getElementById('video-source') as HTMLSourceElement;
     
     // Cập nhật video player với đường dẫn video từ lesson
     const url = lesson.video_url;
@@ -198,7 +201,7 @@ export class UpdateLessonComponent implements OnInit {
       title: this.editForm.get("title")!.value,
       time: this.editForm.get("time")!.value,
       video_url: this.editForm.get("video_url")!.value,
-      section_id: this.editForm.get("section_id")!.value,
+      sectionId: this.editForm.get("sectionId")!.value,
       videoFile: this.editForm.get("videoFile")!.value,
     }
   }

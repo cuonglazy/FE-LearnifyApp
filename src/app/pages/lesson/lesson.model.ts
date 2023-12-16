@@ -3,7 +3,7 @@ export interface ILesson{
     title?: string | null;
     time?: number;
     video_url?: string;
-    section_id?: number | null;
+    sectionId?: number | null;
     videoFile?: File;
 }
 export class Lesson implements ILesson{
@@ -12,7 +12,7 @@ export class Lesson implements ILesson{
         public title?: string | null,
         public time?: number,
         public video_url?: string,
-        public section_id?: number | null,
+        public sectionId?: number | null,
         public videoFile?: File,
     ) {}
 }
