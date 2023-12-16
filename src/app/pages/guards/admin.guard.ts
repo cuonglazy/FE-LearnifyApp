@@ -11,13 +11,10 @@ import { UserResponse } from 'src/app/responses/users/user.response';
 })
 export class AdminGuard {
   userResponse?:UserResponse | null;
-  readonly windowRef = this.el.nativeElement.ownerDocument.defaultView;
-
   constructor(
     private tokenService: TokenService, 
     private router: Router,
-    private userService: UserService,
-    private el: ElementRef
+    private userService:UserService 
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -32,7 +29,6 @@ export class AdminGuard {
       // Nếu không authenticated, bạn có thể redirect hoặc trả về một UrlTree khác.
       // Ví dụ trả về trang login:
       this.router.navigate(['/login']);
-      // this.windowRef.location.href = 'http://localhost:4202/login';
       return false;
     }
   }  
