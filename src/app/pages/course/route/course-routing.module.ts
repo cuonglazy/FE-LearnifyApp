@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CourseComponent } from '../list/course.component';
 import { UpdateCourseComponent } from '../update/update.course.component';
-import { CourseDetailComponent } from '../detail/course-detail.component';
 import { CourseRoutingResolveService } from './course-routing-resolve.service';
 
 const routes: Routes = [

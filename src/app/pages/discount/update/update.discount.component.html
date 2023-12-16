@@ -1,60 +1,66 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 200px; background-size: cover; background-position: center top;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+  style="min-height: 200px; background-size: cover; background-position: center top;">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
- 
+
 </div>
 <div class="container-fluid mt--7">
-  
-    <div class="col-xl- order-xl-1">
-      <div class="card bg-secondary shadow">
-        <div class="card-header bg-white border-0">
-          <div class="row align-items-center">  
-            <div class="col-8">
-              <h3 class="mb-0">Create/Update Discount</h3>
-            </div>
-            <div class="col-4 text-right">
-              <form [formGroup]="dataForm" (ngSubmit)="save()">
-                <a routerLink="/system-admin/discount" class="btn btn-sm btn-info mr-4">Back</a>
-                <button type="submit" [disabled]="dataForm.invalid" class="btn btn-sm btn-default float-right">Save</button>
-              </form>
-            </div>        
-          </div> 
+
+  <div class="col-xl- order-xl-1">
+    <div class="card bg-secondary shadow">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h3 class="mb-0">Create/Update Discount</h3>
+          </div>
+          <div class="col-4 text-right">
+            <form [formGroup]="dataForm" (ngSubmit)="save()">
+              <a routerLink="/system-admin/discount" class="btn btn-sm btn-info mr-4">Back</a>
+              <button type="submit" [disabled]="dataForm.invalid"
+                class="btn btn-sm btn-default float-right">Save</button>
+            </form>
+          </div>
         </div>
-        <div class="card-body">
-          <form [formGroup]="dataForm">
-            <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-md-6" style="display: none;">
-                  <div class="form-group">
-                      <label class="form-control-label" for="id">Id</label>
-                      <input type="text" id="input-code" formControlName="id" class="form-control form-control-alternative" placeholder="Id">
+      </div>
+      <div class="card-body">
+        <form [formGroup]="dataForm">
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-md-6" style="display: none;">
+                <div class="form-group">
+                  <label class="form-control-label" for="id">Id</label>
+                  <input type="text" id="input-code" formControlName="id" class="form-control form-control-alternative"
+                    placeholder="Id">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="code">Code</label>
+                  <input type="text" id="input-code" formControlName="code"
+                    class="form-control form-control-alternative" placeholder="Code">
+                  <div
+                    *ngIf="dataForm.get('code').invalid && (dataForm.get('code').dirty || dataForm.get('code').touched)">
+                    <div *ngIf="dataForm.get('code').errors?.required" class="text-danger">
+                      Code không được bỏ trống!
+                    </div>
+                    <div *ngIf="dataForm.get('code').errors?.minlength" class="text-danger">
+                      Code không thể < 3 kí tự. </div>
+                        <div *ngIf="dataForm.get('code').errors?.maxlength" class="text-danger">
+                          Code không thể > 20 kí tự!
+                        </div>
+                        <div *ngIf="dataForm.get('code').hasError('whitespace')" class="text-danger">
+                          Code không thể chỉ chứa khoảng trống.
+                        </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="code">Code</label>
-                    <input type="text" id="input-code" formControlName="code" class="form-control form-control-alternative" placeholder="Code">
-                    <div *ngIf="dataForm.get('code').invalid && (dataForm.get('code').dirty || dataForm.get('code').touched)">
-                      <div *ngIf="dataForm.get('code').errors?.required" class="text-danger">
-                        Code không được bỏ trống!
-                      </div>
-                      <div *ngIf="dataForm.get('code').errors?.minlength" class="text-danger">
-                        Code không thể < 3 kí tự.
-                      </div>
-                      <div *ngIf="dataForm.get('code').errors?.maxlength" class="text-danger">
-                        Code không thể > 20 kí tự!
-                      </div>
-                      <div *ngIf="dataForm.get('code').hasError('whitespace')" class="text-danger">
-                        Code không thể chỉ chứa khoảng trống.
-                      </div>
-                    </div>
-                  </div>               
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label class="form-control-label" for="input-categories">Percentage</label>
-                    <input type="number" id="input-percentage" formControlName="percentage" class="form-control form-control-alternative" placeholder="Percentage">
-                    <div *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
+                    <input type="number" id="input-percentage" formControlName="percentage"
+                      class="form-control form-control-alternative" placeholder="Percentage">
+                    <div
+                      *ngIf="dataForm.get('percentage').invalid && (dataForm.get('percentage').dirty || dataForm.get('percentage').touched)">
                       <div>
                         <div *ngIf="dataForm.get('percentage').errors.required" class="text-danger">
                           Percentage không được để trống!
@@ -63,120 +69,127 @@
                           Percentage có giá trị >= 1!
                         </div>
                         <div *ngIf="dataForm.get('percentage').errors.max" class="text-danger">
-                          Percentage có giá trị <= 100!
+                          Percentage có giá trị <= 100! </div>
+                            <div *ngIf="dataForm.get('percentage').hasError('whitespace')" class="text-danger">
+                              Percentage không thể chỉ chứa khoảng trống.
+                            </div>
                         </div>
-                        <div *ngIf="dataForm.get('percentage').hasError('whitespace')" class="text-danger">
-                          Percentage không thể chỉ chứa khoảng trống.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-course">startDate</label>
+                      <input type="datetime-local" id="input-startDate" formControlName="startDate"
+                        class="form-control form-control-alternative" placeholder="Start Date">
+                      <div
+                        *ngIf="dataForm.get('startDate').invalid && (dataForm.get('startDate').dirty || dataForm.get('startDate').touched)">
+                        <div *ngIf="dataForm.get('startDate').errors.required" class="text-danger">
+                          Start Date không được để trống!
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-course">startDate</label>
-                    <input type="datetime-local" id="input-startDate" formControlName="startDate" class="form-control form-control-alternative" placeholder="Start Date">
-                    <div *ngIf="dataForm.get('startDate').invalid && (dataForm.get('startDate').dirty || dataForm.get('startDate').touched)">
-                      <div *ngIf="dataForm.get('startDate').errors.required" class="text-danger">
-                        Start Date không được để trống!
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-course">startEnd</label>
+                      <input type="datetime-local" id="input-startEnd" formControlName="startEnd"
+                        class="form-control form-control-alternative" placeholder="Start End">
+                      <div
+                        *ngIf="dataForm.get('startEnd').invalid && (dataForm.get('startEnd').dirty || dataForm.get('startEnd').touched)">
+                        <div *ngIf="dataForm.get('startEnd').errors.required" class="text-danger">
+                          Start End không được để trống!
+                        </div>
+                        <div *ngIf="dataForm.get('startEnd').hasError('dateRange')" class="text-danger">
+                          Start End phải luôn lớn hơn Start Date!
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-course">startEnd</label>
-                    <input type="datetime-local" id="input-startEnd" formControlName="startEnd" class="form-control form-control-alternative" placeholder="Start End">
-                    <div *ngIf="dataForm.get('startEnd').invalid && (dataForm.get('startEnd').dirty || dataForm.get('startEnd').touched)">
-                      <div *ngIf="dataForm.get('startEnd').errors.required" class="text-danger">
-                        Start End không được để trống!
-                      </div>
-                      <div *ngIf="dataForm.get('startEnd').hasError('dateRange')" class="text-danger">
-                        Start End phải luôn lớn hơn Start Date!
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-status">Status</label>
+                      <div class="form-check form-switch" style="margin-left: 20px;">
+                        <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive"
+                          formControlName="isActive">
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-status">Status</label>
-                    <div class="form-check form-switch" style="margin-left: 20px;">
-                      <input class="form-check-input" type="checkbox" id="mySwitch" name="isActive" formControlName="isActive">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <button type="button" data-bs-toggle="modal" data-bs-target="#myModal"
+                        class="btn btn-sm btn-default float-right">Modal</button>
                     </div>
                   </div>
-                </div>                
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" class="btn btn-sm btn-default float-right">Modal</button>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="from-group">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th>Course</th>
-                          <th>Discount</th>
-                          <th>Is Delete</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody formGroup="">
-                        <tr *ngFor="let item of discountCourses">
-                          <td>{{item.nameCourse}}</td>
-                          <td>{{item.nameDiscount}}</td>
-                          <td>
-                            <input type="checkbox" [checked]="item.is_delete" (change)="onCheckboxChange(item.id, $event.target.checked)">
-                          </td>
-                          <td>
-                            <button class="btn btn-warning" (click)="onDelete(item.id)">Delete</button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div class="col-md-12">
+                    <div class="from-group">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Course</th>
+                            <th>Discount</th>
+                            <th>Is Delete</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody formGroup="">
+                          <tr *ngFor="let item of discountCourses">
+                            <td>{{item.nameCourse}}</td>
+                            <td>{{item.nameDiscount}}</td>
+                            <td>
+                              <input type="checkbox" [checked]="item.is_delete"
+                                (change)="onCheckboxChange(item.id, $event.target.checked)">
+                            </td>
+                            <td>
+                              <button class="btn btn-warning" (click)="onDelete(item.id)">Delete</button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
         </form>
-                <div class="modal fade" id="myModal">
-                  <div class="modal-dialog">
-                    <div class="modal-content" style="width: 811px;"> 
-                      <div class="modal-header">
-                        <h4 class="modal-title">Create/Update DiscountCourse</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                      </div>                
-                      <div class="modal-body">
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Course</th>
-                              <th>Discount</th>
-                              <th>Is Delete</th>
-                              <!-- <th>Action</th> -->
-                            </tr>
-                          </thead>
-                          <tbody [formGroup]="dataFormDC">
-                            <tr *ngFor="let item of course">
-                              <td [value]="item.id">{{item.title}}
-                              </td>
-                              <td [innerHTML]="dataFormDC.get('discount_id').value">Doe</td>
-                              <td [innerHTML]="dataFormDC.get('id').value" class="d-none">true</td>
-                              <td>
-                                <!-- <input type="checkbox" [checked]="true" (change)="onCheckboxChange(dataFormDC.get('id').value, $event.target.checked)" >  -->
-                                <input type="checkbox" [checked]="false" (change)="saveDC(dataFormDC.get('id').value,item.id,$event.target.checked)">
-                              </td>
-                              <!-- <td (click)="saveDC(item.id,dataFormDC.get('id').value,)">Save</td> -->
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>                
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                      </div>                
-                    </div>
-                  </div>
-                </div>
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content" style="width: 811px;">
+              <div class="modal-header">
+                <h4 class="modal-title">Create/Update DiscountCourse</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Course</th>
+                      <th>Discount</th>
+                      <th>Is Delete</th>
+                      <!-- <th>Action</th> -->
+                    </tr>
+                  </thead>
+                  <tbody [formGroup]="dataFormDC">
+                    <tr *ngFor="let item of course">
+                      <td [value]="item.id">{{item.title}}
+                      </td>
+                      <td [innerHTML]="dataFormDC.get('discount_id').value">Doe</td>
+                      <td [innerHTML]="dataFormDC.get('id').value" class="d-none">true</td>
+                      <td>
+                        <!-- <input type="checkbox" [checked]="true" (change)="onCheckboxChange(dataFormDC.get('id').value, $event.target.checked)" >  -->
+                        <input type="checkbox" [checked]="false"
+                          (change)="saveDC(dataFormDC.get('id').value,item.id,$event.target.checked)">
+                      </td>
+                      <!-- <td (click)="saveDC(item.id,dataFormDC.get('id').value,)">Save</td> -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-</div>
+  </div>

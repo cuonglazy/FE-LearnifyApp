@@ -68,7 +68,6 @@ export class UpdateDiscountComponent implements OnInit {
 
       })
     })
-
   }
 
   previousState(): void {
