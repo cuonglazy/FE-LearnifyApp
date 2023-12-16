@@ -5,7 +5,7 @@ import { RegisterDTO } from '../dtos/user/register.dto';
 import { LoginDTO } from '../dtos/user/login.dto';
 import { environment } from '../environments/environment';
 import { HttpUtilService } from './http.util.service';
-import { User } from '../models/user';
+import { IUser, User } from '../models/user';
 import { UserResponse } from '../responses/users/user.response';
 
 @Injectable({
@@ -17,6 +17,7 @@ export class UserService {
   private apiGetAllUser = `${environment.apiBaseUrl}/users`; // ${environment.apiBaseUrl}/users?keyword=&page=1&limit=12
   private apiUserDetails = `${environment.apiBaseUrl}/users/details`
   private apiGetUserById = `${environment.apiBaseUrl}/users`;
+  private apiGetTeacherInfo = `${environment.apiBaseUrl}/users/teacher-info`;
   
   private apiConfig = {
     headers: this.createHeaders()
@@ -103,5 +104,9 @@ export class UserService {
       console.error('Error removing user data from local storage:', error);
       // Handle the error as needed
     }
+  }
+
+  GetAllTeacherInfo():Observable<any>{
+    return this.http.get<User[]>(this.apiGetTeacherInfo);
   }
 }

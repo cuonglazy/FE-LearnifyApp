@@ -106,6 +106,7 @@ export class DiscountComponent implements OnInit {
 
   onSizeChange(selectedSize: number): void {
     this.size = selectedSize;
+    this.page = 0;
     this.loadPage();
   }
 }

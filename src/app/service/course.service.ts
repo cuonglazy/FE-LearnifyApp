@@ -76,4 +76,14 @@ export class CourseService {
     params = params.set('size', req.size.toString());
     return this.http.get<Course[]>(`${this.resourceUrl}/pages`,{ headers, observe: 'response', params });
   }
+
+  findAllCourseInfo():Observable<any>{
+    const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+    
+    const options = {
+      headers: headers,
+      observe: 'response' as 'response'
+    }
+    return this.http.get<ICourse[]>(`${this.resourceUrl}/course-info`, options);
+  }
 }

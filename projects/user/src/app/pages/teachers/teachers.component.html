@@ -15,17 +15,17 @@
 <!--          <a href="register" class="inline-btn">get started</a>-->
 <!--       </div>-->
  
-       <div class="box" *ngFor="let item of teachers">
+       <div class="box" *ngFor="let item of dataTeacherInfo">
           <div class="tutor">
-             <img src="{{item.img}}" alt="">
+             <img src="https://i.pinimg.com/originals/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg" alt="">
              <div>
-                <h3>{{item.name}}</h3>
-                <span>{{item.specialization}}</span>
+                <h3>{{item.fullName}}</h3>
+                <!-- <span>{{item.specialization}}</span> -->
              </div>
           </div>
-          <p>tổng số danh sách phát : <span>{{item.total_playlists}}</span></p>
-          <p>tổng số video : <span>{{item.total_videos}}</span></p>
-          <p>tổng số lượt thích : <span>{{item.total_likes}}</span></p>
+          <p>tổng số danh sách phát : <span>{{item.quantityCourse}}</span></p>
+          <!-- <p>tổng số video : <span>{{item.total_videos}}</span></p> -->
+          <!-- <p>tổng số lượt thích : <span>{{item.total_likes}}</span></p> -->
           <a href="teacher-profile" class="inline-btn">Xem hồ sơ</a>
        </div>
 

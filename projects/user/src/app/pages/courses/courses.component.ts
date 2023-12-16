@@ -1,11 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ICourse } from 'src/app/pages/course/course.model';
+import { CourseService } from 'src/app/service/course.service';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
-export class CoursesComponent {
+export class CoursesComponent implements OnInit {
+  page:number=1;
+  size = 9;
+  dataCoursePage : ICourse[] = [];
+  totalAllLength: any;
+  constructor(private courseService: CourseService){
+
+  }
+
+  ngOnInit(): void {
+    this.getCourseInfo();
+      
+  }
+
+  getCourseInfo():void{
+    this.courseService.findAllCourseInfo().subscribe((res)=>{
+      this.dataCoursePage = res.body ? res.body : [];
+      console.warn(this.dataCoursePage);
+      
+    })
+  }
+
+  onSizeChange(selectedSize: number): void {
+    this.size = selectedSize;
+    this.getCourseInfo();
+  }
+
+
   courses : any = [
     {
       "img_teacher": "../../assets/images/pic-1.jpg",

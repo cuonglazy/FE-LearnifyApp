@@ -139,7 +139,8 @@ export class SectionComponent implements OnInit {
   }
 
   onSizeChange(selectedSize: number): void {
-    this.size = selectedSize;
+    this.size = selectedSize;    
+    this.page = 0;
     this.loadPage();
   }
 }

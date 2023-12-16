@@ -111,20 +111,20 @@
 
    <div class="box-container">
 
-      <div class="box" *ngFor="let course of dataPage">
+      <div class="box" *ngFor="let course of dataPage | paginate:{itemsPerPage:size,currentPage:page,totalItems:totalAllLength}">
          <div class="tutor">
             <!-- <img src="{{course.user_id}}" alt=""> -->
             <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="">
             <div class="info">
-               <h3>{{course.user_id}}</h3>
-               <span>{{course.start_time}}</span>
+               <h3>{{course.fullname}}</h3>
+               <span>{{course.createAt}}</span>
             </div>
          </div>
          <div class="thumb">
             <!-- <img src="{{course.img_course}}" alt=""> -->
             <img src="https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2023/10/30114934/Huyen-A%CC%89nh-bi%CC%80a-blog-2023-10-30T114925.545-1024x576.png" alt="">
             <!-- <span>{{course.total_videos}}</span> -->
-            <span>10</span>
+            <span>{{course.quantityLesson}}</span>
          </div>
          <h3 class="title">{{course.title}}</h3>
          <a href="playlist" class="inline-btn">Xem Khóa Học</a>
@@ -135,29 +135,13 @@
       <div class="d-flex align-items-center">
         <select class="form-select mr-3" style="width: 100px; height: 30px;" [(ngModel)]="size" (ngModelChange)="onSizeChange($event)">
           <option value="3">3</option>
-          <option value="5">5</option>
-          <option value="10">10</option>
+          <option value="6">6</option>
+          <option value="9">9</option>
         </select>
-        <div class="ml-auto"></div> <!-- Thêm phần này để tạo khoảng trống bên phải -->
-        <nav aria-label="...">
-          <ul class="pagination justify-content-end mb-0">
-            <li class="page-item" [class.disabled]="page === 0">
-              <a class="page-link" tabindex="-1" (click)="navigateToPage(page - 1)">
-                <i class="fas fa-angle-left"></i>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let i of getPageArray(); let index = index" [class.active]="i === page">
-              <a class="page-link" (click)="navigateToPage(i)">{{ i }}</a>
-            </li>
-            <li class="page-item" [class.disabled]="page === totalPages">
-              <a class="page-link" (click)="navigateToPage(page + 1)">
-                <i class="fas fa-angle-right"></i>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div class="ml-auto"></div>
+        <div class="pagination">
+          <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>
       </div>
     </div>
 
