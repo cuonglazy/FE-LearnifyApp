@@ -22,6 +22,7 @@ import {HttpClientModule} from "@angular/common/http";
 import { PurchaseHistoryComponent } from './pages/purchase-history/purchase-history.component';
 import { PurchasedCourseComponent } from './pages/purchased-course/purchased-course.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
