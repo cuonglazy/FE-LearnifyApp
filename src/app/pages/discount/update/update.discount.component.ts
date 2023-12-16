@@ -103,14 +103,15 @@ export class UpdateDiscountComponent implements OnInit {
       return null;
     };
   }
-
+  
   save(): void {
     const discount = this.createFromForm();
     if (!discount.id) {
+    this.ngOnInit();
       this.subscribeToSaveResponse(this.dataService.create(discount));
     } else {
       this.subscribeToSaveResponse(this.dataService.update(discount));
-    }
+  }
   }
 
   saveDC(discount:number ,course:number,deletee: boolean):void {
@@ -122,19 +123,20 @@ export class UpdateDiscountComponent implements OnInit {
       is_delete
     };
     this.dataService.createDiscountCourse(result).subscribe(()=>{})
-    console.warn("save tc");
   }
 
   onCheckboxChange(id: number, is_delete: boolean) {
     console.log(`Item ID: ${id}, Is Checked: ${is_delete}`);
     this.dataService.updateIsDelete(id,is_delete).subscribe(() =>{
-    })
+    this.ngOnInit();
+  })
   }
   
   onDelete(id: number): void {
     this.dataService.deleteDiscountCourse(id).subscribe(
       (response) => {
         console.warn('Xóa thành công', response);
+        this.ngOnInit();
       },
       (error) => {
         console.error('Lỗi khi xóa', error);

@@ -127,7 +127,7 @@
             <span>{{course.quantityLesson}}</span>
          </div>
          <h3 class="title">{{course.title}}</h3>
-         <a href="playlist" class="inline-btn">Xem Khóa Học</a>
+         <a [href]="[course.courseId + '/playlist']" class="inline-btn">Xem Khóa Học</a>
       </div>
    </div>
 
