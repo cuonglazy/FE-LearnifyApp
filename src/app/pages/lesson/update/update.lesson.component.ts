@@ -18,13 +18,15 @@ export class UpdateLessonComponent implements OnInit {
   isSaving = false;
   section: ISection[] = [];
   lesson: ILesson[] = [];
+  uploadProgress: 0;
 
   editForm = this.fb.group({
     id: [],
     title: ["", [Validators.required]],
-    time: ["", [Validators.required]],
+    time: [],
     video_url: ["", [Validators.required]],
     section_id: [],
+    videoFile: [null],
   })
 
   constructor(protected sectionService: SectionService, protected lessonService: LessonService, protected fb: FormBuilder, private datePipe: DatePipe ,protected activatedRouter: ActivatedRoute) { }
@@ -42,87 +44,134 @@ export class UpdateLessonComponent implements OnInit {
     })
   }
 
-  save(): void{
+  save(): void {
     this.isSaving = true;
     const lesson = this.createFromForm();
-    if(lesson.id !== undefined){
-      this.subscribeToSaveResponse(this.lessonService.update(lesson))
-    }else{
-      return null;
+    
+    // Chuyển đổi thời gian từ hh:mm:ss thành số giây
+    if (typeof lesson.time === 'string') {
+      lesson.time = this.parseTimeStringToSeconds(lesson.time);
+    }
+    
+    if (lesson.id !== undefined) {
+      this.uploadProgress = 0; 
+      this.subscribeToSaveResponse(this.lessonService.update(lesson));
+    } else {
+      this.uploadProgress = 0; 
+      this.subscribeToSaveResponse(this.lessonService.create(lesson));
     }
   }
-  previousState(): void {
-    window.history.back();
+  
+  
+  
+  openFilePicker(event: Event): void {
+    event.preventDefault(); // Ngăn chặn sự kiện mặc định của nút "Chọn"
+  
+    const fileInput: HTMLElement = document.getElementById('videoFile');
+    fileInput.click();
   }
   
-  protected subscribeToSaveResponse(
-      result: Observable<HttpResponse<ILesson>>
-    ): void {
-      result
-        .pipe(
-          catchError((error) => {
-            this.onSaveError(error);
-            return throwError(error);
-          }),
-          finalize(() => this.onSaveFinalize())
-        )
-        .subscribe({
-          next: () => this.onSaveSuccess(),
-        });
+  handleFileInput(files: FileList) {
+    const file = files.item(0);
+    const videoPlayer: HTMLVideoElement = document.getElementById('video-player') as HTMLVideoElement;
+    const videoSource: HTMLSourceElement = document.getElementById('video_url') as HTMLSourceElement;
+  
+    // Lấy tên tệp
+    const fileName = file?.name || 'N/A';
+
+  
+    // Tạo URL cho tệp video và gán nó vào nguồn video
+    const url = URL.createObjectURL(file);
+    videoSource.src = url;
+  
+    // Cập nhật video player
+    videoPlayer.load();
+  
+    // Đọc thời lượng video khi dữ liệu đầu tiên của video đã được tải
+    videoPlayer.onloadeddata = () => {
+  
+      // Chuyển đổi thời gian từ định dạng hh:mm:ss thành chuỗi
+      const timeAsString = this.secondsToHms(Math.floor(videoPlayer.duration));
+  
+      // Hiển thị giờ phút giây cho người dùng
+      this.editForm.patchValue({
+        time: timeAsString,
+        video_url: fileName,
+        videoFile: file,
+      });
+    };
+  
+    // Reset giá trị của input file để tránh lỗi
+    const fileInput: HTMLInputElement = document.getElementById('videoFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
     }
+  }
   
 
-    protected onSaveSuccess(): void {
-      this.previousState();
-    }
-    
-    protected onSaveError(error: any): void {
-      // Xử lý lỗi hoặc log thông báo lỗi.
-    }
-    
-    protected onSaveFinalize(): void {
-      this.isSaving = false;
-    }
+  // chuyển đổi time string thành number 
+  parseTimeStringToSeconds(timeString: string): number {
+    const matches = timeString.match(/(\d+p)?(\d+s)?/);
+  
+    // Lấy giá trị của phút và giây từ các nhóm trùng khớp
+    const minutes = matches[1] ? parseInt(matches[1]) : 0;
+    const seconds = matches[2] ? parseInt(matches[2]) : 0;
+  
+    // Chuyển đổi thành số giây
+    return minutes * 60 + seconds;
+  }
 
-    openFilePicker(): void {
-      const fileInput: HTMLElement = document.getElementById('video-file');
-      fileInput.click();
-    }
-    
-    handleFileInput(files: FileList) {
-      const file = files.item(0);
-      const videoPlayer: HTMLVideoElement = document.getElementById('video-player') as HTMLVideoElement;
-      const videoSource: HTMLSourceElement = document.getElementById('video-source') as HTMLSourceElement;
-    
-      // Tạo URL cho tệp video và gán nó vào nguồn video
-      const url = URL.createObjectURL(file);
-      videoSource.src = url;
-    
-      // Cập nhật video player
-      videoPlayer.load();
-    
-      // Đọc thời lượng video khi dữ liệu đầu tiên của video đã được tải
-      videoPlayer.onloadeddata = () => {
-         console.log('Video Duration:', videoPlayer.duration);
-    
-         // Đặt giá trị cho FormControl "time" trong editForm
-         this.editForm.patchValue({
-            time: this.secondsToHms(videoPlayer.duration)
-         });
-      };
-   }
-   
-    secondsToHms(d: number) {
-      const h = Math.floor(d / 3600);
-      const m = Math.floor(d % 3600 / 60);
-      const s = Math.floor(d % 3600 % 60);
-    
-      const hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " giờ, ") : "";
-      const mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " phút, ") : "";
-      const sDisplay = s > 0 ? s + (s === 1 ? " second" : " giây") : "";
-      return hDisplay + mDisplay + sDisplay; 
+  
+  // Chuyển đổi giây thành chuỗi hh:mm:ss
+  secondsToHms(d: number | string): string {
+    if (typeof d !== 'number') {
+      return d.toString(); // Không cần chuyển đổi
     }
   
+    const h = Math.floor(d / 3600);
+    const m = Math.floor(d % 3600 / 60);
+    const s = Math.floor(d % 3600 % 60);
+  
+    const hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " giờ, ") : "";
+    const mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " phút, ") : "";
+    const sDisplay = s > 0 ? s + (s === 1 ? " second" : " giây") : "";
+    return hDisplay + mDisplay + sDisplay;
+  }
+  
+
+
+    previousState(): void {
+      window.history.back();
+    }
+    
+    protected subscribeToSaveResponse(
+        result: Observable<HttpResponse<ILesson>>
+      ): void {
+        result
+          .pipe(
+            catchError((error) => {
+              this.onSaveError(error);
+              return throwError(error);
+            }),
+            finalize(() => this.onSaveFinalize())
+          )
+          .subscribe({
+            next: () => this.onSaveSuccess(),
+          });
+      }
+    
+  
+      protected onSaveSuccess(): void {
+        this.previousState();
+      }
+      
+      protected onSaveError(error: any): void {
+        // Xử lý lỗi hoặc log thông báo lỗi.
+      }
+      
+      protected onSaveFinalize(): void {
+        this.isSaving = false;
+      }
   protected updateForm(lesson: ILesson): void{
     this.editForm.patchValue({
       id: lesson.id,
@@ -150,6 +199,7 @@ export class UpdateLessonComponent implements OnInit {
       time: this.editForm.get("time")!.value,
       video_url: this.editForm.get("video_url")!.value,
       section_id: this.editForm.get("section_id")!.value,
+      videoFile: this.editForm.get("videoFile")!.value,
     }
   }
 }

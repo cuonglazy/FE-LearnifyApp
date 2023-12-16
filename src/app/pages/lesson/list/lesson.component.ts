@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Lesson } from '../lesson.model';
 import { LessonService } from 'src/app/service/lesson.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-lesson',
@@ -82,7 +82,20 @@ export class LessonComponent implements OnInit {
     this.loadPage();
   }  
 
-  
+ 
+  secondsToHms(d: number) {
+    const h = Math.floor(d / 3600);
+    const m = Math.floor(d % 3600 / 60);
+    const s = Math.floor(d % 3600 % 60);
 
+    if (h === 0 && m === 0 && s === 0) {
+        return "0 phút";
+    }
+
+    const hDisplay = h > 0 ? h + (h === 1 ? " hour " : " giờ ") : "";
+    const mDisplay = m > 0 ? m + (m === 1 ? " minute " : " phút ") : "";
+    const sDisplay = s > 0 ? s + (s === 1 ? " second" : " giây") : "";
+    return hDisplay + mDisplay + sDisplay; 
+}
 
 }
