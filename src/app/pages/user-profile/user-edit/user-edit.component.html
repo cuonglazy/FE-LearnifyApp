@@ -6,10 +6,10 @@
     <div class="container-fluid d-flex align-items-center">
         <div class="row">
             <div class="col-lg-7 col-md-10">
-                <h1 class="display-2 text-white">Hello Jesse</h1>
+                <h1 class="display-2 text-white">Hello {{userCloneData.fullname}}</h1>
                 <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with
                     your work and manage your projects or assigned tasks</p>
-                <a href="#!" class="btn btn-info">Edit profile</a>
+                <a href="'system-admin/dashboard'" class="btn btn-info">Back Home</a>
             </div>
         </div>
     </div>
@@ -25,27 +25,33 @@
                             <h3 class="mb-0">My account</h3>
                         </div>
                         <div class="col-4 text-right">
-                            <a href="#!" class="btn btn-info">Lưu</a>
+                            <button type="submit" (click)="save()" class="btn btn-info">Lưu</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form (ngSubmit)="save()" [formGroup]="userEditForm">
                         <h6 class="heading-small text-muted mb-4">User information</h6>
                         <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 d-none">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-username">Họ và tên</label>
-                                        <input type="text" id="input-username"
-                                            class="form-control form-control-alternative" placeholder="Họ và tên"
-                                            value="">
+                                        <label class="form-control-label" for="input-username">ID <label style="color: red;">*</label></label>
+                                        <input type="text" id="input-username" formControlName="id"
+                                            class="form-control form-control-alternative" placeholder="Họ và tên">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-email">Email</label>
-                                        <input type="email" id="input-email"
+                                        <label class="form-control-label" for="input-username">Họ và tên <label style="color: red;">*</label></label>
+                                        <input type="text" id="input-username" formControlName="fullname"
+                                            class="form-control form-control-alternative" placeholder="Họ và tên">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-email">Email <label style="color: red;">*</label></label>
+                                        <input type="text" id="input-email" formControlName="email"
                                             class="form-control form-control-alternative"
                                             placeholder="example@example.com">
                                     </div>
@@ -54,16 +60,15 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-first-name">Số điện thoại</label>
-                                        <input type="text" id="input-first-name"
-                                            class="form-control form-control-alternative" placeholder="+84 123456789"
-                                            value="">
+                                        <label class="form-control-label" for="input-first-name">Số điện thoại <label style="color: red;">*</label></label>
+                                        <input type="text" id="input-first-name" formControlName="phone_number"
+                                            class="form-control form-control-alternative" placeholder="+84 123456789">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-last-name">Ngày sinh</label>
-                                        <input type="date" id="input-last-name"
+                                        <label class="form-control-label" for="input-last-name">Ngày sinh <label style="color: red;">*</label></label>
+                                        <input type="date" id="input-last-name" formControlName="date_of_birth"
                                             class="form-control form-control-alternative">
                                     </div>
                                 </div>
@@ -76,9 +81,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-control-label" for="input-address">Địa chỉ</label>
+                                        <label class="form-control-label" for="input-address">Địa chỉ <label style="color: red;">*</label></label>
                                         <input id="input-address" class="form-control form-control-alternative"
-                                            placeholder="TP. Đà Nẵng, Việt Nam" value="" type="text">
+                                            formControlName="address" placeholder="TP. Đà Nẵng, Việt Nam" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +92,7 @@
                                     <div class="form-group">
                                         <label class="form-control-label" for="input-city">Thành phố</label>
                                         <input type="text" id="input-city" class="form-control form-control-alternative"
-                                            placeholder="Đà Nẵng" value="" disabled>
+                                            placeholder="Đà Nẵng" disabled>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -95,7 +100,7 @@
                                         <label class="form-control-label" for="input-country">Quốc gia</label>
                                         <input type="text" id="input-country"
                                             class="form-control form-control-alternative" placeholder="Việt Nam"
-                                            value="" disabled>
+                                            disabled>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
@@ -105,6 +110,23 @@
                                             class="form-control form-control-alternative" placeholder="550000" disabled>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <h6 class="heading-small text-muted mb-4">Security</h6>
+                        <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-country">Mật khẩu <label style="color: red;">*</label></label>
+                                <input type="password" formControlName="password" id="input-country" class="form-control form-control-alternative" placeholder="******" value="">
+                            </div>
+                            </div>
+                            <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-country">Xác nhận mật khẩu <label style="color: red;">*</label></label>
+                                <input type="password" formControlName="retype_password" id="input-postal-code" class="form-control form-control-alternative" placeholder="******">
+                                </div>
+                            </div>
                             </div>
                         </div>
                         <hr class="my-4" />

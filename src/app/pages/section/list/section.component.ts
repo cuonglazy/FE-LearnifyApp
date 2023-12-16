@@ -60,9 +60,10 @@ export class SectionComponent implements OnInit {
         } else {
           alert("Xóa Thành Công!")
         }
+        this.loadPage();
       });   
     });
-    this.loadPage();
+    
   }
 
 
@@ -97,7 +98,7 @@ export class SectionComponent implements OnInit {
 
       this.courseService.findAll().subscribe((response) => {
         this.dataCourse = response.body ? response.body : [];
-
+        
         const result = this.dataPage.map((item1) => {
           const matchingObject2 = this.dataCourse.find((item2) => item2.id === item1.course_id);
           return {
@@ -107,7 +108,6 @@ export class SectionComponent implements OnInit {
         });
         this.dataPage = result;
       })
-
     })
   }
 
@@ -132,12 +132,14 @@ export class SectionComponent implements OnInit {
   navigateToPage(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
+      this.searching = true;
       this.loadPage();
     }
   }
 
   onSizeChange(selectedSize: number): void {
-    this.size = selectedSize;
+    this.size = selectedSize;    
+    this.page = 0;
     this.loadPage();
   }
 }

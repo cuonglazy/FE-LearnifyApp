@@ -43,7 +43,7 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ discount }) => {
+    this.activatedRoute.data.subscribe((discount) => {
       this.updateFromForm(discount);
       this.discountCourses = discount.discountCourses;
       this.discount = discount.discountCourses;
@@ -68,7 +68,6 @@ export class UpdateDiscountComponent implements OnInit {
 
       })
     })
-
   }
 
   previousState(): void {
@@ -114,7 +113,8 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   saveDC(discount:number ,course:number,deletee: boolean):void {
-    const discount_id = discount;const course_id = course;const is_delete = deletee;
+    const discount_id = discount;const course_id = course;
+    const is_delete = deletee;
 
     const result = {
       discount_id,
@@ -177,8 +177,6 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   createFromForm(): IDiscount {
-    this.ngOnInit();
-    
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,

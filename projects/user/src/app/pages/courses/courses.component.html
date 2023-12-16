@@ -6,35 +6,40 @@
 
       <div class="box-container">
 
-         <div class="box" *ngFor="let course of courses">
+         <div class="box" *ngFor="let course of dataCoursePage | paginate:{itemsPerPage:size,currentPage:page,totalItems:totalAllLength}">
             <div class="tutor">
-               <img src="{{course.img_teacher}}" alt="">
+               <!-- <img src="{{course.user_id}}" alt=""> -->
+               <img src="https://cdn-icons-png.flaticon.com/512/3177/3177440.png" alt="">
                <div class="info">
-                  <h3>{{course.name_teacher}}</h3>
-                  <span>{{course.date_upload}}</span>
+                  <h3>{{course.fullname}}</h3>
+                  <span>{{course.createAt}}</span>
                </div>
             </div>
             <div class="thumb">
-               <img src="{{course.img_course}}" alt="">
-               <span>{{course.total_videos}}</span>
+               <!-- <img src="{{course.img_course}}" alt=""> -->
+               <img src="https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2023/10/30114934/Huyen-A%CC%89nh-bi%CC%80a-blog-2023-10-30T114925.545-1024x576.png" alt="">
+               <!-- <span>{{course.total_videos}}</span> -->
+               <span>{{course.quantityLesson}}</span>
             </div>
             <h3 class="title">{{course.title}}</h3>
-            <a href="playlist" class="inline-btn">Xem Khóa Học</a>
+            <a href="playlist" class="inline-btn" >Xem Khóa Học</a>
          </div>
       </div>
 
    </div>
 
-    <div class="pagination-container">
-       <ul class="pagination">
-          <li><a href="#" class="disabled">&lt;=</a></li>
-          <li><a href="#" class="disabled">&lt;</a></li>
-          <li><a href="#" class="active">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">&gt;</a></li>
-          <li><a href="#"> =&gt;</a></li>
-       </ul>
+   <div class="card-footer py-4">
+      <div class="d-flex align-items-center">
+        <select class="form-select mr-3" style="width: 100px; height: 30px;" [(ngModel)]="size" (ngModelChange)="onSizeChange($event)">
+          <option value="3">3</option>
+          <option value="6">6</option>
+          <option value="9">9</option>
+        </select>
+        <div class="ml-auto"></div>
+        <div class="pagination">
+          <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>
+      </div>
     </div>
 
  </section>

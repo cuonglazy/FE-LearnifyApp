@@ -21,6 +21,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { PurchaseHistoryComponent } from './pages/purchase-history/purchase-history.component';
 import { PurchasedCourseComponent } from './pages/purchased-course/purchased-course.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +48,8 @@ import { PurchasedCourseComponent } from './pages/purchased-course/purchased-cou
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

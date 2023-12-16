@@ -99,12 +99,14 @@ export class DiscountComponent implements OnInit {
   navigateToPage(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
+      this.searching = false;
       this.loadPage();
     }
   }
 
   onSizeChange(selectedSize: number): void {
     this.size = selectedSize;
+    this.page = 0;
     this.loadPage();
   }
 }
