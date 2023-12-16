@@ -151,45 +151,44 @@
                 </div>
               </div>
         </form>
-        <div class="modal fade" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content" style="width: 811px;">
-              <div class="modal-header">
-                <h4 class="modal-title">Create/Update DiscountCourse</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Course</th>
-                      <th>Discount</th>
-                      <th>Is Delete</th>
-                      <!-- <th>Action</th> -->
-                    </tr>
-                  </thead>
-                  <tbody [formGroup]="dataFormDC">
-                    <tr *ngFor="let item of course">
-                      <td [value]="item.id">{{item.title}}
-                      </td>
-                      <td [innerHTML]="dataFormDC.get('discount_id').value">Doe</td>
-                      <td [innerHTML]="dataFormDC.get('id').value" class="d-none">true</td>
-                      <td>
-                        <!-- <input type="checkbox" [checked]="true" (change)="onCheckboxChange(dataFormDC.get('id').value, $event.target.checked)" >  -->
-                        <input type="checkbox" [checked]="false"
-                          (change)="saveDC(dataFormDC.get('id').value,item.id,$event.target.checked)">
-                      </td>
-                      <!-- <td (click)="saveDC(item.id,dataFormDC.get('id').value,)">Save</td> -->
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+                <div class="modal fade" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content" style="width: 811px;"> 
+                      <div class="modal-header">
+                        <h4 class="modal-title">Create/Update DiscountCourse</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="ngOnInit()"></button>
+                      </div>                
+                      <div class="modal-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Course</th>
+                              <th>Discount</th>
+                              <th>Is Delete</th>
+                              <!-- <th>Action</th> -->
+                            </tr>
+                          </thead>
+                          <tbody [formGroup]="dataFormDC">
+                            <tr *ngFor="let item of course">
+                              <td [value]="item.id">{{item.title}}
+                              </td>
+                              <td [innerHTML]="dataFormDC.get('discount_id').value">Doe</td>
+                              <td [innerHTML]="dataFormDC.get('id').value" class="d-none">true</td>
+                              <td>
+                                <!-- <input type="checkbox" [checked]="true" (change)="onCheckboxChange(dataFormDC.get('id').value, $event.target.checked)" >  -->
+                                <input type="checkbox" [checked]="false" (change)="saveDC(dataFormDC.get('id').value,item.id,$event.target.checked)">
+                              </td>
+                              <!-- <td (click)="saveDC(item.id,dataFormDC.get('id').value,)">Save</td> -->
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>                
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      </div>                
+                    </div>
+                  </div>
+                </div>
       </div>
     </div>
   </div>
