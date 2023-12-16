@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateFn } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivateFn, CanActivate } from '@angular/router';
 import { TokenService } from 'src/app/service/token.service';
 import { Router } from '@angular/router'; // Đảm bảo bạn đã import Router ở đây.
 import { inject } from '@angular/core';
@@ -7,7 +7,7 @@ import { inject } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard {
+export class AuthGuard implements CanActivate{
   constructor(private tokenService: TokenService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {

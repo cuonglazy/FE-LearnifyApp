@@ -19,6 +19,7 @@ export class UserProfileComponent implements OnInit {
   visiblePages: number[] = [];
   keyword: string = "";
   isUsersLoading: boolean = true;
+  userId: number;
 
   constructor(private userService: UserService,
               private tokenService: TokenService,
@@ -26,7 +27,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllUsers(this.keyword, this.currentPage, this.itemsPerPage);
-                                                                        }
+}
 
   getAllUsers(keyword: string, page: number, limit: number) {
     this.userService.getAllUsers(keyword, page = 0, limit).subscribe({
@@ -36,6 +37,7 @@ export class UserProfileComponent implements OnInit {
         //   user.url = `${environment.apiBaseUrl}/users/images/${user.image_url}`;
         // });
         this.users = response.users;
+        this.userId = this.users[0].id;
         this.totalPages = response.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
       },

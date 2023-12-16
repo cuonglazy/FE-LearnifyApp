@@ -1,0 +1,192 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <h1 class="display-2 text-white">Hello {{userCloneData?.fullname}}</h1>
+          <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+          <a [routerLink]="" class="btn btn-info">Back Home</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <form action="" [formGroup]="userProfileForm"> 
+            <!-- [formGroup]="userImageData" (ngSubmit)="postImageForUser(userImageData.image_url)" -->
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image" *ngFor="let image of userImageData">
+                  <a href="javascript:void(0)">
+                    <!-- <input type="file" id="image-file" accept="image/*" style="display: none;"> -->
+                    <img id="image-play" [src]="image.image_url" class="rounded-circle">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+              <div class="d-flex justify-content-between">
+                <!-- Input element for file selection -->
+                <input type="file" name="files" #imageInput style="display: none" (change)="onFileSelected(imageInput)" accept="image/*">
+                <button class="btn btn-sm btn-info mr-4" (click)="imageInput.click()">
+                  Tải ảnh
+                </button>
+                <button type="button" class="btn btn-sm btn-default float-right" > Lưu</button>
+              </div>
+            </div>
+            
+          </form>                   
+          <div class="card-body pt-0 pt-md-4">
+            <div class="row">
+              <div class="col">
+                <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                  <div>
+                    <span class="heading">22</span>
+                    <span class="description">Friends</span>
+                  </div>
+                  <div>
+                    <span class="heading">10</span>
+                    <span class="description">Photos</span>
+                  </div>
+                  <div>
+                    <span class="heading">89</span>
+                    <span class="description">Comments</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+              <div class="text-center">
+                <h3>
+                  {{userCloneData?.fullname}}<span class="font-weight-light">, {{userCloneData?.date_of_birth}}</span>
+                </h3>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>Bucharest, Romania
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
+                </div>
+                <div>
+                  <i class="ni education_hat mr-2"></i>University of Computer Science
+                </div>
+                <hr class="my-4" />
+                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+                <a href="javascript:void(0)">Show more</a>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-8 order-xl-1">
+        <div class="card bg-secondary shadow">
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">My account</h3>
+              </div>
+              <div class="col-4 text-right">
+                <button type="submit" (click)="save()" class="btn btn-info">Lưu</button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="save()" [formGroup]="userProfileForm">
+              <h6 class="heading-small text-muted mb-4">User information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Họ và tên <label style="color: red;">*</label></label>
+                      <input type="text" formControlName="fullname" id="input-username" class="form-control form-control-alternative" placeholder="Họ và tên" value="">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email">Email <label style="color: red;">*</label></label>
+                      <input type="email" formControlName="email" id="input-email" class="form-control form-control-alternative" placeholder="example@example.com" disabled>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-first-name">Số điện thoại <label style="color: red;">*</label></label>
+                      <input type="text" formControlName="phone_number" id="input-first-name" class="form-control form-control-alternative" placeholder="+84 123456789" value="">
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-last-name">Ngày sinh <label style="color: red;">*</label></label>
+                      <input type="date" formControlName="date_of_birth" id="input-last-name" class="form-control form-control-alternative">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <hr class="my-4" /> -->
+              <!-- Address -->
+              <h6 class="heading-small text-muted mb-4">Contact information</h6>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-address">Địa chỉ <label style="color: red;">*</label></label>
+                      <input id="input-address" formControlName="address" class="form-control form-control-alternative" placeholder="TP. Đà Nẵng, Việt Nam" value="" type="text">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-city">Thành phố</label>
+                      <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="Đà Nẵng" value="" disabled>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-country">Quốc gia</label>
+                      <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Việt Nam" value="" disabled>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-country">Postal code</label>
+                      <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="550000" disabled>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h6 class="heading-small text-muted mb-4">Security</h6>
+              <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country">Mật khẩu <label style="color: red;">*</label></label>
+                    <input type="password" id="input-country" class="form-control form-control-alternative" placeholder="******" value="">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                      <label class="form-control-label" for="input-country">Xác nhận mật khẩu <label style="color: red;">*</label></label>
+                      <input type="password" formControlName="retype_password" id="input-postal-code" class="form-control form-control-alternative" placeholder="******">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <hr class="my-4" /> -->
+              <!-- Description -->
+              <h6 class="heading-small text-muted mb-4">About me</h6>
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label>Giới thiệu</label>
+                  <textarea rows="4" class="form-control form-control-alternative" placeholder="Nhập vào đây vài từ để giới thiệu về bạn ..."></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
