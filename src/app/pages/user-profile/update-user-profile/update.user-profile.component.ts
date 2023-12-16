@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserResponse } from 'src/app/responses/users/user.response';
@@ -104,7 +104,7 @@ export class UpdateUserProfileComponent implements OnInit {
 
   save(): void {
     debugger
-    if (this.userProfileForm.valid) {
+    if (this.userProfileForm) {
       const updateUserDTO: UpdateUserDTO = {
         fullname: this.userProfileForm.get('fullname')?.value,
         address: this.userProfileForm.get('address')?.value,
@@ -118,9 +118,12 @@ export class UpdateUserProfileComponent implements OnInit {
       this.userService.updateUserDetail(this.token, updateUserDTO)
         .subscribe({
           next: (response: any) => {
-            this.userService.removeUserFromLocalStorage();
-            this.tokenService.removeToken();
-            this.router.navigate(['/login']);
+            const passwordClone = Object.assign({}, response)
+            if(response.password != passwordClone.password) {
+              this.userService.removeUserFromLocalStorage();
+              this.tokenService.removeToken();
+              this.router.navigate(['/login']);
+            }
           },
           error: (error: any) => {
             alert(error.error.message);
