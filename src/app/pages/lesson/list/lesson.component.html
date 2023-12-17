@@ -68,11 +68,30 @@
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                       <a class="dropdown-item" [routerLink]="['/system-admin/lesson', item.id ,'edit']">Cập nhật</a>
-                      <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
-                    </div>
+                      <a (click)="confirmDelete(item.id)"><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#myModal">Xóa</button></a>                    </div>
                   </div>
                 </td>
               </tr>
+
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Xác Nhận Xóa!</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      <span class="text-danger">Bạn Chắc Chắc Muốn Xóa Section Này Không?</span>
+                    </div>
+                    <div class="modal-footer">
+                      <a class="btn btn-warning" (click)="onDelete()" data-bs-dismiss="modal">Xóa</a>
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </tbody>
           </table>
         </div>

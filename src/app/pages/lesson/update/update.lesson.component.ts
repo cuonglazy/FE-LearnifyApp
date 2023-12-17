@@ -52,8 +52,8 @@ export class UpdateLessonComponent implements OnInit {
     if (typeof lesson.time === 'string') {
       lesson.time = this.parseTimeStringToSeconds(lesson.time);
     }
-    
-    if (lesson.id !== undefined) {
+
+    if (lesson.id != null &&lesson.id !== undefined) {
       this.uploadProgress = 0; 
       this.subscribeToSaveResponse(this.lessonService.update(lesson));
     } else {
@@ -61,8 +61,6 @@ export class UpdateLessonComponent implements OnInit {
       this.subscribeToSaveResponse(this.lessonService.create(lesson));
     }
   }
-  
-  
   
   openFilePicker(event: Event): void {
     event.preventDefault(); // Ngăn chặn sự kiện mặc định của nút "Chọn"
@@ -103,7 +101,6 @@ export class UpdateLessonComponent implements OnInit {
       fileInput.value = '';
     }
   }
-  
 
   // chuyển đổi time string thành number 
   parseTimeStringToSeconds(timeString: string): number {
@@ -113,19 +110,17 @@ export class UpdateLessonComponent implements OnInit {
 
   timeArray.forEach((timePart) => {
     const value = parseInt(timePart, 10);
-    if (timePart.includes("hour")) {
+    if (timePart.includes("giờ")) {
       totalSeconds += value * 3600;
-    } else if (timePart.includes("minute")) {
+    } else if (timePart.includes("phút")) {
       totalSeconds += value * 60;
-    } else if (timePart.includes("second")) {
+    } else if (timePart.includes("giây")) {
       totalSeconds += value;
     }
   });
 
   return totalSeconds;
   }
-  
-  
   
   // Chuyển đổi giây thành chuỗi hh:mm:ss
   secondsToHms(d: number | string): string {
@@ -186,13 +181,13 @@ export class UpdateLessonComponent implements OnInit {
           sectionId: lesson.sectionId,
     });
     
-    // Cập nhật video player với đường dẫn video từ lesson
-    const url = lesson.video_url;
-    if (url) {
-       videoSource.src = url;
-       videoPlayer.load();
+      // Cập nhật video player với đường dẫn video từ lesson
+      const url = lesson.video_url;
+      if (url) {
+        videoSource.src = url;
+        videoPlayer.load();
+      }
     }
-  }
   
   protected createFromForm(): ILesson {
     return {

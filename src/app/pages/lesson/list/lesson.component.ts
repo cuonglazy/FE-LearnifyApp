@@ -17,6 +17,7 @@ export class LessonComponent implements OnInit {
   page: number = 1;
   displayPage: number = 1;
   totalPages: number;
+  itemIdToDelete: number; 
   searchForm: FormGroup;
 
   constructor(protected lessonService: LessonService, protected formBuilder: FormBuilder) { 
@@ -98,4 +99,14 @@ export class LessonComponent implements OnInit {
     return hDisplay + mDisplay + sDisplay; 
 }
 
+  confirmDelete(itemId: number) {
+    this.itemIdToDelete = itemId;
+  }
+
+  onDelete():void{
+    this.lessonService.delete(this.itemIdToDelete).subscribe(() =>{
+      alert("Xóa Thành Công!")
+      this.loadPage();
+    })
+  }
 }

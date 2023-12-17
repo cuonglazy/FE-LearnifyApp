@@ -14,6 +14,8 @@ import { UserService } from 'src/app/service/user.service';
 export class PlaylistComponent implements OnInit{
   user: any;
   dataCourse: any;
+  dataLesson: any;
+  dataSection: any;
   dataDiscount:any;
   discountsWithCourseId: any[] = [];
   constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService){
@@ -45,6 +47,10 @@ export class PlaylistComponent implements OnInit{
       this.user = res;
       this.dataCourse.user_name = this.user.fullname;
     })
+  }
+
+  getAllLessonBySectionId(){
+    
   }
 
 }
