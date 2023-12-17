@@ -6,7 +6,7 @@
 
 .user-profile .info .user{
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: -60px;
     padding: 1rem;
 }
 
@@ -72,4 +72,51 @@
   
 a{
     text-decoration: none;
+}
+
+/* ---------- */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 4rem;
+}
+
+section.container {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+h3 {
+    color: #007bff;
+    font-size: 2rem; /* Tăng kích thước font cho h3 */
+}
+
+p {
+    color: #6c757d;
+    font-size: 1.8rem; /* Tăng kích thước font cho p */
+}
+
+.box {
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem; /* Tăng kích thước font cho input */
+}
+
+.form-control {
+    font-size: 1.4rem; /* Tăng kích thước font cho input trong Bootstrap */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-size: 1.8rem; /* Tăng kích thước font cho button */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
 }

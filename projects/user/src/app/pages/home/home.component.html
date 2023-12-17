@@ -3,63 +3,7 @@
    <h1 class="heading">Thể Loại</h1>
 
    <div class="box-container">
-
-      <!-- <div class="box">
-         <h3 class="title">Lượt thích và bình luận</h3>
-         <p class="likes">Tổng số lượt tích : <span>25</span></p>
-         <a href="#" class="inline-btn">Xem lượt thích</a>
-         <p class="likes">Tổng số bình luận : <span>12</span></p>
-         <a href="#" class="inline-btn">Xem bình luận</a>
-         <p class="likes">Tổng số lượt mua : <span>4</span></p>
-         <a href="#" class="inline-btn">Xem lượt mua</a>
-      </div> -->
-      
-      <!-- <div class="box">
-         <h3 class="title">top categories</h3>
-         <div class="flex">
-            <a href="#"><i class="fas fa-code"></i><span>Phát triển</span></a>
-            <a href="#"><i class="fas fa-chart-simple"></i><span>Kinh doanh</span></a>
-            <a href="#"><i class="fas fa-pen"></i><span>Thiết kế</span></a>
-            <a href="#"><i class="fas fa-chart-line"></i><span>Tiếp thị</span></a>
-            <a href="#"><i class="fas fa-music"></i><span>Âm nhạc</span></a>
-            <a href="#"><i class="fas fa-camera"></i><span>nhiếp ảnh</span></a>
-            <a href="#"><i class="fas fa-cog"></i><span>Phần mềm</span></a>
-            <a href="#"><i class="fas fa-vial"></i><span>Khoa học</span></a>
-         </div>
-      </div>
-
       <div class="box">
-         <h3 class="title">popular topics</h3>
-         <div class="flex">
-            <a href="#"><i class="fab fa-html5"></i><span>HTML</span></a>
-            <a href="#"><i class="fab fa-css3"></i><span>CSS</span></a>
-            <a href="#"><i class="fab fa-js"></i><span>javascript</span></a>
-            <a href="#"><i class="fab fa-react"></i><span>react</span></a>
-            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
-            <a href="#"><i class="fab fa-bootstrap"></i><span>bootstrap</span></a>
-         </div>
-      </div> -->
-
-      <div class="box">
-         <!-- <ul class="nav">
-            <li><span>Phát triển</span>
-               <ul>
-                  <li>Frontend
-                    <ul>
-                      <li>Frontend 1</li>
-                      <li>Frontend 2</li>
-                    </ul>
-                  </li>
-                  <li>BackEnd
-                     <ul>
-                        <li>Backend 1</li>
-                        <li>Backend 2</li>
-                      </ul>
-                  </li>
-                  <li>FullStack</li>
-                </ul>
-            </li>
-          </ul> -->
           <ul class="nav">
             <ng-container *ngFor="let category of treeCategories">
                <li><span>{{ category.name }}</span>
@@ -80,25 +24,6 @@
                </li>
             </ng-container>
           </ul>
-          <!-- <ng-container *ngFor="let category of treeCategories">
-            <li>
-              <i class="fas fa-code"></i><span>{{ category.name }}</span>
-              <ul *ngIf="category.children && category.children.length > 0">
-                <ng-container *ngFor="let child of category.children">
-                  <li>
-                    <span>{{ child.name }}</span>
-                    <ul *ngIf="child.children && child.children.length > 0">
-                      <ng-container *ngFor="let grandchild of child.children">
-                        <li>
-                          <span>{{ grandchild.name }}</span>
-                        </li>
-                      </ng-container>
-                    </ul>
-                  </li>
-                </ng-container>
-              </ul>
-            </li>
-          </ng-container> -->
       </div>
 
    </div>

@@ -4,17 +4,19 @@ import { DashboardComponent } from "../../pages/dashboard/dashboard.component";
 import { IconsComponent } from "../../pages/icons/icons.component";
 import { CategoriesComponent } from "src/app/pages/category/list/categories.component";
 import { UpdateCategoryComponent } from "src/app/pages/category/update/update.category.component";
-import { AdminGuard } from "src/app/pages/guards/admin.guard";
+import { AdminGuard, AdminGuardFn } from "src/app/pages/guards/admin.guard";
 
 export const AdminLayoutRoutes: Routes = [
-  { path: "dashboard", component: DashboardComponent },
+  { path: "dashboard", component: DashboardComponent,
+  canActivate: [AdminGuardFn]
+  },
   {
     path: "user-profile",
     loadChildren: () =>
       import("./../../pages/user-profile/user-profile.module").then(
         (m) => m.UserProfileModule
       ),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   {
     path: "category",
@@ -22,7 +24,7 @@ export const AdminLayoutRoutes: Routes = [
       import("./../../pages/category/category.module").then(
         (m) => m.CategoryModule
       ),
-    // canActivate: [AdminGuard]
+    canActivate: [AdminGuardFn]
   },
   {
     path: "discount",
@@ -30,13 +32,13 @@ export const AdminLayoutRoutes: Routes = [
       import("./../../pages/discount/discount.module").then(
         (m) => m.DiscountModule
       ),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   {
     path: "lesson",
     loadChildren: () =>
       import("./../../pages/lesson/lesson.module").then((m) => m.LessonModule),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   {
     path: "payment",
@@ -44,13 +46,13 @@ export const AdminLayoutRoutes: Routes = [
       import("./../../pages/payment/payment.module").then(
         (m) => m.PaymentModule
       ),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   {
     path: "course",
     loadChildren: () =>
       import("./../../pages/course/course.module").then((m) => m.CourseModule),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   {
     path: "section",
@@ -58,7 +60,7 @@ export const AdminLayoutRoutes: Routes = [
       import("./../../pages/section/section.module").then(
         (m) => m.SectionModule
       ),
-      // canActivate: [AdminGuard]
+      canActivate: [AdminGuardFn]
   },
   { path: "icons", component: IconsComponent },
 ];
