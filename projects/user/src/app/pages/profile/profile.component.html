@@ -4,39 +4,66 @@
  
     <div class="info">
  
-      <div class="user">
-         <img src="../../assets/images/pic-1.jpg" alt="" id="profileImage" class="custom-file-upload" (click)="onImageClick()">
-         <h3>{{userCloneData?.fullname}}, <span class="font-weight-light">, {{userCloneData?.date_of_birth}}</span></h3>
-         <p>{{userCloneData?.role_id}}</p>
-         <div class="user" style="visibility: hidden;">
+      <!-- <div class="user">
+         <div *ngFor="let image of userImageData">
+            <img [src]="image.image_url" alt="" id="profileImage" class="custom-file-upload" (click)="onImageClick()">
+         </div>
+         <h3>{{userCloneData?.fullname}}, <span class="font-weight-light">{{userCloneData?.date_of_birth}}</span></h3>
+         <p>Vai trò: {{userCloneData?.role_id.name}}</p>
+         <div class="user" style=" z-index: 1000;"> 
              <p>Cập nhật ảnh đại diện</p>
              <input type="file" accept="image/*" class="box" id="fileInput" (change)="onFileSelected($event)">
          </div>
-     </div>
+     </div> -->
+     <div class="card-header text-center">
+      <div *ngFor="let image of userImageData" style="text-align: center;">
+         <div style="position: relative; display: inline-block;">
+           <img [src]="image.image_url" alt="" id="profileImage" class="custom-file-upload" (click)="onImageClick()" style="height: 200px; margin-bottom: 35px">
+           <button style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background-color: rgb(33, 156, 212); color: white; padding: 10px 20px; border: none; cursor: pointer;" (click)="imageInput.click()">Tải ảnh lên</button>
+         </div>
+         <h3 style="padding-top: 10px; color: black;">{{userCloneData?.fullname}}, <span class="font-weight-light">{{userCloneData?.date_of_birth}}</span></h3>
+         <p>
+            Vai trò:
+            {{
+              userCloneData?.role_id.name === 'user' ? 'Học viên' :
+              userCloneData?.role_id.name === 'teacher' ? 'Giáo viên' :
+              userCloneData?.role_id.name === 'admin' ? 'Quản trị viên' : 'Không xác định'
+            }}
+          </p>
+       </div>
+       
+      
+      <div class="d-flex justify-content-between">
+        <input type="file" name="files" #imageInput style="display: none" (change)="onFileSelected2(imageInput)" accept="image/*">
+      <!-- <div class="col-12">
+         <button type="submit" class="btn btn-primary" (click)="imageInput.click()">Tải ảnh lên</button>
+     </div> -->
+      
+      </div>
+    </div>
       <div style="padding-bottom: 20px;">
          <section class="container">
             <form enctype="multipart/form-data" class="row g-3" (ngSubmit)="save()" [formGroup]="userProfileForm">
                 <div class="col-md-6">
                     <!-- Column 1 -->
                     <p>Email <label style="color: red;">*</label></p>
-                    <input type="email" name="email" placeholder="example@example.com" maxlength="50" class="box form-control" disabled>
+                    <input type="email" name="email" formControlName="email" placeholder="example@example.com" maxlength="50" class="box form-control" disabled>
                     <p>Ngày sinh <label style="color: red;">*</label></p>
-                    <input type="date" name="old_pass" placeholder="" maxlength="20"class="box form-control">
+                    <input type="date" name="date_of_birth" formControlName="date_of_birth" placeholder="" maxlength="20"class="box form-control">
                     <p>Mật khẩu mới <label style="color: red;">*</label></p>
-                    <input type="password" name="new_pass" placeholder="Nhập mật khẩu mới" maxlength="20" class="box form-control">
+                    <input type="password" name="password" formControlName="password" placeholder="Nhập mật khẩu mới" maxlength="20" class="box form-control">
                 </div>
                 <div class="col-md-6">
                      <p>Họ và tên:  <label style="color: red;">*</label></p>
-                    <input type="text" name="name" placeholder="..." maxlength="50" class="box form-control">
+                    <input type="text" name="fullname" formControlName="fullname" placeholder="..." maxlength="50" class="box form-control">
                     <p>Địa chỉ <label style="color: red;">*</label></p>
-                    <input type="email" name="email" placeholder="" maxlength="50" class="box form-control">
+                    <input type="text" name="address" formControlName="address" placeholder="" maxlength="50" class="box form-control">
                     <p>Xác nhận mật khẩu <label style="color: red;">*</label></p>
-                    <input type="password" name="c_pass" placeholder="Xác nhận mật khẩu mới của bạn" maxlength="20"
+                    <input type="password" name="c_pass" formControlName="" placeholder="Xác nhận mật khẩu mới của bạn" maxlength="20"
                         class="box form-control">
                   
                 </div>
                 <div class="col-12">
-                    <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary" (click)="save()">Cập nhật hồ sơ</button>
                 </div>
             </form>

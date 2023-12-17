@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { IUser, User } from 'src/app/models/user';
-import { Observable, of, EMPTY } from 'rxjs';
+import { Observable, of, EMPTY, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
-import { mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import {  } from 'src/app/service/discount.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -11,7 +11,7 @@ import { UserService } from 'src/app/service/user.service';
 export class UserProfileRoutingResolveService implements Resolve<User> {
     constructor(protected service: UserService, protected router: Router) {}
   
-    resolve(route: ActivatedRouteSnapshot): Observable<User> | Observable<never> {
+    resolve(route: ActivatedRouteSnapshot): Observable<any> | Observable<never> {
       const id = route.params['id'];
       if (id) {
         return this.service.getUserById(id).pipe(
