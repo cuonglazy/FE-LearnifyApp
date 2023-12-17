@@ -33,7 +33,9 @@
               "src/styles.scss",
               "src/assets/scss/argon.scss",
               "src/assets/vendor/nucleo/css/nucleo.css",
-              "src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
+              "src/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css",
+              "ngx-toastr/toastr.css",
+              "animate.css/animate.css"
             ],
             "scripts": [
               "chart.js/dist/Chart.min.js",
@@ -225,7 +227,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {"port": 4201},
+          "options": {
+            "port": 4201
+          },
           "configurations": {
             "production": {
               "browserTarget": "user:build:production"

@@ -29,7 +29,8 @@ export class LessonService {
       tap(event => {
         if (event.type === HttpEventType.UploadProgress) {
           if (event.total && typeof event.loaded === 'number') {
-            this.uploadProgress = Math.round(100 * event.loaded / event.total);
+            // Tính phần trăm hoàn thành và cập nhật giá trị tuyến tính từ 0 đến 100
+            this.uploadProgress = Math.round((100 * event.loaded) / event.total);
           }
         } else if (event instanceof HttpResponse) {
           // Upload đã hoàn tất, đặt progress về 100
@@ -40,6 +41,7 @@ export class LessonService {
       map(event => event as EntityResponseType)
     );
   }
+  
   
 
   update(lesson: ILesson): Observable<EntityResponseType>{
@@ -97,5 +99,4 @@ export class LessonService {
     const headers = new HttpHeaders().set("Authorization",`Bearer ${this.token}`);
     return this.http.get<ILesson>(`${this.resourceUrl}/${id}`, {headers , observe: 'response'});
   }
-
 }

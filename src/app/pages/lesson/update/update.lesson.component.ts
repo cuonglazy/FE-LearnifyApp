@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { Observable, catchError, finalize, throwError } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class UpdateLessonComponent implements OnInit {
     videoFile: [null],
   })
 
-  constructor(protected sectionService: SectionService, protected lessonService: LessonService, protected fb: FormBuilder, private datePipe: DatePipe ,protected activatedRouter: ActivatedRoute) { }
+  constructor(protected sectionService: SectionService,private toastrService: ToastrService, protected lessonService: LessonService, protected fb: FormBuilder, private datePipe: DatePipe ,protected activatedRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getAllSections();
@@ -140,7 +141,7 @@ export class UpdateLessonComponent implements OnInit {
     previousState(): void {
       window.history.back();
     }
-    
+
     protected subscribeToSaveResponse(
         result: Observable<HttpResponse<ILesson>>
       ): void {
@@ -150,13 +151,19 @@ export class UpdateLessonComponent implements OnInit {
               this.onSaveError(error);
               return throwError(error);
             }),
-            finalize(() => this.onSaveFinalize())
+            finalize(() => {
+              this.onSaveFinalize();
+              this.toastrService.success("Success!", "Thêm mới thành công!");
+            })
           )
           .subscribe({
-            next: () => this.onSaveSuccess(),
+            next: () => {
+              this.toastrService.success("Success!", "Thêm mới thành công!");
+              this.onSaveSuccess();
+            },
           });
       }
-    
+      
   
       protected onSaveSuccess(): void {
         this.previousState();
