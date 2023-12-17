@@ -111,13 +111,17 @@ export class PlaylistComponent implements OnInit{
 
   disableAddCart():void{
     const serializedValue = localStorage.getItem(this.key);
-    const convertObject = JSON.parse(serializedValue);
 
-    const filteredItems = convertObject.filter((item: any) => item.id === this.dataCourse.id);
-    if(filteredItems.length > 0){
-      this.ItemCart = 1
-    }else{
+    if(serializedValue === null || serializedValue === undefined){
       this.ItemCart = 0
+    }else{
+      const convertObject = JSON.parse(serializedValue);
+      const filteredItems = convertObject.filter((item: any) => item.id === this.dataCourse.id);
+      if(filteredItems.length > 0){
+        this.ItemCart = 1
+      }else{
+        this.ItemCart = 0
+      }
     }
   }
 }
