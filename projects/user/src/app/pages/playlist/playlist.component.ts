@@ -51,10 +51,6 @@ export class PlaylistComponent implements OnInit{
       const userName = res.fullname;
       this.dataCourse.fullname = userName;
     })
-    this.userService.getUserById(this.dataCourse.user_id).subscribe((res)=>{
-      this.user = res;
-      this.dataCourse.user_name = this.user.fullname;
-    })
   }
 
   // giá Khóa Học sao khi giảm giá 
