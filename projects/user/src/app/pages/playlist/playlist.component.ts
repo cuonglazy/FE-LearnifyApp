@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IUser, User } from 'src/app/models/user';
 import { ICourse } from 'src/app/pages/course/course.model';
 import { DiscountService } from 'src/app/service/discount.service';
+import { LessonService } from 'src/app/service/lesson.service';
+import { SectionService } from 'src/app/service/section.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -21,7 +23,7 @@ export class PlaylistComponent implements OnInit{
   key = "cart_item";
   user = "user";
   ItemCart : any;
-  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService){
+  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService,private sectionService: SectionService,private lessonService: LessonService){
   }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class PlaylistComponent implements OnInit{
     this.fullNameUser();
     this.priceDiscount();
     this.disableAddCart();
+    this.loadSection();
     console.warn(this.dataCourse);
     
   }
@@ -138,5 +141,25 @@ export class PlaylistComponent implements OnInit{
         this.ItemCart = 0
       }
     }
+  }
+
+  loadSection():void{
+    this.sectionService.findAll().subscribe(res => {
+      this.dataSection = res.body ? res.body : [];
+      const filteredSections = this.dataSection.filter(section => section.course_id === this.dataCourse.id);
+      console.warn("Section đã fill course", filteredSections);
+      this.dataSection = filteredSections;
+      this.lessonService.findAll().subscribe((respose)=>{
+        this.dataLesson = respose.body ? respose.body : [];
+        console.warn(this.dataLesson);
+
+        this.dataSection.forEach(section => {
+          section.lessons = this.dataLesson.filter(lesson => lesson.sectionId === section.id);      
+          
+        });
+
+        console.warn("Section",this.dataSection);    
+      })
+    })
   }
 }
