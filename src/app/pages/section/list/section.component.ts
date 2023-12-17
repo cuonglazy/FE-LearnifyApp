@@ -54,7 +54,7 @@ export class SectionComponent implements OnInit {
   deleteItem() {
     this.sectionService.delete(this.itemIdToDelete).subscribe(()=>{
       this.dataLesson.forEach((lesson) => {
-        if (lesson.section_id === this.itemIdToDelete) {
+        if (lesson.sectionId === this.itemIdToDelete) {
           alert("Section này đang chứa Lesson bạn không thể xóa nó!");
           alert("Tôi Đã Update Is Delete Của nó thành False");
         } else {
@@ -132,7 +132,7 @@ export class SectionComponent implements OnInit {
   navigateToPage(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
-      this.searching = true;
+      this.searching = false;
       this.loadPage();
     }
   }

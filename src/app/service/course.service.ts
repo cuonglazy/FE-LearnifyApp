@@ -1,9 +1,9 @@
+import { Observable } from 'rxjs';
 import { Course } from './../pages/course/course.model';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ICourse, getCourseIdentifier } from '../pages/course/course.model';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 
 export type EntityResponseType = HttpResponse<ICourse>;
 export type EntityArrayResponseType = HttpResponse<ICourse[]>;
@@ -13,9 +13,17 @@ export type EntityArrayResponseType = HttpResponse<ICourse[]>;
 export class CourseService {
   protected resourceUrl = `${environment.apiBaseUrl}/courses`;
   protected token = localStorage.getItem("access_token");
+ 
   constructor(
     protected http: HttpClient,
     ) {}
+
+    private createHeaders(): HttpHeaders {
+      return new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept-Language': 'vi'
+      })
+    }
     
     create(course: ICourse): Observable<EntityResponseType>{
       const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)

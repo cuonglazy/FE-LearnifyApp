@@ -14,13 +14,19 @@ import { WatchVideoComponent } from './pages/watch-video/watch-video.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { PurchasedCourseComponent } from './pages/purchased-course/purchased-course.component';
 import { PurchaseHistoryComponent } from './pages/purchase-history/purchase-history.component';
+import { CourseRoutingResolveService } from 'src/app/pages/course/route/course-routing-resolve.service';
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'about', component: AboutComponent},
   { path: 'contact', component: ContactComponent},
   { path: 'courses', component: CoursesComponent},
   { path: 'login', component: LoginComponent},
-  { path: 'playlist', component: PlaylistComponent},
+  { path: ':id/playlist', 
+    component: PlaylistComponent,
+    resolve: {
+      course:  CourseRoutingResolveService
+    }
+},
   { path: 'profile', component: ProfileComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'teacher-profile', component: TeacherProfileComponent},

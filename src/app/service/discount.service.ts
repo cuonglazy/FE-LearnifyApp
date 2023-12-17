@@ -15,6 +15,7 @@ export class DiscountService {
     protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
     protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
     protected token = localStorage.getItem("access_token");
+    protected tokentt = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZW1haWwuY29tIiwic3ViIjoiYWRtaW5AZW1haWwuY29tIiwiZXhwIjoxNzA1MzE2NDcxfQ.JG_5dzNbvPlTrmtkBG9RYixLvYVsULFb1tuaKObuzvE';
     constructor(protected http: HttpClient) { }
 
       create(discount: IDiscount): Observable<EntityResponseType>{
@@ -47,7 +48,7 @@ export class DiscountService {
       }
     
       findAll(): Observable<EntityArrayResponseType> {
-        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.tokentt}`)
         
         const options = {
           headers: headers,

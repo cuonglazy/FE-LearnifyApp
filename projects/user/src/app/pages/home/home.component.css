@@ -245,3 +245,9 @@ a {
     border-radius: 20px !important;
     border: transparent !important;
 }
+.small-btn {
+    font-size: 15px; /* Điều chỉnh kích thước font chữ của nút */
+    padding: 5px 10px; /* Điều chỉnh kích thước của nút */
+    color: red;
+    font-weight: bold;
+  }
