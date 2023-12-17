@@ -9,7 +9,11 @@ import { Course, ICourse } from '../course.model';
 import { Observable, finalize } from 'rxjs';
 import { CategoryService } from 'src/app/service/category.service';
 import { UserService } from 'src/app/service/user.service';
+import { environment } from 'src/environments/environment';
 
+class ImageSnippet {
+  constructor(public src: string, public file: File) {}
+}
 @Component({
   selector: 'app-update.course',
   templateUrl: './update.course.component.html',
@@ -23,6 +27,7 @@ export class UpdateCourseComponent implements OnInit {
   category: ICategory[];
   selectedCategory: Category;
 
+
   constructor(
     private courseService: CourseService,
     private formBuilder: FormBuilder,
@@ -32,8 +37,8 @@ export class UpdateCourseComponent implements OnInit {
   ) {
     this.dataForm = this.formBuilder.group({
       id: [''],
-      thumbnail: [null, [Validators.required]],
-      title: [null, [Validators.required]],
+      thumbnail: [null, Validators.required],
+      title: [null, Validators.required],
       price: [null, [Validators.required, Validators.min(100)]],
       category_id: [null],
       user_id: [null, [Validators.required]],
@@ -58,8 +63,10 @@ export class UpdateCourseComponent implements OnInit {
 
   loadCategories(): void {
     this.categoryService.findAll().subscribe((res) => {
+      console.log('Categories:', res.body);
       this.categories = res.body || [];
       this.categories = this.buildHierarchy(res.body || []);
+
     });
   }
 
@@ -113,9 +120,10 @@ export class UpdateCourseComponent implements OnInit {
     }
   }
 
-  onFileSelected(event): void {
-    console.log(event)
+  onFileSelected(imageInput: any): void {
+    
   }
+
 
   protected onSaveSuccess(): void {
     this.previousState();
@@ -130,6 +138,7 @@ export class UpdateCourseComponent implements OnInit {
   }
 
   protected updateForm(course: ICourse): void {
+    this.thumbnail = [{ thumbnail: course.thumbnail }];
     this.dataForm.patchValue({
       id: course.id,
       thumbnail: course.thumbnail,
@@ -138,7 +147,7 @@ export class UpdateCourseComponent implements OnInit {
       description: course.description,
       user_id: course.user_id,
       category_id: course.category_id,
-      is_delete: course.is_delete,
+      is_delete: course.is_delete,  
     });
   }
 
