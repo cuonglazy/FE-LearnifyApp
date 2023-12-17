@@ -5,6 +5,7 @@ import { IUser, User } from 'src/app/models/user';
 import { ICourse } from 'src/app/pages/course/course.model';
 import { DiscountService } from 'src/app/service/discount.service';
 import { LessonService } from 'src/app/service/lesson.service';
+import { RatingService } from 'src/app/service/rating.service';
 import { SectionService } from 'src/app/service/section.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -18,12 +19,15 @@ export class PlaylistComponent implements OnInit{
   dataLesson: any;
   dataSection: any;
   dataDiscount:any;
+  dataRating:any;
+  ratingId = 0;
   discountsWithCourseId: any[] = [];
   discountPercentage = 0;
+  starRating = 0;
   key = "cart_item";
   user = "user";
   ItemCart : any;
-  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService,private sectionService: SectionService,private lessonService: LessonService){
+  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService,private sectionService: SectionService,private lessonService: LessonService,private ratingService: RatingService){
   }
 
   ngOnInit(): void {
@@ -161,5 +165,45 @@ export class PlaylistComponent implements OnInit{
         console.warn("Section",this.dataSection);    
       })
     })
+  }
+
+  getAllRatingByCourseId(id:number):void{
+    this.ratingService.getAllRatingByCourseId(id).subscribe(res => {
+      this.dataRating = res.body ? res.body : [];
+      console.warn(this.dataRating);
+      
+    })
+  }
+
+  saveRating(rate: number) {
+    const serializedValue = localStorage.getItem("user");
+    const convertObject = JSON.parse(serializedValue);
+
+    this.starRating = rate;
+
+    const rating = {
+      id: null,
+      user_id: convertObject.id,
+      course_id: this.dataCourse.id,
+      number_rating: this.starRating,
+      description: null
+    }
+
+    if(convertObject.id){
+      this.ratingService.getAllRatingByCourseId(this.dataCourse.id).subscribe(res => {
+        this.dataRating = res.body ? res.body : [];
+        for (const dataRating of this.dataRating) {
+          if (dataRating.id !== undefined) {
+            this.ratingId = dataRating.id
+            rating.id = dataRating.id;
+          }
+        }
+        if(this.dataRating.length > 0){
+          this.ratingService.updateRating(this.ratingId,rating).subscribe({});
+        }else{
+          this.ratingService.create(rating).subscribe({});
+        }
+      })
+    }
   }
 }

@@ -31,11 +31,7 @@
             <p>{{dataCourse.description}}</p>
             <h3>
                Đánh Giá :
-               <i class="fa-solid fa-star"></i>
-               <i class="fa-solid fa-star"></i>
-               <i class="fa-solid fa-star"></i>
-               <i class="fa-solid fa-star"></i>
-               <i class="fa-regular fa-star"></i>
+               <ngb-rating [max]=5 [(rate)]="starRating" [readonly]="false" (rateChange)="saveRating($event)"></ngb-rating>
             </h3>
             <h3 style="margin-top: 5px;">
                Giá Khóa Học : <span style="text-decoration: line-through" *ngIf="discountPercentage != 0">{{dataCourse.price}}</span><span style="margin-left: 5px"*ngIf="discountPercentage != 0">{{dataCourse.priceDiscount}}</span>
