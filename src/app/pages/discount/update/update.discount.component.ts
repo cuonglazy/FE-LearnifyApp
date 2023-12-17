@@ -179,6 +179,7 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   createFromForm(): IDiscount {
+
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,

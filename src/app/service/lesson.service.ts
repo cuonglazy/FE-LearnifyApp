@@ -1,8 +1,8 @@
-import { ILesson, getLessonIdentifier } from './../pages/lesson/lesson.model';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, filter, map, tap } from 'rxjs';
 import { HttpClient, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
+import { ILesson, getLessonIdentifier } from '../pages/lesson/lesson.model';
 
 export type EntityResponseType = HttpResponse<ILesson>
 export type EntityArrayResponseType = HttpResponse<ILesson[]>
