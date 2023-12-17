@@ -30,6 +30,7 @@
                 <th scope="col">Ngày sinh</th>
                 <th scope="col">Địa chỉ</th>
                 <th scope="col">Vai trò</th>
+                <th scope="col">Kích hoạt</th>
               </tr>
             </thead>
             <tbody>
@@ -62,14 +63,20 @@
                   <ng-container *ngSwitchCase="3">Teacher</ng-container>
                   <ng-container *ngSwitchDefault>Unknown Role</ng-container>
                 </td>
+                <td>
+                  <span class="badge badge-dot mr-4" style="color: black;">
+                    <div class="form-check form-switch" style="margin-left: 20px;">
+                      <input class="form-check-input" type="checkbox" id="mySwitch" name="is_active" [checked]="u.is_active" disabled="true">
+                    </div>                    
+                  </span>
+                </td>
                 <td class="text-right">
                   <div ngbDropdown placement="bottom-right">
                     <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" [routerLink]="['/system-admin/user-profile', u.id ,'edit']">Cập
-                        nhật</a>
+                      <a class="dropdown-item" [routerLink]="['/system-admin/user-profile', u.id ,'edit']">Cập nhật</a>
                       <a class="dropdown-item" href="javascript:void(0)">Xóa</a>
                     </div>
                   </div>

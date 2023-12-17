@@ -33,6 +33,7 @@ export class UserEditComponent implements OnInit {
       fullname: [''],
       phone_number: ['', Validators.minLength(10)],
       email: ['', Validators.minLength(6)],
+      is_active: [true],
       date_of_birth: [Date.now()],
       password: ['', [Validators.minLength(6)]],
       retypePassword: ['', [Validators.minLength(6)]],
@@ -128,7 +129,8 @@ export class UserEditComponent implements OnInit {
       phone_number: this.userEditForm.get(['phone_number'])!.value,
       date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
       address: this.userEditForm.get(['address'])!.value,
-      password: this.userEditForm.get(['password'])!.value
+      password: this.userEditForm.get(['password'])!.value,
+      is_active: this.userEditForm.get(['is_active'])!.value
     }
   }
 

@@ -10,7 +10,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TeacherProfileComponent } from './pages/teacher-profile/teacher-profile.component';
 import { TeachersComponent } from './pages/teachers/teachers.component';
-import { UpdateComponent } from './pages/update/update.component';
 import { WatchVideoComponent } from './pages/watch-video/watch-video.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { PurchasedCourseComponent } from './pages/purchased-course/purchased-course.component';
@@ -26,7 +25,6 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'teacher-profile', component: TeacherProfileComponent},
   { path: 'teachers', component: TeachersComponent},
-  { path: 'update', component: UpdateComponent},
   { path: 'watch-video', component: WatchVideoComponent},
   { path: 'cart', component: CartComponent},
   { path: 'purchased-course', component: PurchasedCourseComponent},
