@@ -12,7 +12,6 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent implements OnInit{
-  user: any;
   dataCourse: any;
   dataLesson: any;
   dataSection: any;
@@ -36,8 +35,9 @@ export class PlaylistComponent implements OnInit{
     this.replaceTWithSpace();
     this.fullNameUser();
     this.priceDiscount();
-    console.warn(this.dataCourse);
     this.disableAddCart();
+    console.warn(this.dataCourse);
+    
   }
 
   // thay thế T bằng dấu cách
@@ -65,10 +65,14 @@ export class PlaylistComponent implements OnInit{
       for (const discount of this.dataDiscount) {
         for (const course of discount.discountCourses) {
           if (course.course_id === this.dataCourse.id) {
-            if(discount.percentage > this.discountPercentage){
-              this.discountPercentage = discount.percentage;
+            if(discount.isActive){
+              if(course.is_delete){
+                if(discount.percentage > this.discountPercentage){
+                  this.discountPercentage = discount.percentage;
+                }
+                break;
+              }
             }
-            break;
           }
         }
       }    
@@ -113,6 +117,8 @@ export class PlaylistComponent implements OnInit{
 
       // Lưu mảng mới vào localStorage
       this.saveToLocalStorage(currentItems);
+
+      this.disableAddCart();
     } catch (error) {
       console.error('Error adding to localStorage:', error);
     }
