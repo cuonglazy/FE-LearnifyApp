@@ -44,9 +44,9 @@ export class UpdateDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((discount) => {
-      this.updateFromForm(discount);
-      this.discountCourses = discount.discountCourses;
-      this.discount = discount.discountCourses;
+      this.updateFromForm(discount.discount);
+      this.discountCourses = discount.discount.discountCourses;
+      this.discount = discount.discount.discountCourses;
 
       this.courseService.findAll().subscribe((res)=>{
         const dataCourse = res.body ? res.body : [];
@@ -59,7 +59,7 @@ export class UpdateDiscountComponent implements OnInit {
 
         this.discountCourses.forEach((course) => {
           course.nameCourse = courseNameMap[course.course_id];
-          course.nameDiscount = discount.code
+          course.nameDiscount = discount.discount.code
         });
 
         const courseIdsToRemove = discount.discountCourses.map(course => course.course_id);
