@@ -26,7 +26,7 @@ export class UserService {
   
   private apiPostImageForUser = `${environment.apiBaseUrl}/users/uploads`
   private apiGetImageOfUser = `${environment.apiBaseUrl}/users/image`
-  protected token = localStorage.getItem("access_token");
+  public token = localStorage.getItem("access_token");
 
   private apiConfig = {
     headers: this.createHeaders()

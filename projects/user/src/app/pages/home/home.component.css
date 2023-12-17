@@ -177,11 +177,11 @@
 }
 
 ul.nav {
+    font-size: 14px;
     background-color: var(--main-color);
     display: flex;
     padding: 10px;
     position: relative;
-    z-index: 1;
 }
 
 ul.nav li {
@@ -195,6 +195,7 @@ ul.nav li {
 
 ul.nav li:hover {
     background-color: #58bcfa;
+    z-index: 1000;
 }
 
 ul.nav ul {
@@ -204,7 +205,6 @@ ul.nav ul {
     left: 0;
     background-color: #87cefa;
     border-top: 1px solid #555;
-    z-index: 3;
 }
 
 ul.nav li:hover>ul {
@@ -213,13 +213,11 @@ ul.nav li:hover>ul {
 
 ul.nav ul li {
     width: 100%;
-    z-index: 4;
 }
 
 ul.nav ul ul {
     left: 100%;
     top: 0;
-    z-index: 5;
 }
 
 li {
