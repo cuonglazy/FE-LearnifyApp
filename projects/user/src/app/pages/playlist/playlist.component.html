@@ -20,7 +20,7 @@
             <img src="../../assets/images/pic-2.jpg" alt="" />
             <div *ngIf="dataCourse">
                <a href="teacher-profile">
-                  <h3>{{user.fullname}}</h3>
+                  <h3>{{dataCourse.fullname}}</h3>
                </a>
                <span>{{dataCourse.start_time}}</span>
             </div>
@@ -38,11 +38,12 @@
                <i class="fa-regular fa-star"></i>
             </h3>
             <h3 style="margin-top: 5px;">
-               Giá Khóa Học :
-               <span style="text-decoration: line-through">199VNĐ</span><span style="margin-left: 5px">188VNĐ</span>
+               Giá Khóa Học : <span style="text-decoration: line-through" *ngIf="discountPercentage != 0">{{dataCourse.price}}</span><span style="margin-left: 5px"*ngIf="discountPercentage != 0">{{dataCourse.priceDiscount}}</span>
+               <span style="margin-left: 5px" *ngIf="discountPercentage == 0">{{dataCourse.priceDiscount}}</span>
             </h3>
-            <a href="#" class="inline-btn">Mua Khóa Học</a>
-            <a href="#" class="inline-btn" style="margin-left: 5px"><i class="fas fa-cart-shopping"></i>Thêm Vào Giỏ
+            <a href="#" class="inline-btn" (click)="addToLocalStorage()">Mua Khóa Học</a>
+            <!-- <button class="inline-btn" style="margin-left: 5px"></button> -->
+            <a class="inline-btn" style="margin-left: 5px" (click)="addToLocalStorage()" *ngIf="ItemCart == 0"><i class="fas fa-cart-shopping"></i>Thêm Vào Giỏ
                Hàng</a>
          </div>
       </div>
