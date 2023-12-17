@@ -9,12 +9,13 @@ export interface ICourse{
     thumbnail?: string;
     is_delete?: boolean;
     description?: string;
-    user_id?: number;
-    category_id?: number;
+    userId?: number;
+    categoryId?: number;
     category_name?: string;
     user_name?: string;
     section_id?: number;
     Category?: ICategory[];
+    imageFile?: File,
 }
 
 export class Course implements ICourse{
@@ -28,10 +29,11 @@ export class Course implements ICourse{
         public thumbnail?: string,
         public is_delete?: boolean,
         public description?: string,
-        public user_id?: number,
-        public category_id?: number,
+        public userId?: number,
+        public categoryId?: number,
         public category_name?: string,
         public user_name?: string,
+        public imageFile?: File,
         ){
         this.is_delete = is_delete ?? true;
     }

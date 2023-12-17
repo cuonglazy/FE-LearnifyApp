@@ -26,7 +26,7 @@ export class UpdateCourseComponent implements OnInit {
   thumbnail: any;
   category: ICategory[];
   selectedCategory: Category;
-
+  uploadProgress: 0;
 
   constructor(
     private courseService: CourseService,
@@ -37,13 +37,14 @@ export class UpdateCourseComponent implements OnInit {
   ) {
     this.dataForm = this.formBuilder.group({
       id: [''],
-      thumbnail: [null, Validators.required],
+      thumbnail: ['', Validators.required],
       title: [null, Validators.required],
       price: [null, [Validators.required, Validators.min(100)]],
-      category_id: [null],
-      user_id: [null, [Validators.required]],
+      categoryId: [null],
+      userId: [null, [Validators.required]],
       description: [null, Validators.maxLength(255)],
       is_delete: [true],
+      imageFile:[null],
     });
   }
 
@@ -55,7 +56,7 @@ export class UpdateCourseComponent implements OnInit {
     const loggedInUser = this.userService.getUserResponseFromLocalStorage();
     if (loggedInUser) {
       this.dataForm.patchValue({
-        user_id: loggedInUser.id,
+        userId: loggedInUser.id,
       });
     }
     this.loadCategories();
@@ -120,10 +121,46 @@ export class UpdateCourseComponent implements OnInit {
     }
   }
 
-  onFileSelected(imageInput: any): void {
-    
-  }
+  openFilePicker(event: Event): void {
+  event.preventDefault();
 
+  const fileInput: HTMLElement | null = document.getElementById('imageFile');
+  if (fileInput) {
+    fileInput.click();
+  }
+}
+
+handleFileInput(files: FileList): void {
+  const file = files.item(0);
+  const imagePlayer: HTMLImageElement | null = document.getElementById('thumbnail') as HTMLImageElement;
+
+  if (imagePlayer) {
+    const fileName = file?.name || 'N/A';
+    const url = URL.createObjectURL(file);
+
+    imagePlayer.onload = () => {
+      console.log('Thumbnail image loaded successfully');
+      this.dataForm.patchValue({
+        thumbnail: fileName,
+        imageFile: file,
+      });
+
+      // Giải phóng tài nguyên
+      URL.revokeObjectURL(url);
+    };
+
+    imagePlayer.src = url;
+
+    // Reset giá trị của input file để tránh lỗi
+    const fileInput: HTMLInputElement | null = document.getElementById('imageFile') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+}
+
+  onFileSelected(imageInput: any): void {
+  }
 
   protected onSaveSuccess(): void {
     this.previousState();
@@ -138,6 +175,10 @@ export class UpdateCourseComponent implements OnInit {
   }
 
   protected updateForm(course: ICourse): void {
+    console.log('Dữ liệu khoá học:', course);
+  
+    const imagePlayer: HTMLImageElement | null = document.getElementById('thumbnail') as HTMLImageElement;
+  
     this.thumbnail = [{ thumbnail: course.thumbnail }];
     this.dataForm.patchValue({
       id: course.id,
@@ -145,22 +186,31 @@ export class UpdateCourseComponent implements OnInit {
       title: course.title,
       price: course.price,
       description: course.description,
-      user_id: course.user_id,
-      category_id: course.category_id,
-      is_delete: course.is_delete,  
+      userId: course.userId,
+      categoryId: course.categoryId,
+      is_delete: course.is_delete,
     });
+  
+    const url = course.thumbnail;
+    if (url) {
+      console.log('URL hình thu nhỏ:', url);
+      imagePlayer.src = url;
+      // imagePlayer.loading; 
+    }
   }
+  
 
   protected createFromForm(): ICourse {
     return {
       ...new Course(),
       id: this.dataForm.get(['id'])!.value,
       thumbnail: this.dataForm.get(['thumbnail'])!.value,
+      imageFile: this.dataForm.get(['imageFile'])!.value,
       title: this.dataForm.get(['title'])!.value,
       price: this.dataForm.get(['price'])!.value,
       description: this.dataForm.get(['description'])!.value,
-      user_id: this.dataForm.get(['user_id'])!.value,
-      category_id: this.dataForm.get(['category_id'])!.value,
+      userId: this.dataForm.get(['userId'])!.value,
+      categoryId: this.dataForm.get(['categoryId'])!.value,
       is_delete: this.dataForm.get(['is_delete'])!.value,
     };
   }

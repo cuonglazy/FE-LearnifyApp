@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable, filter, map, tap } from 'rxjs';
 import { Course } from './../pages/course/course.model';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpRequest, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ICourse, getCourseIdentifier } from '../pages/course/course.model';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,8 @@ export type EntityArrayResponseType = HttpResponse<ICourse[]>;
   providedIn: 'root'
 })
 export class CourseService {
+  uploadProgress: number = 0;
+
   protected resourceUrl = `${environment.apiBaseUrl}/courses`;
   protected token = localStorage.getItem("access_token");
  
@@ -25,22 +27,45 @@ export class CourseService {
       })
     }
     
-    create(course: ICourse): Observable<EntityResponseType>{
-      const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
-      const options = {
-        headers: headers,
-        observe: 'response' as 'response'
+    // create(course: ICourse): Observable<EntityResponseType>{
+    //   const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
+    //   const options = {
+    //     headers: headers,
+    //     observe: 'response' as 'response'
+    //   }
+    //   return this.http.post<ICourse>(this.resourceUrl, course, options); 
+    // }
+
+    create(course: ICourse): Observable<EntityResponseType> {
+      const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+      const formData: FormData = this.buildLessonFormData(course);
+    
+      return this.http.post<ICourse>(this.resourceUrl, formData, {headers, observe: 'response'});
+    }
+
+    private buildLessonFormData(course: ICourse): FormData {
+      const formData: FormData = new FormData();
+    
+      // Thêm các trường của khóa học vào FormData
+      formData.append('id', course.id?.toString() || '');
+      formData.append('title', course.title || '');
+      formData.append('price', course.price?.toString() || '');
+      formData.append('thumbnail', course.thumbnail || '');
+      formData.append('categoryId', course.categoryId?.toString() || '');
+      formData.append('userId', course.userId?.toString() || '');
+      formData.append('description', course.description || '');
+    
+      // Nếu có tệp image, thêm nó vào FormData
+      if (course.imageFile) {
+        formData.append('imageFile', course.imageFile);
       }
-      return this.http.post<ICourse>(this.resourceUrl, course, options); 
+      return formData;
     }
 
   update(course: ICourse): Observable<EntityResponseType> {
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`)
-    const options = {
-      headers: headers,
-      observe: 'response' as 'response'
-    }
-    return this.http.put<ICourse>(`${this.resourceUrl}/${getCourseIdentifier(course)}`, course, options);
+    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+      const formData: FormData = this.buildLessonFormData(course);
+    return this.http.put<ICourse>(`${this.resourceUrl}/${getCourseIdentifier(course)}`, formData, {headers, observe: 'response'});
   }
 
   delete(id: number): Observable<EntityResponseType> {
