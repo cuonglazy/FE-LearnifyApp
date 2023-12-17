@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { IUser, User } from 'src/app/models/user';
 import { ICourse } from 'src/app/pages/course/course.model';
 import { DiscountService } from 'src/app/service/discount.service';
 import { UserService } from 'src/app/service/user.service';
@@ -11,14 +12,17 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent implements OnInit{
+  user: any;
   dataCourse: any;
+  dataLesson: any;
+  dataSection: any;
   dataDiscount:any;
   discountsWithCourseId: any[] = [];
   discountPercentage = 0;
   key = "cart_item";
   user = "user";
   ItemCart : any;
-  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private usersService: UserService){
+  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService){
   }
 
   ngOnInit(): void {
@@ -44,7 +48,7 @@ export class PlaylistComponent implements OnInit{
 
   // Thêm Fullname của user vào dataCourse
   fullNameUser():void{
-    this.usersService.getUserById(this.dataCourse.user_id).subscribe((res)=>{
+    this.userService.getUserById(this.dataCourse.user_id).subscribe((res)=>{
       const userName = res.fullname;
       this.dataCourse.fullname = userName;
     })

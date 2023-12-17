@@ -13,10 +13,11 @@
         <tr *ngFor="let item of cartItems">
             <td>{{item.title}}</td>
             <td>{{item.priceDiscount}}</td>
-            <td><img src="https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2023/10/30114934/Huyen-A%CC%89nh-bi%CC%80a-blog-2023-10-30T114925.545-1024x576.png" alt="Ảnh sản phẩm 1"></td>
+            <td><img src="https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2023/10/30114934/Huyen-A%CC%89nh-bi%CC%80a-blog-2023-10-30T114925.545-1024x576.png"
+                    alt="Ảnh sản phẩm 1"></td>
             <td><a (click)="removeFromLocalStorage(item.id);">Xóa</a></td>
         </tr>
-    </tbody>    
+    </tbody>
 </table>
 <h1 class="titletotal">Thanh Toán</h1>
 <p style="border-bottom: .1rem solid rgba(0,0,0,.2);margin-bottom: 20px; margin-left: 20px;margin-right: 20px;"></p>
@@ -26,6 +27,3 @@
         <input type="text" id="promo-code" name="promo-code" placeholder="Nhập mã khuyến mãi">
         <button class="payment-button" style="margin-left: 5px;">Xác nhận</button>
     </div>
-    <h1>Tổng Tiền : <span style="text-decoration: line-through;">1.000.000 VND</span><span style="margin-left: 10px">10.000VND</span></h1>
-    <button class="payment-button">Thanh Toán</button>
-</div>

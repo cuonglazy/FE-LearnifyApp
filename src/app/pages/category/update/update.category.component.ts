@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Observable, catchError, finalize, throwError } from "rxjs";
 import { HttpResponse } from "@angular/common/http";
 import { CategoryService } from "src/app/service/category.service";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-update.category",
@@ -12,8 +13,9 @@ import { CategoryService } from "src/app/service/category.service";
 })
 export class UpdateCategoryComponent implements OnInit {
   isSaving = false;
-  category: ICategory[] = [];
+  categories: ICategory[] = [];
   selectedCategory: ICategory | null = null;
+  isUpdating = false;
 
   editForm = this.fb.group({
     id: [],
@@ -25,7 +27,8 @@ export class UpdateCategoryComponent implements OnInit {
   constructor(
     protected fb: FormBuilder,
     protected activatedRouter: ActivatedRoute,
-    protected categoryService: CategoryService
+    protected categoryService: CategoryService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +49,7 @@ export class UpdateCategoryComponent implements OnInit {
         const categories = res.body
           ? res.body.filter((item) => item.is_delete === true)
           : [];
-        this.category = this.buildHierarchy(categories);
+        this.categories = this.buildHierarchy(categories);
         resolve();
       });
     });
@@ -66,10 +69,20 @@ export class UpdateCategoryComponent implements OnInit {
           level + 1,
           visited
         );
+        const grandChildren = this.buildHierarchy(
+          categories,
+          cat.id,
+          level + 2,
+          visited
+        );
         return {
           ...cat,
           level: level,
           children: children,
+          child: {
+            ...cat,
+            grandChildren: grandChildren,
+          },
         };
       })
       .filter((cat) => cat !== null);
@@ -80,11 +93,12 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   updateSelectedCategory(value: string): void {
-    this.selectedCategory = this.category.find((item) => item.id === +value);
+    this.selectedCategory = this.categories.find((item) => item.id === +value);
     this.editForm.patchValue({
       parent_id: this.selectedCategory ? this.selectedCategory.id : null,
     });
   }
+  
 
   save(): void {
     this.isSaving = true;
@@ -113,7 +127,10 @@ export class UpdateCategoryComponent implements OnInit {
         finalize(() => this.onSaveFinalize())
       )
       .subscribe({
-        next: () => this.onSaveSuccess(),
+        next: () => {
+          this.toastrService.success("Bạn đã thêm mới category", "Thêm mới thành công!");
+          this.onSaveSuccess()
+        },
       });
   }
   
@@ -134,7 +151,7 @@ export class UpdateCategoryComponent implements OnInit {
   }
 
   protected updateForm(category: ICategory): void {
-    const parentCategory = this.findCategoryById(category.parent_id, this.category);
+    const parentCategory = this.findCategoryById(category.parent_id, this.categories);
     
     this.editForm.patchValue({
       id: category.id,
