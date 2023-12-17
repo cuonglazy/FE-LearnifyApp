@@ -16,6 +16,7 @@ export class PlaylistComponent implements OnInit{
   discountsWithCourseId: any[] = [];
   discountPercentage = 0;
   key = "cart_item";
+  user = "user";
   ItemCart : any;
   constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private usersService: UserService){
   }
@@ -47,6 +48,10 @@ export class PlaylistComponent implements OnInit{
       const userName = res.fullname;
       this.dataCourse.fullname = userName;
     })
+
+    const serializedValue = localStorage.getItem(this.user);
+    const convertObject = JSON.parse(serializedValue);
+    this.dataCourse.userLoginId = convertObject.id;
   }
 
   // giá Khóa Học sao khi giảm giá 

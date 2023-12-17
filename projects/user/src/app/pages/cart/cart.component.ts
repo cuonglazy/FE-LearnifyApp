@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit{
-  key = "cart_item"
+  key = "cart_item";
+  user = "user";
   cartItems : any;
   ngOnInit(): void {
     this.getFromLocalStorage(this.key);
@@ -19,11 +20,13 @@ export class CartComponent implements OnInit{
       const convertObject = serializedValue ? JSON.parse(serializedValue) : null;
 
       // Nếu có user id thì cmt dòng dưới
-      this.cartItems = convertObject;
+      // this.cartItems = convertObject;
 
       // nếu có id user thì lọc và hiển thị các các cart có user id
-      // const filteredItems = convertObject.filter((item: any) => item.user_id !== id);
-      // this.cartItems = filteredItems;
+      const dataUserDetailString = localStorage.getItem(this.user);
+      const dataUserDetail = JSON.parse(dataUserDetailString);
+      const filteredItems = convertObject.filter((item: any) => item.userLoginId == dataUserDetail.id);
+      this.cartItems = filteredItems;
     } catch (error) {
       console.error('Error getting from localStorage:', error);
     }
