@@ -75,6 +75,10 @@ export class DiscountComponent implements OnInit {
     this.dataService.findPage(res).subscribe((response)=>{
       this.totalPages = response.body['totalPages'],
       this.dataPage = response.body['discount']
+      this.dataPage.forEach(discount =>{
+        discount.startDate = discount.startDate.replace('T', ' ');
+        discount.startEnd = discount.startEnd.replace('T', ' ');
+      })
     })
   }
 

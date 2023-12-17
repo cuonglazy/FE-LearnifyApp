@@ -18,10 +18,12 @@ import { UpdateComponent } from './pages/update/update.component';
 import { WatchVideoComponent } from './pages/watch-video/watch-video.component';
 import { CartComponent } from './pages/cart/cart.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { PurchaseHistoryComponent } from './pages/purchase-history/purchase-history.component';
 import { PurchasedCourseComponent } from './pages/purchased-course/purchased-course.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
+import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,9 +51,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptors,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

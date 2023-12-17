@@ -2,8 +2,8 @@ export interface IDiscount {
     id?: number;
     code?: string;
     percentage?: number;
-    startDate?: Date;
-    startEnd?: Date;
+    startDate?: string;
+    startEnd?: string;
     isActive?: boolean;
     discountCourses?: IDiscountCourse[];
 }
@@ -12,8 +12,8 @@ export class Discount implements IDiscount {
         public id?: number,
         public code?: string,
         public percentage?: number,
-        public startDate?: Date,
-        public startEnd?: Date,
+        public startDate?: string,
+        public startEnd?: string,
         public isActive?: boolean,
         public discountCourses?: IDiscountCourse[]
     ) {

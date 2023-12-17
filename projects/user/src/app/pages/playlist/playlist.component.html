@@ -18,21 +18,17 @@
       <div class="column">
          <div class="tutor">
             <img src="../../assets/images/pic-2.jpg" alt="" />
-            <div>
+            <div *ngIf="dataCourse">
                <a href="teacher-profile">
-                  <h3>Giảng Viên A</h3>
+                  <h3>{{dataCourse.fullname}}</h3>
                </a>
-               <span>21-10-2022</span>
+               <span>{{dataCourse.start_time}}</span>
             </div>
          </div>
 
          <div class="details">
-            <h3>Hướng Dẫn HTML Cơ Bản</h3>
-            <p>
-               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum minus
-               reiciendis, error sunt veritatis exercitationem deserunt velit
-               doloribus itaque voluptate.
-            </p>
+            <h3>{{dataCourse.title}}</h3>
+            <p>{{dataCourse.description}}</p>
             <h3>
                Đánh Giá :
                <i class="fa-solid fa-star"></i>
@@ -42,11 +38,12 @@
                <i class="fa-regular fa-star"></i>
             </h3>
             <h3 style="margin-top: 5px;">
-               Giá Khóa Học :
-               <span style="text-decoration: line-through">199VNĐ</span><span style="margin-left: 5px">188VNĐ</span>
+               Giá Khóa Học : <span style="text-decoration: line-through" *ngIf="discountPercentage != 0">{{dataCourse.price}}</span><span style="margin-left: 5px"*ngIf="discountPercentage != 0">{{dataCourse.priceDiscount}}</span>
+               <span style="margin-left: 5px" *ngIf="discountPercentage == 0">{{dataCourse.priceDiscount}}</span>
             </h3>
-            <a href="#" class="inline-btn">Mua Khóa Học</a>
-            <a href="#" class="inline-btn" style="margin-left: 5px"><i class="fas fa-cart-shopping"></i>Thêm Vào Giỏ
+            <a href="#" class="inline-btn" (click)="addToLocalStorage()">Mua Khóa Học</a>
+            <!-- <button class="inline-btn" style="margin-left: 5px"></button> -->
+            <a class="inline-btn" style="margin-left: 5px" (click)="addToLocalStorage()" *ngIf="ItemCart == 0"><i class="fas fa-cart-shopping"></i>Thêm Vào Giỏ
                Hàng</a>
          </div>
       </div>
@@ -54,45 +51,7 @@
 </section>
 
 <section class="playlist-videos">
-   <h1 class="heading">Phần 1 <i class="fa-solid fa-lock-open"></i></h1>
 
-   <div class="box-container">
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-1.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 01)</h3>
-      </a>
-
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-2.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 02)</h3>
-      </a>
-
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-3.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 03)</h3>
-      </a>
-
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-4.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 04)</h3>
-      </a>
-
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-5.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 05)</h3>
-      </a>
-
-      <a class="box" href="watch-video">
-         <i class="fas fa-play"></i>
-         <img src="../../assets/images/post-1-6.png" alt="" />
-         <h3>Hướng Dẫn HTML Cơ Bản (bài 06)</h3>
-      </a>
-   </div>
    <br />
    <h1 class="heading">Phần 2 <i class="fa-solid fa-lock"></i></h1>
 
