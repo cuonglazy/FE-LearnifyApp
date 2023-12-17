@@ -82,6 +82,14 @@
                                   formControlName="is_active">
                               </div>
                             </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Role :</label>
+                                    <select class="form-control" formControlName="role_id" (change)="onRoleChange()">
+                                        <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
+                                    </select>
+                                  </div>
+                              </div>
                         </div>
                         <hr class="my-4" />
                         <!-- Address -->
