@@ -87,11 +87,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     };
     this.userService.login(loginDTO).subscribe({
       next: (response: LoginResponse) => {
-        debugger;
+        
         const { token } = response;
         if (this.rememberMe) {
           this.tokenService.setToken(token);
-          debugger;
+          
           this.userService.getUserDetails(token).subscribe({
             next: (response: any) => {
               debugger
@@ -108,21 +108,21 @@ export class LoginComponent implements OnInit, OnDestroy {
               }
             },
             complete: () => {
-              debugger;
+              
             },
             error: (error: any) => {
-              debugger;
+              
               alert(error.error.message);
             }
           })
         }                
       },
       complete: () => {
-        debugger;
+        
         
       },
       error: (error: any) => {
-        debugger;
+        
         alert(error.error.message);
       }
     });

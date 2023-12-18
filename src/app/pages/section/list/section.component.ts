@@ -132,7 +132,7 @@ export class SectionComponent implements OnInit {
   navigateToPage(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
       this.page = newPage;
-      this.searching = true;
+      this.searching = false;
       this.loadPage();
     }
   }

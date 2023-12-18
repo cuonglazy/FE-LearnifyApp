@@ -7,11 +7,8 @@ export interface User {
     email?: string;
     address?: string;
     password?: string;
-    active?: boolean;
+    is_active?: boolean;
     date_of_birth?: Date;
-    facebook_account_id?: number;
-    google_account_id?: number;
-    url?: string;
     role_id?: Role;
     image_url?: UserImage[];
 }
@@ -33,22 +30,19 @@ export interface User {
 // }
 
 export class IUser implements User {
-    constructor (public id?: number,
+    constructor (
+        public id?: number,
         public fullname?: string,
         public phone_number?: string,
         public email?: string,
         public address?: string,
         public password?: string,
-        public active?: boolean,
+        public is_active?: boolean,
         public date_of_birth?: Date,
-        public facebook_account_id?: number,
-        public google_account_id?: number,
-        public url?: string,
         public role_id?: Role,
         public image_url?: UserImage[]
         ) {
-        this.active = this.active ?? true;
-
+        this.is_active = this.is_active ?? false;
         }
         
 }

@@ -1,3 +1,5 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 /*playlist-details*/
 .playlist-details .row{
     display: flex;
@@ -106,6 +108,13 @@
 }
 
 /*playlist-videos*/
+.playlist-videos .box-container .box-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 .playlist-videos .box-container{
     display: grid;
@@ -160,3 +169,25 @@
 a{
     text-decoration: none;
 }
+
+.rating_start{
+    font-size: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+
+ngb-rating {
+    color: rgb(165, 165, 29);
+    font-size: 40px;
+  }
+  
+  .star {
+    position: relative;
+    display: inline-block;
+    font-size: 3rem;
+    color: #d3d3d3;
+  }
+
+  

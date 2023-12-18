@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import { UpdateUserDTO } from 'src/app/dtos/user/update.user.dto';
+import { Role } from 'src/app/models/role';
 import { IUser, User } from 'src/app/models/user';
 import { UserResponse } from 'src/app/responses/users/user.response';
 import { TokenService } from 'src/app/service/token.service';
@@ -33,10 +34,12 @@ export class UserEditComponent implements OnInit {
       fullname: [''],
       phone_number: ['', Validators.minLength(10)],
       email: ['', Validators.minLength(6)],
+      is_active: [true],
       date_of_birth: [Date.now()],
       password: ['', [Validators.minLength(6)]],
       retypePassword: ['', [Validators.minLength(6)]],
-      address: ['']
+      address: [''],
+      role_id: [null],
     })
   }
 
@@ -119,7 +122,45 @@ export class UserEditComponent implements OnInit {
     window.history.back();
   }
 
+  onRoleChange() {
+    const role_id = this.userEditForm.get('role_id')!.value;
+    console.log(role_id);
+    // Bạn có thể thực hiện các thao tác khác với role_id ở đây
+  }
+
+  // roleData : any;
+  // createForm(): User {
+  //   const role_id = this.userEditForm.get(['role_id'])!.value;
+  //   for (const role of this.roles) {
+  //     if (role.id === role_id) {
+  //       this.roleData = role;
+  //     }
+  //   }
+  //   return {
+  //     ...new IUser(),
+  //     id: this.userEditForm.get(['id'])!.value,
+  //     fullname: this.userEditForm.get(['fullname'])!.value,
+  //     email: this.userEditForm.get(['email'])!.value,
+  //     phone_number: this.userEditForm.get(['phone_number'])!.value,
+  //     date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
+  //     address: this.userEditForm.get(['address'])!.value,
+  //     password: this.userEditForm.get(['password'])!.value,
+  //     is_active: this.userEditForm.get(['is_active'])!.value,
+  //     role_id: this.roleData
+  //   }
+  // }
+
+  roleData: Role;
+
   createForm(): User {
+    const role_id = this.userEditForm.get(['role_id'])!.value;
+
+    for (const role of this.roles) {
+      if (role.id === role_id.id) {
+        this.roleData = role;
+      }
+    }
+
     return {
       ...new IUser(),
       id: this.userEditForm.get(['id'])!.value,
@@ -128,8 +169,27 @@ export class UserEditComponent implements OnInit {
       phone_number: this.userEditForm.get(['phone_number'])!.value,
       date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
       address: this.userEditForm.get(['address'])!.value,
-      password: this.userEditForm.get(['password'])!.value
-    }
+      password: this.userEditForm.get(['password'])!.value,
+      is_active: this.userEditForm.get(['is_active'])!.value,
+      role_id: this.roleData
+    };
   }
 
+  roles: Role[] = [
+    {
+      id: 1,
+      name: 'admin',
+      user: null
+    },
+    {
+      id: 2,
+      name: 'user',
+      user: null
+    },
+    {
+      id: 3,
+      name: 'teacher',
+      user: null
+    },
+  ];
 }

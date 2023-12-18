@@ -16,15 +16,18 @@
        </div>
  
        <div class="profile">
-          <img src="../../assets/images/pic-1.jpg" class="image" alt="">
-          <h3 class="name">Học Viên lỏ</h3>
-          <p class="role">Học Viên</p>
+         <div *ngFor="let image of userImageData">
+            <img [src]="image.image_url" class="image" alt="">
+         </div>
+          <h3 class="name" *ngIf="userResponse">{{userResponse.fullname}}</h3>
           <a routerLink="profile" class="btn">Xem thông tin</a>
-          <a routerLink="purchased-history" class="btn">Lịch Sử Mua Hàng</a>
-          <a href="http://localhost:4202/system-admin/dashboard" class="btn">admin</a>
+          <a routerLink="purchased-history" class="btn"  *ngIf="userResponse">Lịch Sử Mua Hàng</a>
+          <a routerLink="register" class="btn" *ngIf="userResponse">Xem thông tin cá nhân</a>
+          <a href="http://localhost:4202/system-admin/dashboard" class="btn" *ngIf="userResponse?.role_id.name === 'admin'">admin</a>
           <div class="flex-btn">
-             <a routerLink="login" class="option-btn">Đăng nhập</a>
-             <a routerLink="register" class="option-btn">Đăng kí</a>
+             <a routerLink="login" class="option-btn" *ngIf="!userResponse">Đăng nhập</a>
+             <a routerLink="register" class="option-btn" *ngIf="!userResponse">Đăng kí</a>
+             <a routerLink="register" class="option-btn" *ngIf="userResponse" (click)="onLogOut()">Đăng xuất</a>
           </div>
        </div>
  
@@ -39,10 +42,12 @@
    </div>
 
    <div class="profile">
-      <img src="../../assets/images/pic-1.jpg" class="image" alt="">
-      <h3 class="name">Học Viên vippro</h3>
-      <p class="role">Học Viên</p>
-      <a href="profile" class="btn">Thông tin cá nhân</a>
+      <div *ngFor="let image of userImageData">
+         <img [src]="image.image_url" class="image" alt="">
+      </div>
+      <h3 class="name" *ngIf="userResponse">{{userResponse.fullname}}</h3>
+      <p class="role" *ngIf="userResponse?.role_id.name === 'admin'">Học Viên</p>
+      <a href="profile" class="btn" *ngIf="userResponse">Thông tin cá nhân</a>
    </div>
 
    <nav class="navbar">

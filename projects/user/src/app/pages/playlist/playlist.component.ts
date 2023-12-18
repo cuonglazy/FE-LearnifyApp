@@ -4,6 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { IUser, User } from 'src/app/models/user';
 import { ICourse } from 'src/app/pages/course/course.model';
 import { DiscountService } from 'src/app/service/discount.service';
+import { LessonService } from 'src/app/service/lesson.service';
+import { RatingService } from 'src/app/service/rating.service';
+import { SectionService } from 'src/app/service/section.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -12,16 +15,19 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent implements OnInit{
-  user: any;
   dataCourse: any;
   dataLesson: any;
   dataSection: any;
   dataDiscount:any;
+  dataRating:any;
+  ratingId = 0;
   discountsWithCourseId: any[] = [];
   discountPercentage = 0;
+  starRating = 0;
   key = "cart_item";
+  user = "user";
   ItemCart : any;
-  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService){
+  constructor(private activatedRoute: ActivatedRoute, private discountService: DiscountService, private userService: UserService,private sectionService: SectionService,private lessonService: LessonService,private ratingService: RatingService){
   }
 
   ngOnInit(): void {
@@ -35,8 +41,10 @@ export class PlaylistComponent implements OnInit{
     this.replaceTWithSpace();
     this.fullNameUser();
     this.priceDiscount();
-    console.warn(this.dataCourse);
     this.disableAddCart();
+    this.loadSection();
+    console.warn(this.dataCourse);
+    
   }
 
   // thay thế T bằng dấu cách
@@ -51,10 +59,10 @@ export class PlaylistComponent implements OnInit{
       const userName = res.fullname;
       this.dataCourse.fullname = userName;
     })
-    this.userService.getUserById(this.dataCourse.user_id).subscribe((res)=>{
-      this.user = res;
-      this.dataCourse.user_name = this.user.fullname;
-    })
+
+    const serializedValue = localStorage.getItem(this.user);
+    const convertObject = JSON.parse(serializedValue);
+    this.dataCourse.userLoginId = convertObject.id;
   }
 
   // giá Khóa Học sao khi giảm giá 
@@ -64,10 +72,14 @@ export class PlaylistComponent implements OnInit{
       for (const discount of this.dataDiscount) {
         for (const course of discount.discountCourses) {
           if (course.course_id === this.dataCourse.id) {
-            if(discount.percentage > this.discountPercentage){
-              this.discountPercentage = discount.percentage;
+            if(discount.isActive){
+              if(course.is_delete){
+                if(discount.percentage > this.discountPercentage){
+                  this.discountPercentage = discount.percentage;
+                }
+                break;
+              }
             }
-            break;
           }
         }
       }    
@@ -112,6 +124,8 @@ export class PlaylistComponent implements OnInit{
 
       // Lưu mảng mới vào localStorage
       this.saveToLocalStorage(currentItems);
+
+      this.disableAddCart();
     } catch (error) {
       console.error('Error adding to localStorage:', error);
     }
@@ -119,13 +133,77 @@ export class PlaylistComponent implements OnInit{
 
   disableAddCart():void{
     const serializedValue = localStorage.getItem(this.key);
+
+    if(serializedValue === null || serializedValue === undefined){
+      this.ItemCart = 0
+    }else{
+      const convertObject = JSON.parse(serializedValue);
+      const filteredItems = convertObject.filter((item: any) => item.id === this.dataCourse.id);
+      if(filteredItems.length > 0){
+        this.ItemCart = 1
+      }else{
+        this.ItemCart = 0
+      }
+    }
+  }
+
+  loadSection():void{
+    this.sectionService.findAll().subscribe(res => {
+      this.dataSection = res.body ? res.body : [];
+      const filteredSections = this.dataSection.filter(section => section.course_id === this.dataCourse.id);
+      console.warn("Section đã fill course", filteredSections);
+      this.dataSection = filteredSections;
+      this.lessonService.findAll().subscribe((respose)=>{
+        this.dataLesson = respose.body ? respose.body : [];
+        console.warn(this.dataLesson);
+
+        this.dataSection.forEach(section => {
+          section.lessons = this.dataLesson.filter(lesson => lesson.sectionId === section.id);      
+          
+        });
+
+        console.warn("Section",this.dataSection);    
+      })
+    })
+  }
+
+  getAllRatingByCourseId(id:number):void{
+    this.ratingService.getAllRatingByCourseId(id).subscribe(res => {
+      this.dataRating = res.body ? res.body : [];
+      console.warn(this.dataRating);
+      
+    })
+  }
+
+  saveRating(rate: number) {
+    const serializedValue = localStorage.getItem("user");
     const convertObject = JSON.parse(serializedValue);
 
-    const filteredItems = convertObject.filter((item: any) => item.id === this.dataCourse.id);
-    if(filteredItems.length > 0){
-      this.ItemCart = 1
-    }else{
-      this.ItemCart = 0
+    this.starRating = rate;
+
+    const rating = {
+      id: null,
+      user_id: convertObject.id,
+      course_id: this.dataCourse.id,
+      number_rating: this.starRating,
+      description: null
+    }
+
+    if(convertObject.id){
+      this.ratingService.getAllRatingByCourseId(this.dataCourse.id).subscribe(res => {
+        this.dataRating = res.body ? res.body : [];
+        for (const dataRating of this.dataRating) {
+          if (dataRating.id !== undefined) {
+            this.ratingId = dataRating.id
+            rating.id = dataRating.id;
+          }
+        }
+        if(this.dataRating.length > 0){
+          this.ratingService.updateRating(this.ratingId,rating).subscribe({});
+        }else{
+          this.ratingService.create(rating).subscribe({});
+        }
+      })
     }
   }
 }
