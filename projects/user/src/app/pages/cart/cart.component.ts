@@ -22,6 +22,8 @@ export class CartComponent implements OnInit{
       const dataUserDetail = JSON.parse(dataUserDetailString);
       const filteredItems = convertObject.filter((item: any) => item.userLoginId == dataUserDetail.id);
       this.cartItems = filteredItems;
+      console.warn(this.cartItems);
+      
     } catch (error) {
       console.error('Error getting from localStorage:', error);
     }
