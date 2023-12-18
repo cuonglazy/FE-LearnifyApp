@@ -22,11 +22,11 @@
           <h3 class="name" *ngIf="userResponse">{{userResponse.fullname}}</h3>
           <a routerLink="profile" class="btn">Xem thông tin</a>
           <a routerLink="purchased-history" class="btn"  *ngIf="userResponse">Lịch Sử Mua Hàng</a>
-          <a routerLink="register" class="btn" *ngIf="userResponse">Xem thông tin cá nhân</a>
+          <!-- <a routerLink="register" class="btn" *ngIf="userResponse">Xem thông tin cá nhân</a> -->
           <a href="http://localhost:4202/system-admin/dashboard" class="btn" *ngIf="userResponse?.role_id.name === 'admin'">admin</a>
           <div class="flex-btn">
              <a routerLink="login" class="option-btn" *ngIf="!userResponse">Đăng nhập</a>
-             <a routerLink="register" class="option-btn" *ngIf="!userResponse">Đăng kí</a>
+             <a href="http://localhost:4202/register" class="option-btn" *ngIf="!userResponse">Đăng kí</a>
              <a routerLink="register" class="option-btn" *ngIf="userResponse" (click)="onLogOut()">Đăng xuất</a>
           </div>
        </div>

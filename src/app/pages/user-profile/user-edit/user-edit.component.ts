@@ -21,6 +21,7 @@ export class UserEditComponent implements OnInit {
   token:string = '';
   isSaving = false;
   userCloneData: any;
+  roleData: Role;
 
   constructor(
     private userService: UserService,
@@ -94,6 +95,7 @@ export class UserEditComponent implements OnInit {
     //Update profile theo ID
     if(user.id) {
       this.subscribeToSaveResponse(this.userService.updateUserById(user.id, user))
+      alert("Thành công")
     } 
     if(!user.id) {
       alert('Người dùng chưa tồn tại để cập nhật!')
@@ -127,30 +129,6 @@ export class UserEditComponent implements OnInit {
     console.log(role_id);
     // Bạn có thể thực hiện các thao tác khác với role_id ở đây
   }
-
-  // roleData : any;
-  // createForm(): User {
-  //   const role_id = this.userEditForm.get(['role_id'])!.value;
-  //   for (const role of this.roles) {
-  //     if (role.id === role_id) {
-  //       this.roleData = role;
-  //     }
-  //   }
-  //   return {
-  //     ...new IUser(),
-  //     id: this.userEditForm.get(['id'])!.value,
-  //     fullname: this.userEditForm.get(['fullname'])!.value,
-  //     email: this.userEditForm.get(['email'])!.value,
-  //     phone_number: this.userEditForm.get(['phone_number'])!.value,
-  //     date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
-  //     address: this.userEditForm.get(['address'])!.value,
-  //     password: this.userEditForm.get(['password'])!.value,
-  //     is_active: this.userEditForm.get(['is_active'])!.value,
-  //     role_id: this.roleData
-  //   }
-  // }
-
-  roleData: Role;
 
   createForm(): User {
     const role_id = this.userEditForm.get(['role_id'])!.value;
@@ -192,4 +170,26 @@ export class UserEditComponent implements OnInit {
       user: null
     },
   ];
+
+  // roleData : any;
+  // createForm(): User {
+  //   const role_id = this.userEditForm.get(['role_id'])!.value;
+  //   for (const role of this.roles) {
+  //     if (role.id === role_id) {
+  //       this.roleData = role;
+  //     }
+  //   }
+  //   return {
+  //     ...new IUser(),
+  //     id: this.userEditForm.get(['id'])!.value,
+  //     fullname: this.userEditForm.get(['fullname'])!.value,
+  //     email: this.userEditForm.get(['email'])!.value,
+  //     phone_number: this.userEditForm.get(['phone_number'])!.value,
+  //     date_of_birth: this.userEditForm.get(['date_of_birth'])!.value,
+  //     address: this.userEditForm.get(['address'])!.value,
+  //     password: this.userEditForm.get(['password'])!.value,
+  //     is_active: this.userEditForm.get(['is_active'])!.value,
+  //     role_id: this.roleData
+  //   }
+  // }
 }

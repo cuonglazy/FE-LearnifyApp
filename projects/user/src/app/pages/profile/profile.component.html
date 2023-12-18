@@ -19,7 +19,6 @@
       <div *ngFor="let image of userImageData" style="text-align: center;">
          <div style="position: relative; display: inline-block;">
            <img [src]="image.image_url" alt="" id="profileImage" class="custom-file-upload" (click)="onImageClick()" style="height: 200px; margin-bottom: 35px">
-           <button style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background-color: rgb(33, 156, 212); color: white; padding: 10px 20px; border: none; cursor: pointer;" (click)="imageInput.click()">Tải ảnh lên</button>
          </div>
          <h3 style="padding-top: 10px; color: black;">{{userCloneData?.fullname}}, <span class="font-weight-light">{{userCloneData?.date_of_birth}}</span></h3>
          <p>
@@ -31,13 +30,14 @@
             }}
           </p>
        </div>
+       <!-- <button style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); background-color: rgb(33, 156, 212); color: white; padding: 10px 20px; border: none; cursor: pointer;" (click)="imageInput.click()">Tải ảnh lên</button> -->
        
       
       <div class="d-flex justify-content-between">
         <input type="file" name="files" #imageInput style="display: none" (change)="onFileSelected2(imageInput)" accept="image/*">
-      <!-- <div class="col-12">
+      <div class="col-12">
          <button type="submit" class="btn btn-primary" (click)="imageInput.click()">Tải ảnh lên</button>
-     </div> -->
+     </div>
       
       </div>
     </div>
@@ -58,8 +58,8 @@
                     <input type="text" name="fullname" formControlName="fullname" placeholder="..." maxlength="50" class="box form-control">
                     <p>Địa chỉ <label style="color: red;">*</label></p>
                     <input type="text" name="address" formControlName="address" placeholder="" maxlength="50" class="box form-control">
-                    <p>Xác nhận mật khẩu <label style="color: red;">*</label></p>
-                    <input type="password" name="c_pass" formControlName="" placeholder="Xác nhận mật khẩu mới của bạn" maxlength="20"
+                    <p>Số điện thoại<label style="color: red;">*</label></p>
+                    <input type="text" name="phone_number" formControlName="phone_number" placeholder="Xác nhận mật khẩu mới của bạn" maxlength="20"
                         class="box form-control">
                   
                 </div>
