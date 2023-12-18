@@ -23,6 +23,7 @@ import { PurchasedCourseComponent } from './pages/purchased-course/purchased-cou
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +51,8 @@ import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

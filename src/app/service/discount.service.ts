@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/comm
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Discount, IDiscount, IDiscountCourse, getDiscountCourseIdentifier, getDiscountIdentifier } from "../pages/discount/discount.model";
+import { environment } from "src/environments/environment";
 
 
 export type EntityResponseType = HttpResponse<IDiscount>;
@@ -12,8 +13,8 @@ export type EntityArrayResponseType = HttpResponse<IDiscount[]>;
     providedIn: 'root'
 })
 export class DiscountService {
-    protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
-    protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
+    protected apiDiscount = `${environment.apiBaseUrl}/discounts`;
+    protected apiPostDiscountCS = `${environment.apiBaseUrl}/discount-course`;
     protected token = localStorage.getItem("access_token");
     constructor(protected http: HttpClient) { }
 

@@ -6,7 +6,7 @@ import { LessonComponent } from "./list/lesson.component";
 import { UpdateLessonComponent } from "./update/update.lesson.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { LessonDetailComponent } from './detail/lesson-detail.component';
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import { CommonModule } from "@angular/common";
     ClipboardModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule,
+    NgbModule
   ],
+  providers: [DatePipe],
 })
 export class LessonModule {}

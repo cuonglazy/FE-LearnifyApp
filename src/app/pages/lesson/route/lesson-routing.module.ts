@@ -3,6 +3,7 @@ import { UpdateLessonComponent } from '../update/update.lesson.component';
 import { LessonDetailComponent } from '../detail/lesson-detail.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { LessonRoutingResolveService } from './lesson-routing.resolve.service';
 
 const lessonRoutes: Routes = [
   {
@@ -12,14 +13,16 @@ const lessonRoutes: Routes = [
   {
     path: "new",
     component: UpdateLessonComponent,
+    resolve:{
+      lesson: LessonRoutingResolveService,
+    },
   },
   {
     path: ":id/edit",
     component: UpdateLessonComponent,
-  },
-  {
-    path: ":id/view",
-    component: UpdateLessonComponent,
+    resolve:{
+      lesson: LessonRoutingResolveService,
+    },
   },
 ];
 

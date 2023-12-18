@@ -81,10 +81,10 @@ export class ProfileComponent {
         // this.router.navigate(['/system-admin/dashboard']);
       },
       complete: () => {
-        debugger;
+        
       },
       error: (error: any) => {
-        debugger;
+        
         alert(error.error.message);
       }
     })

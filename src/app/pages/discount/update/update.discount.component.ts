@@ -44,9 +44,9 @@ export class UpdateDiscountComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe((discount) => {
-      this.updateFromForm(discount);
-      this.discountCourses = discount.discountCourses;
-      this.discount = discount.discountCourses;
+      this.updateFromForm(discount.discount);
+      this.discountCourses = discount.discount.discountCourses;
+      this.discount = discount.discount.discountCourses;
 
       this.courseService.findAll().subscribe((res)=>{
         const dataCourse = res.body ? res.body : [];
@@ -59,7 +59,7 @@ export class UpdateDiscountComponent implements OnInit {
 
         this.discountCourses.forEach((course) => {
           course.nameCourse = courseNameMap[course.course_id];
-          course.nameDiscount = discount.code
+          course.nameDiscount = discount.discount.code
         });
 
         const courseIdsToRemove = discount.discountCourses.map(course => course.course_id);
@@ -102,14 +102,15 @@ export class UpdateDiscountComponent implements OnInit {
       return null;
     };
   }
-
+  
   save(): void {
     const discount = this.createFromForm();
     if (!discount.id) {
+    this.ngOnInit();
       this.subscribeToSaveResponse(this.dataService.create(discount));
     } else {
       this.subscribeToSaveResponse(this.dataService.update(discount));
-    }
+  }
   }
 
   saveDC(discount:number ,course:number,deletee: boolean):void {
@@ -122,19 +123,20 @@ export class UpdateDiscountComponent implements OnInit {
       is_delete
     };
     this.dataService.createDiscountCourse(result).subscribe(()=>{})
-    console.warn("save tc");
   }
 
   onCheckboxChange(id: number, is_delete: boolean) {
     console.log(`Item ID: ${id}, Is Checked: ${is_delete}`);
     this.dataService.updateIsDelete(id,is_delete).subscribe(() =>{
-    })
+    this.ngOnInit();
+  })
   }
   
   onDelete(id: number): void {
     this.dataService.deleteDiscountCourse(id).subscribe(
       (response) => {
         console.warn('Xóa thành công', response);
+        this.ngOnInit();
       },
       (error) => {
         console.error('Lỗi khi xóa', error);
@@ -177,6 +179,7 @@ export class UpdateDiscountComponent implements OnInit {
   }
 
   createFromForm(): IDiscount {
+
     return {
       ...new Discount(),
       id: this.dataForm.get(['id'])!.value,
