@@ -57,11 +57,10 @@ export class RegisterComponent {
     }
     this.userService.register(registerDTO).subscribe({
       next: (response: any) => {
-        debugger
         this.router.navigate(['/login']);
+        alert("Đăng ký thành công")
       },
       complete: () => {
-        debugger
       },
       error: (error: any) => {
         alert(`Cannot register, error: ${error.error}`)

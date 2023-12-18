@@ -70,7 +70,7 @@ export class CartComponent implements OnInit{
     try {
       const serializedValue = localStorage.getItem(key);
       const convertObject = serializedValue ? JSON.parse(serializedValue) : null;
-
+      
       const dataUserDetailString = localStorage.getItem(this.user);
       const dataUserDetail = JSON.parse(dataUserDetailString);
       const filteredItems = convertObject.filter((item: any) => item.userLoginId == dataUserDetail.id);
@@ -167,7 +167,7 @@ export class CartComponent implements OnInit{
     }
   }
   removeItem(id: any):void{
-    
+
   }
   //payment
   redirectToVNPayQR(){

@@ -81,10 +81,10 @@ export class ProfileComponent {
         // this.router.navigate(['/system-admin/dashboard']);
       },
       complete: () => {
-        debugger;
+        
       },
       error: (error: any) => {
-        debugger;
+        
         alert(error.error.message);
       }
     })
@@ -112,6 +112,7 @@ export class ProfileComponent {
               this.tokenService.removeToken();
               this.router.navigate(['/login']);
             }
+            alert("Thành công")
           },
           error: (error: any) => {
             alert(error.error.message);

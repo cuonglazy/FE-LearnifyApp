@@ -124,6 +124,7 @@ export class UpdateUserProfileComponent implements OnInit {
               this.tokenService.removeToken();
               this.router.navigate(['/login']);
             }
+            alert("Thành công!")
           },
           error: (error: any) => {
             alert(error.error.message);
