@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   page:number=1;
   size = 9;
   dataForm: FormGroup;
-  dataPage : ICourse[] = [];
+  dataPage : any[] = [];
   totalAllLength: any;
   //NavBar Category
   category: ICategory[] = [];
@@ -57,8 +57,14 @@ export class HomeComponent implements OnInit {
   getCourseInfo():void{
     this.courseService.findAllCourseInfo().subscribe((res)=>{
       this.dataPage = res.body ? res.body : [];
+
+      const uniqueCourses = this.dataPage.filter((course, index, self) => 
+        index === self.findIndex((c) => (
+          c.courseId === course.courseId
+        ))
+      );
+      this.dataPage = uniqueCourses;
       console.warn(this.dataPage);
-      
     })
   }
 
@@ -66,56 +72,5 @@ export class HomeComponent implements OnInit {
     this.size = selectedSize;
     this.getCourseInfo();
   }
-
-  // Page
-//   loadPage(): void {
-//     if (this.page < 0) {
-//       this.page = 0;
-//     }
-    
-//     let searchKey = ""
-
-//     if(this.searching){
-//       searchKey = this.dataForm.get("searchCode")!.value;
-//       this.page = 0;
-//     }else{
-//       searchKey = ""
-//     }
-
-//     const res = {
-//       keyword: searchKey,
-//       page: this.page,
-//       size: this.size
-//     }
-//     this.courseService.findPage(res).subscribe((response)=>{
-//       this.totalPages = response.body['totalPages'],
-//       this.dataPage = response.body['courses']
-//     })
-//   }
-
-//   getPageArray(): number[] {
-//     const pages = [];
-//     const numberOfPagesToShow = 3;
-//     this.displayPage = Math.floor(this.page / numberOfPagesToShow) * numberOfPagesToShow + 1;
-    
-//     if (this.page >= this.totalPages - numberOfPagesToShow || this.page === 0) {
-//       this.displayPage = 1;
-//     }
-
-//     for (let i = 0; i < numberOfPagesToShow; i++) {
-//       const page = this.displayPage + i;
-//       if (page <= this.totalPages) {
-//         pages.push(page);
-//       }
-//     }
-//     return pages;
-//   }
-
-//   navigateToPage(newPage: number): void {
-//     if (newPage >= 0 && newPage < this.totalPages) {
-//       this.page = newPage;
-//       this.loadPage();
-//     }
-//   }
 
 }
