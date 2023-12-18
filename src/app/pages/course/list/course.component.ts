@@ -49,6 +49,7 @@ getCourse(): void {
 }
 
   loadpage(): void {
+    // tránh trường hợp page âm
     if(this.page < 0) {
       this.page = 0;
     }
