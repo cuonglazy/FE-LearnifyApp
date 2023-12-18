@@ -14,7 +14,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { TeacherProfileComponent } from './pages/teacher-profile/teacher-profile.component';
 import { TeachersComponent } from './pages/teachers/teachers.component';
-import { UpdateComponent } from './pages/update/update.component';
 import { WatchVideoComponent } from './pages/watch-video/watch-video.component';
 import { CartComponent } from './pages/cart/cart.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -24,6 +23,7 @@ import { PurchasedCourseComponent } from './pages/purchased-course/purchased-cou
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +39,6 @@ import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
     RegisterComponent,
     TeacherProfileComponent,
     TeachersComponent,
-    UpdateComponent,
     WatchVideoComponent,
     CartComponent,
     PurchaseHistoryComponent,
@@ -52,7 +51,8 @@ import { TokenInterceptors } from 'src/app/interceptors/token.interceptors';
     ReactiveFormsModule,
     HttpClientModule,
     NgxPaginationModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

@@ -15,14 +15,9 @@ export class CartComponent implements OnInit{
 
   getFromLocalStorage(key: string): void {
     try {
-      // Đọc giá trị từ localStorage và chuyển đổi thành đối tượng JavaScript
       const serializedValue = localStorage.getItem(key);
       const convertObject = serializedValue ? JSON.parse(serializedValue) : null;
-
-      // Nếu có user id thì cmt dòng dưới
-      // this.cartItems = convertObject;
-
-      // nếu có id user thì lọc và hiển thị các các cart có user id
+      
       const dataUserDetailString = localStorage.getItem(this.user);
       const dataUserDetail = JSON.parse(dataUserDetailString);
       const filteredItems = convertObject.filter((item: any) => item.userLoginId == dataUserDetail.id);

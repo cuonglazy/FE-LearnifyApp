@@ -5,13 +5,12 @@
        <input type="email" name="email" placeholder="Nhập email của bạn" required maxlength="50" class="box" [(ngModel)]="email">
        <p>Mật Khẩu <span>*</span></p>
        <input type="password" name="pass" placeholder="Nhập mật khẩu của bạn" required maxlength="20" class="box" [(ngModel)]="password" >
-       <button value="Đăng nhập" name="submit" class="btn" (click)="login()"></button>
-       <select class="d-flex align-items-center m-b-12" [(ngModel)]="selectedRole" (change)="onRoleChange($event)" [ngModelOptions]="{standalone: true}"
-            style="width: 100%; color: #333; background-color: #fff;">
-         <label class="d-flex align-items-center m-b-12" > Quyền đăng nhập </label>
-            <option *ngFor="let role of roles" [ngValue]="role" >
-               {{ role.name }}
-            </option>
-      </select>
+       <div class="form-group">
+         <label for="roleSelect" class="d-flex align-items-center m-b-12" style="font-size: 14px; padding-top: 10px;">Quyền đăng nhập</label>
+         <select id="roleSelect" class="form-control" [(ngModel)]="selectedRole" style="font-size: 14px;" (change)="onRoleChange($event)" [ngModelOptions]="{standalone: true}">
+           <option *ngFor="let role of roles" [ngValue]="role">{{ role.name }}</option>
+         </select>
+       </div>
+       <button value="Đăng nhập" name="submit" class="btn" (click)="login()">Đăng nhập</button>
     </form>
  </section>

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from "@angular/comm
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Discount, IDiscount, IDiscountCourse, getDiscountCourseIdentifier, getDiscountIdentifier } from "../pages/discount/discount.model";
+import { environment } from "src/environments/environment";
 
 
 export type EntityResponseType = HttpResponse<IDiscount>;
@@ -12,10 +13,9 @@ export type EntityArrayResponseType = HttpResponse<IDiscount[]>;
     providedIn: 'root'
 })
 export class DiscountService {
-    protected apiDiscount = `http://localhost:8080/api/v1/discounts`;
-    protected apiPostDiscountCS = `http://localhost:8080/api/v1/discount-course`;
+    protected apiDiscount = `${environment.apiBaseUrl}/discounts`;
+    protected apiPostDiscountCS = `${environment.apiBaseUrl}/discount-course`;
     protected token = localStorage.getItem("access_token");
-    protected tokentt = 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoiYWRtaW5AZW1haWwuY29tIiwic3ViIjoiYWRtaW5AZW1haWwuY29tIiwiZXhwIjoxNzA1MzE2NDcxfQ.JG_5dzNbvPlTrmtkBG9RYixLvYVsULFb1tuaKObuzvE';
     constructor(protected http: HttpClient) { }
 
       create(discount: IDiscount): Observable<EntityResponseType>{
@@ -48,7 +48,7 @@ export class DiscountService {
       }
     
       findAll(): Observable<EntityArrayResponseType> {
-        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.tokentt}`)
+        const headers = new HttpHeaders().set('Authorization',`Bearer ${this.token}`)
         
         const options = {
           headers: headers,
