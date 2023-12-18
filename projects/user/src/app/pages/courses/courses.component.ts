@@ -10,7 +10,7 @@ import { CourseService } from 'src/app/service/course.service';
 export class CoursesComponent implements OnInit {
   page:number=1;
   size = 9;
-  dataCoursePage : ICourse[] = [];
+  dataCoursePage : any[] = [];
   totalAllLength: any;
   constructor(private courseService: CourseService){
 
@@ -24,8 +24,14 @@ export class CoursesComponent implements OnInit {
   getCourseInfo():void{
     this.courseService.findAllCourseInfo().subscribe((res)=>{
       this.dataCoursePage = res.body ? res.body : [];
+
+      const uniqueCourses = this.dataCoursePage.filter((course, index, self) => 
+        index === self.findIndex((c) => (
+          c.courseId === course.courseId
+        ))
+      );
+      this.dataCoursePage = uniqueCourses;
       console.warn(this.dataCoursePage);
-      
     })
   }
 
