@@ -63,9 +63,12 @@ export class CourseService {
     }
 
   update(course: ICourse): Observable<EntityResponseType> {
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
-      const formData: FormData = this.buildLessonFormData(course);
-    return this.http.put<ICourse>(`${this.resourceUrl}/${getCourseIdentifier(course)}`, formData, {headers, observe: 'response'});
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`)
+    const options = {
+      headers: headers,
+      observe: 'response' as 'response'
+    }
+    return this.http.put<ICourse>(`${this.resourceUrl}/${getCourseIdentifier(course) as number}`, course, options);
   }
 
   delete(id: number): Observable<EntityResponseType> {
@@ -79,6 +82,7 @@ export class CourseService {
     };
 
     return this.http.delete(`${this.resourceUrl}/${id}`, options)
+    // return this.http.delete(`${this.resourceUrl}/${id}`, {headers, observe: 'response'});
   }
 
 

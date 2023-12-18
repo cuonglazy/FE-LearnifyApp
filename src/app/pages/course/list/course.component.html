@@ -32,7 +32,7 @@
                 <th style="display: none;" scope="col">ID</th>
                 <th scope="col">Tiêu đề</th>
                 <th scope="col">Giá tiền</th>
-                <th scope="col">Số lượng đăng ký</th>
+                <th style="display: none;" scope="col">Số lượng đăng ký</th>
                 <th scope="col">Thumbnail</th>
                 <th scope="col">Mô tả</th>
                 <th style="display: none;" scope="col">Ngày bắt đầu</th>
@@ -49,13 +49,13 @@
                 <td style="display: none;">{{item.id}}</td>
                 <td>{{ item.title }}</td>
                 <td>{{ item.price }}</td>
-                <td>{{ item.enrollment_count }}</td>
+                <td style="display: none;">{{ item.enrollment_count }}</td>
                 <td>{{ item.thumbnail }}</td>
                 <td>{{ item.description }}</td>
                 <td style="display: none;">{{ item.start_time | date: 'dd/MM/yyyy' }}</td>
                 <td style="display: none;">{{ item.end_time | date: 'dd/MM/yyyy' }}</td>
                 <td style="display: none;">{{ item.userId }}</td>
-                <td>{{ item.category_id }}</td>
+                <td>{{ item.categoryId }}</td>
                 <td>
                   <span class="badge badge-dot mr-4 align-items-center" [style.color]="'black'">
                     <i [ngClass]="{'bg-warning': !item.is_delete, 'bg-success': item.is_delete}"></i>

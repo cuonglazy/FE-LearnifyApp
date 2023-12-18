@@ -9,7 +9,6 @@ import { Course, ICourse } from '../course.model';
 import { Observable, finalize } from 'rxjs';
 import { CategoryService } from 'src/app/service/category.service';
 import { UserService } from 'src/app/service/user.service';
-import { environment } from 'src/environments/environment';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -93,7 +92,7 @@ export class UpdateCourseComponent implements OnInit {
           },
         };
       })
-      .filter((cat) => cat !== null);
+      // .filter((cat) => cat !== null);
   }
 
   getIndentation(level: number): string {
@@ -114,6 +113,7 @@ export class UpdateCourseComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const course = this.createFromForm();
+    console.warn(course);
     if (!course.id) {
       this.subscribeToSaveResponse(this.courseService.create(course));
     } else {
@@ -122,7 +122,7 @@ export class UpdateCourseComponent implements OnInit {
   }
 
   openFilePicker(event: Event): void {
-  event.preventDefault();
+  // event.preventDefault();
 
   const fileInput: HTMLElement | null = document.getElementById('imageFile');
   if (fileInput) {
@@ -132,6 +132,7 @@ export class UpdateCourseComponent implements OnInit {
 
 handleFileInput(files: FileList): void {
   const file = files.item(0);
+  
   const imagePlayer: HTMLImageElement | null = document.getElementById('thumbnail') as HTMLImageElement;
 
   if (imagePlayer) {
@@ -145,10 +146,7 @@ handleFileInput(files: FileList): void {
         imageFile: file,
       });
 
-      // Giải phóng tài nguyên
-      URL.revokeObjectURL(url);
     };
-
     imagePlayer.src = url;
 
     // Reset giá trị của input file để tránh lỗi
@@ -175,7 +173,6 @@ handleFileInput(files: FileList): void {
   }
 
   protected updateForm(course: ICourse): void {
-    console.log('Dữ liệu khoá học:', course);
   
     const imagePlayer: HTMLImageElement | null = document.getElementById('thumbnail') as HTMLImageElement;
   
@@ -190,15 +187,7 @@ handleFileInput(files: FileList): void {
       categoryId: course.categoryId,
       is_delete: course.is_delete,
     });
-  
-    const url = course.thumbnail;
-    if (url) {
-      console.log('URL hình thu nhỏ:', url);
-      imagePlayer.src = url;
-      // imagePlayer.loading; 
-    }
   }
-  
 
   protected createFromForm(): ICourse {
     return {
