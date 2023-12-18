@@ -112,6 +112,7 @@ export class ProfileComponent {
               this.tokenService.removeToken();
               this.router.navigate(['/login']);
             }
+            alert("Thành công")
           },
           error: (error: any) => {
             alert(error.error.message);
