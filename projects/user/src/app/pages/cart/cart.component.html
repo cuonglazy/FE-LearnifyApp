@@ -1,28 +1,40 @@
-<h1 class="titlecart">Giỏ Hàng</h1>
-<p style="border-bottom: .1rem solid rgba(0,0,0,.2);margin-bottom: 20px; margin-left: 20px;margin-right: 20px;"></p>
-<table>
-    <thead>
-        <tr>
-            <th>Tên</th>
-            <th>Giá tiền</th>
-            <th>Ảnh</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of cartItems">
-            <td>{{item.title}}</td>
-            <td>{{item.priceDiscount}}</td>
-            <td><img [src]="item.thumbnail" alt=""></td>
-            <td><a (click)="removeFromLocalStorage(item.id);">Xóa</a></td>
-        </tr>
-    </tbody>
-</table>
-<h1 class="titletotal">Thanh Toán</h1>
-<p style="border-bottom: .1rem solid rgba(0,0,0,.2);margin-bottom: 20px; margin-left: 20px;margin-right: 20px;"></p>
-<div class="payment-container">
-    <div>
-        <label for="promo-code">Mã khuyến mãi:</label>
-        <input type="text" id="promo-code" name="promo-code" placeholder="Nhập mã khuyến mãi">
-        <button class="payment-button" style="margin-left: 5px;">Xác nhận</button>
+<div>
+    <h1 class="titlecart">Giỏ Hàng</h1>
+    <div class="d-flex" style="width: 100%; justify-content: end;">
+        <!-- Sử dụng lớp ml-auto để đẩy về phía bên phải -->
+        <button class="btn btn-success " style="width: 100px;" (click)="saveCart()">Lưu</button>
+        <button class="btn btn-danger " style="width: 100px;" (click)="deleteCart()">Xóa</button>
     </div>
+    <p style="border-bottom: .1rem solid rgba(0,0,0,.2);margin-bottom: 20px; margin-left: 20px;margin-right: 20px;"></p>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Giá tiền</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems">
+                <td>{{item.title}}</td>
+                <td>{{item.priceDiscount}}</td>
+                <td><img src="https://d1iv5z3ivlqga1.cloudfront.net/wp-content/uploads/2023/10/30114934/Huyen-A%CC%89nh-bi%CC%80a-blog-2023-10-30T114925.545-1024x576.png"
+                        alt="Ảnh sản phẩm 1"></td>
+                <td><button (click)="removeItem(item.id);">Xóa</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <h1 class="titletotal">Thanh Toán</h1>
+    <p style="border-bottom: .1rem solid rgba(0,0,0,.2);margin-bottom: 20px; margin-left: 20px;margin-right: 20px;"></p>
+    <div class="payment-container">
+        <div>
+            <label for="promo-code">Mã khuyến mãi:</label>
+            <input type="text" id="promo-code" name="promo-code" placeholder="Nhập mã khuyến mãi">
+            <button class="payment-button" style="margin-left: 5px;">Xác nhận</button>
+        </div>
+    </div>
+    <div *ngIf="paymentHtml; else loadingTemplate" [innerHTML]="paymentHtml"></div>
+    <ng-template #loadingTemplate>Loading...</ng-template>
+    <button (click)="redirectToVNPayQR()">VNPAYQR</button>
+</div>

@@ -7,6 +7,8 @@ import { UpdateLessonComponent } from "./update/update.lesson.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { LessonDetailComponent } from './detail/lesson-detail.component';
 import { CommonModule, DatePipe } from "@angular/common";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { CommonModule, DatePipe } from "@angular/common";
     ClipboardModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    ToastrModule
   ],
   providers: [DatePipe],
 })

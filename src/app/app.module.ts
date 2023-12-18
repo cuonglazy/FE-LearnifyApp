@@ -1,5 +1,5 @@
 import { TokenInterceptors } from "./interceptors/token.interceptors";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule, provideAnimations } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
@@ -12,6 +12,7 @@ import { AppRoutingModule } from "./app.routing";
 import { ComponentsModule } from "./components/components.module";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { BrowserModule } from "@angular/platform-browser";
     ReactiveFormsModule,
     CommonModule,
     AppRoutingModule,
+    ToastrModule.forRoot(),
   ],
   declarations: [AppComponent, AdminLayoutComponent, AuthLayoutComponent],
   providers: [
